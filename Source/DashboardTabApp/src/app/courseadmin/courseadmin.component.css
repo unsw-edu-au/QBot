@@ -1,0 +1,58 @@
+
+.k-link {
+    white-space: pre-line;
+    font-size: small;
+}
+
+.td {
+    font-size: smaller;
+}
+
+.k-command-cell {
+    display: flex;
+    padding-left: 5px !important;
+}
+
+tr {
+    white-space: pre;
+}
+
+.k-button k-grid-remove-command {
+    font-size: smaller;
+}
+
+input.mat-input-element {
+    text-overflow: ellipsis;
+    font-size: small;
+    max-width: 50%;
+}
+
+.mat-header-cell {
+    font-size: 12px;
+    background-color: aliceblue;
+    padding-right: 5px;
+    /*text-align: center;*/
+    /*padding-left: 5px;*/
+}
+
+.mat-cell:first-of-type, mat-footer-cell:first-of-type, mat-header-cell:first-of-type {
+        padding-left: 12px !important;
+}
+
+.lastColumn {
+    max-width: 10%;
+}
+
+.mat-button {
+    min-width: 50px!important;
+}
+
+.link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+/*mat-cell:last-of-type, mat-footer-cell:last-of-type, mat-header-cell:last-of-type {
+    flex:none;
+    padding-right:0!important;
+}*/

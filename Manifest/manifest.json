@@ -1,0 +1,79 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.5",
+  "version": "1.0",
+  "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
+  "packageName": "your-qbot-package-name",
+  "developer": {
+    "name": "Anything unique",
+    "websiteUrl": "https://github.com/unsw-edu-au/QBot",
+    "privacyUrl": "https://github.com/unsw-edu-au/QBot",
+    "termsOfUseUrl": "https://github.com/unsw-edu-au/QBot"
+  },
+  "icons": {
+    "outline": "qbot.png",
+    "color": "qbot.png"
+  },
+  "name": {
+    "short": "Question",
+    "full": "Question"
+  },
+  "description": {
+    "short": "QBot",
+    "full": "QBot keeps track of answered and unanswered questions, sends notifications to tutors and teachers in charge, and dynamically constructs its own knowledge database on the subject to help suggest answers in future. Just tag @question in the conversations tab of your class Team."
+  },
+  "accentColor": "#3F487F",
+  "composeExtensions": [
+    {
+      "botId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
+      "canUpdateConfiguration": true,
+      "commands": [
+        {
+          "id": "SelectAnswer",
+          "description": "Select an answer",
+          "title": "Select answer",
+          "type": "action",
+          "context": [ "message" ],
+          "fetchTask": true,
+          "parameters": [
+            {
+              "name": "SelectAnswer",
+              "title": "Select Answer"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+    "configurableTabs": [
+      {
+        "configurationUrl": "https://qbot-questions-tab.azurewebsites.net/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}",
+        "canUpdateConfiguration": true,
+        "scopes": [
+          "team"
+        ]
+      }
+    ],
+  "bots": [
+    {
+      "botId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
+      "scopes": [
+        "team",
+        "personal"
+      ]
+    }
+  ],
+  "staticTabs": [
+    {
+      "entityId": "DashboardTab",
+      "name": "Dashboard",
+      "contentUrl": "https://qbot-dashboard-tab.azurewebsites.net/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}",
+      "scopes": [ "personal" ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [ "qbot-dashboard-tab.azurewebsites.net", "qbot-questions-tab.azurewebsites.net", "qbot-api.azurewebsites.net" ]
+}

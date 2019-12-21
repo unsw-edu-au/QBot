@@ -1,0 +1,88 @@
+<h1 style="padding-bottom:10px">User Administration</h1>
+<div>
+    <label style="padding-right:5px; font-weight:bold">Select Course</label>
+    <mat-form-field>
+        <mat-select [(ngModel)]="selectedCourseName" style="padding-left:5px" (ngModelChange)="updateUserTable($event)" >
+            <mat-option *ngFor="let course of courseList" [value]="course" >
+                {{course.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+
+<div style="padding-bottom:5px" *ngIf="selectedCourseName != undefined">
+    <button mat-raised-button (click)="refreshUsers()">
+        <img src="../../assets/favicon.ico" style="width:24px;height:24px;padding-right:5px" /> Sync Users From Teams
+    </button>
+</div>
+<div style="padding-bottom:20px; padding-top:10px">
+    <mat-table #table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="userName">
+            <mat-header-cell class="firstColumn" *matHeaderCellDef>Username </mat-header-cell>
+            <mat-cell class="firstColumn" *matCellDef="let user">
+                <span>{{user.userName}}</span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="firstName">
+            <mat-header-cell class="innerColumns" *matHeaderCellDef>First Name </mat-header-cell>
+            <mat-cell class="innerColumns" *matCellDef="let user">
+                <span>{{user.firstName}}</span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+            <mat-header-cell class="innerColumns" *matHeaderCellDef>Last Name </mat-header-cell>
+            <mat-cell class="innerColumns" *matCellDef="let user">
+                <span>{{user.lastName}}</span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+            <mat-header-cell class="innerColumns" *matHeaderCellDef>Role </mat-header-cell>
+            <mat-cell class="innerColumns" *matCellDef="let user">
+                <!--<input matInput placeholder="Endpoint Key" [value]="user.role.roleName" [(ngModel)]="user.role.roleName">-->
+                <mat-select [(ngModel)]="user.role.id" style="padding-left:5px">
+                    <mat-option *ngFor="let role of roleList;let i = index" [value]="role.id">
+                        {{role.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="tutorialGroups">
+            <mat-header-cell class="tutorialGroupColumn" *matHeaderCellDef>Tutorial Groups </mat-header-cell>
+            <mat-cell class="tutorialGroupColumn" *matCellDef="let user">
+                <span class="link" style="font-size: small;" (click)="manageUserTutorial(user)">{{user.tutorialGroupsString != undefined ? user.tutorialGroupsString : 'Click to manage user tutorial groups' }}</span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell class="lastColumn" *matHeaderCellDef>&nbsp;Actions</mat-header-cell>
+            <mat-cell class="lastColumn" *matCellDef="let user; let i = index;">
+                <!--<button mat-button (click)="editRow(i)"><mat-icon>edit</mat-icon></button>-->
+                <button mat-button (click)="deleteRow(user, i)"><mat-icon>delete</mat-icon></button>
+                <button mat-button (click)="saveRow(user, i)"><mat-icon>save</mat-icon></button>
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>
+
+<!--<p>
+    Bulk add/edit students by updating and uploading a .csv file. <br />
+</p>
+<p>
+    Download a template here
+    <a href="../../assets/StudentUploadTemplate.csv">
+        <img src="../../assets/csvIcon.png" width="32" height="32">
+    </a>
+</p>
+<div style="padding-bottom: 5px">
+    <input id="studentFile" type="file" *ngIf="selectedCourseName != undefined" (change)="handleFileInput($event.target)" accept=".csv" #studentFile />
+</div>-->

@@ -1,0 +1,22 @@
+/*.firstColumn, .lastColumn {
+    min-width: 25%;
+    max-width: 25%;
+    word-break: break-word;
+}
+
+.innerColumns {
+    padding-left: 5px;
+    max-width: 12.5%;
+    min-width: 12.5%;
+}
+
+.mat-cell:first-of-type, mat-footer-cell:first-of-type, mat-header-cell:first-of-type {
+    padding-left: 10px !important;
+}
+
+.mat-cell:last-of-type, mat-footer-cell:last-of-type, mat-header-cell:last-of-type {
+    padding-right: 0px !important;
+}*/
+.mat-cell:last-of-type, mat-footer-cell:last-of-type, mat-header-cell:last-of-type {
+padding-right: 0px !important;
+}

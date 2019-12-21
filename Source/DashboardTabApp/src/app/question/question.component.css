@@ -1,0 +1,51 @@
+.dropdown {
+    height: 50px;
+}
+
+.filterButtonTeamsCustom {
+    margin-right:10px;
+}
+
+.filterCollapseButton {
+    background-color: #16233A;
+    opacity: 0.52;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+    .active, .filterCollapseButton:hover {
+        background-color: #16233A;
+        opacity:0.36;
+    }
+
+.filterCollapseContent {
+    overflow: hidden;
+    background-color: #edebe9;
+    padding: 18px;
+    width: 100%;
+}
+
+.plusminus{
+    float: right;
+}
+
+.filterButton {
+    float: right;
+}
+
+.table {
+    table-layout:fixed;
+    width:100%;
+}
+
+.table > .tr > .td {
+    word-wrap:break-word;
+}
+
+

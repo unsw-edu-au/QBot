@@ -1,0 +1,97 @@
+<h1>Course Admin</h1>
+<span class="link" (click) ="openInstructions()">Course provisioning instructions</span>
+<div style="padding-bottom:5px">
+    <button mat-raised-button (click)="addRow()">
+        <mat-icon>add</mat-icon> New Course
+    </button>
+</div>
+<div style="padding-bottom:20px">
+    <mat-table #table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="courseName">
+            <mat-header-cell *matHeaderCellDef>Course Name </mat-header-cell>
+            <mat-cell *matCellDef="let course">
+                <span>{{course.name}}</span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="predictiveQnAServiceHost">
+            <mat-header-cell *matHeaderCellDef>Service Host </mat-header-cell>
+            <mat-cell *matCellDef="let course">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="Service Host" [value]="course.predictiveQnAServiceHost" [(ngModel)]="course.predictiveQnAServiceHost">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="predictiveQnAKnowledgeBaseId">
+            <mat-header-cell *matHeaderCellDef>KnowledgeBase Id </mat-header-cell>
+            <mat-cell *matCellDef="let course">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="KnowledgeBase Id" [value]="course.predictiveQnAKnowledgeBaseId" [(ngModel)]="course.predictiveQnAKnowledgeBaseId">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="predictiveQnAEndpointKey">
+            <mat-header-cell *matHeaderCellDef>Endpoint Key </mat-header-cell>
+            <mat-cell *matCellDef="let course">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="Endpoint Key" [value]="course.predictiveQnAEndpointKey" [(ngModel)]="course.predictiveQnAEndpointKey">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="predictiveQnAHttpEndpoint">
+            <mat-header-cell *matHeaderCellDef>Http Endpoint </mat-header-cell>
+            <mat-cell *matCellDef="let course">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="Http Endpoint" [value]="course.predictiveQnAHttpEndpoint" [(ngModel)]="course.predictiveQnAHttpEndpoint">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="predictiveQnAHttpKey">
+            <mat-header-cell *matHeaderCellDef>Http Key </mat-header-cell>
+            <mat-cell *matCellDef="let course">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="Http Key" [value]="course.predictiveQnAHttpKey" [(ngModel)]="course.predictiveQnAHttpKey">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="predictiveQnAKnowledgeBaseName">
+            <mat-header-cell *matHeaderCellDef>KnowledgeBase Name </mat-header-cell>
+            <mat-cell *matCellDef="let course">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="KnowledgeBase Name" [value]="course.predictiveQnAKnowledgeBaseName" [(ngModel)]="course.predictiveQnAKnowledgeBaseName">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="predictiveQnAConfidenceThreshold">
+            <mat-header-cell *matHeaderCellDef>Confidence Threshold </mat-header-cell>
+            <mat-cell *matCellDef="let course">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="Confidence Threshold" [value]="course.predictiveQnAConfidenceThreshold" [(ngModel)]="course.predictiveQnAConfidenceThreshold" style="text-align:center" type="number">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="deleteButton">
+            <mat-header-cell class="lastColumn" *matHeaderCellDef></mat-header-cell>
+            <mat-cell class="lastColumn" *matCellDef="let course; let i = index;">
+                <button mat-button (click)="deleteRow(i)"><mat-icon>delete</mat-icon></button>
+                <button mat-button (click)="saveRow(course)"><mat-icon>save</mat-icon></button>
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>
+
+<div>
+    <span> </span>
+</div>

@@ -1,0 +1,21 @@
+<h1>
+    Course Provisioning Information
+</h1>
+
+<div>
+    <h2>Table field details</h2>
+    <img src="../../assets/course info.png" style="padding-bottom:10px" />
+    <ul>
+        <li><b>PredictiveQnAServiceHost:</b> Host property + “/” when the QnA maker is published. <sup>1</sup></li>
+        <li><b>PredictiveQnAKnowledgeBaseId:</b>  GUID part of the POST command</li>
+        <li><b>PredictiveQnAEndpointKey:</b>  GUID part of Authorization.</li>
+        <li><b>PredictiveQnAHttpEndpoint:</b>  Endpoint of the Cognitive Service.</li>
+        <li><b>PredictiveQnAHttpKey:</b>  Key of the Cognitive Service.</li>
+        <li><b>PredictiveQnAKnowledgeBaseName:</b>  Name of knowledgebase for the course on QnA Maker.</li>
+        <li><b>PredictiveQnAConfidenceThreshold:</b>  Integer that should be from 0-100 that reflects the confidence percentage an answer from QnA Maker must be if it is to be supplied as an answer to a question.</li>
+    </ul>
+</div>
+
+<div mat-dialog-actions style="padding-bottom:10px">
+    <button mat-raised-button (click)="onOKClick()">OK</button>
+</div>

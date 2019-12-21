@@ -1,0 +1,76 @@
+<h1> </h1>
+
+<!--<p> Hello {{currentUser.fullName}}!</p>-->
+
+<div id="mainFilterContainer">
+    <button class="filterCollapseButton teamsText" (click)="showHideContent($event)">
+        <i [className]="plusminus_classname"></i>
+        Filters
+    </button>
+    <div *ngIf="filterContentVisible" class="filterCollapseContent">
+        <form class="container-fluid" name="questionForm" #questionForm="ngForm">
+            <div class="form-group">
+                <label class="teamsText" for="questionTopic">Topic</label>
+                <select class="form-control dropdown teamsText" #questionTopic="ngModel" name="questionTopic" [(ngModel)]="selectedTopic">
+                    <option *ngFor="let t of topics" [ngValue]="t">{{t}}</option>
+                </select>
+            </div>
+
+            <!--<div class="form-group">
+                <label class="teamsText" for="questionStatus">Status</label>
+                <select class="form-control teamsText" #questionStatus="ngModel" name="questionStatus" [(ngModel)]="selectedStatus">
+                    <option *ngFor="let s of statuses" [ngValue]="s">{{s}}</option>
+                </select>
+            </div>-->
+
+            <div class="filterButton">
+                <button class="teamsText ac-pushButton filterButtonTeamsCustom" type="button" (click)="applyFilters($event)">Apply Filters</button>
+                <button class="teamsText ac-pushButton" type="button" (click)="resetFilters($event)">Reset Filters</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<tabs>
+    <tab tabTitle="Unanswered Questions" tabActive="true">
+        <div id="unansweredCardDiv" class="cardDiv card-body teamsText" >
+        </div>
+    </tab>
+    <tab tabTitle="Answered Questions">
+        <div id="answeredCardDiv" class="cardDiv card-body teamsText">
+        </div>
+    </tab>
+</tabs>
+
+<!--<div id="cardDiv"></div>-->
+
+<!--<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingOne">
+            <h4 class="panel-title">
+                <button class="questionsCollapseButton btn btn-link" data-toggle="collapse" data-target="#collapseOne" (click)="showHideUnanswered($event)">
+                    <i [ngClass]="{'plusminus glyphicon': true,'glyphicon-minus': unansweredContentVisible, 'glyphicon-plus': !unansweredContentVisible}"></i>
+                    Unanswered Questions
+                </button>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div id="unansweredCardDiv" class="cardDiv card-body">
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingTwo">
+            <h4 class="panel-title">
+                <button class="questionsCollapseButton btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" (click)="showHideAnswered($event)">
+                    <i [ngClass]="{'plusminus glyphicon': true,'glyphicon-minus': answeredContentVisible, 'glyphicon-plus': !answeredContentVisible}"></i>
+                    Answered Questions
+                </button>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse in">
+            <div id="answeredCardDiv" class="cardDiv card-body">
+            </div>
+        </div>
+    </div>
+</div>-->

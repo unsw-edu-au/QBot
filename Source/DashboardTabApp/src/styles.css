@@ -1,0 +1,105 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+body {
+    background-color: #edebe9;
+}
+
+
+
+.teamsTitle {
+    font-family: 'Segoe UI';
+}
+
+.teamsText {
+    font-family: 'Segoe UI';
+}
+
+#mainFilterContainer {
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.nav-tabs {
+    font-family: 'Segoe UI';
+    border-bottom: none;
+    background-color: transparent;
+}
+
+    .nav-tabs > li:hover {
+        background-color: transparent;
+    }
+
+    .nav-tabs > li > a {
+        color: #16233A;
+        background-color: transparent;
+    }
+
+        .nav-tabs > li > a:hover {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom-color: #16233A;
+            border-bottom-style: solid;
+            border-bottom-width: medium;
+            background-color: transparent;
+            color: #16233A;
+        }
+
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:focus,
+    .nav-tabs > li.active > a:hover {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom-color: #6364a7;
+        border-bottom-style: solid;
+        border-bottom-width: medium;
+        background-color: transparent;
+        color: #6364a7;
+    }
+
+    .nav-tabs > li > a.nav-icon {
+        margin: 5px;
+    }
+
+#collapseOne,
+#collapseTwo {
+    padding: 10px;
+}
+
+.questionsCollapseButton {
+    text-align: start;
+    width: 100%;
+    height: 100%;
+}
+
+.cardDiv > * {
+    /*background-color: #EEF1F5;*/
+    background-color: white;
+    display: block;
+    margin: 10px 0;
+}
+
+.cardHolder {
+    /*border-top-style:solid;*/
+    border-radius: 3px;
+    border-width: thin;
+    border-color: #6364a7;
+}
+
+.ac-pushButton {
+    padding: 0px 24px;
+    height: 32px;
+    border-radius: 3px;
+    color: white;
+    background-color: #6364a7;
+    border:none;
+}
+
+body { margin: 0; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body { margin: 0; }
+

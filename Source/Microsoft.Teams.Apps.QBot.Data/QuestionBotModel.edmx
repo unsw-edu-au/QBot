@@ -1,0 +1,630 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="unswbotdevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="GroupId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PredictiveQnAServiceHost" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="PredictiveQnAKnowledgeBaseId" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="PredictiveQnAEndpointKey" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="PredictiveQnAHttpEndpoint" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="PredictiveQnAHttpKey" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="PredictiveQnAKnowledgeBaseName" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="PredictiveQnAConfidenceThreshold" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="DeployedURL" Type="nvarchar" MaxLength="1024" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="TenantId" Type="uniqueidentifier" />
+          <Property Name="GroupId" Type="uniqueidentifier" />
+          <Property Name="TeamId" Type="nvarchar" MaxLength="2048" />
+          <Property Name="TeamName" Type="nvarchar" MaxLength="2048" />
+          <Property Name="ConversationId" Type="nvarchar" MaxLength="2048" />
+          <Property Name="MessageId" Type="nvarchar" MaxLength="2048" />
+          <Property Name="Topic" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="QuestionText" Type="nvarchar(max)" />
+          <Property Name="OriginalPosterId" Type="int" Nullable="false" />
+          <Property Name="DateSubmitted" Type="datetime" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="2048" />
+          <Property Name="AnswerText" Type="nvarchar(max)" />
+          <Property Name="AnswerMessageId" Type="nvarchar" MaxLength="2048" />
+          <Property Name="AnswerPosterId" Type="int" />
+          <Property Name="DateAnswered" Type="datetime" />
+          <Property Name="AnswerCardActivityId" Type="nvarchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TutorialGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TutorialGroupMembership">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TutorialGroupId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserPrincipalName" Type="nvarchar" MaxLength="255" />
+          <Property Name="StudentId" Type="nvarchar" MaxLength="255" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="PersonalConversationContactData" Type="nvarchar(max)" />
+          <Property Name="IsGlobalAdmin" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserCourseRoleMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Question_AnswerPoster">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="AnswerPosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_CourseId">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_OriginalPoster">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="OriginalPosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorialGroup_CourseId">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="TutorialGroup" Type="Self.TutorialGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TutorialGroup">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorialGroupMembership_TutorialGroupId">
+          <End Role="TutorialGroup" Type="Self.TutorialGroup" Multiplicity="1" />
+          <End Role="TutorialGroupMembership" Type="Self.TutorialGroupMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TutorialGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TutorialGroupMembership">
+              <PropertyRef Name="TutorialGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorialGroupMembership_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="TutorialGroupMembership" Type="Self.TutorialGroupMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TutorialGroupMembership">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCourseRoleMapping_CourseId">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="UserCourseRoleMapping" Type="Self.UserCourseRoleMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCourseRoleMapping">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCourseRoleMapping_RoleId">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UserCourseRoleMapping" Type="Self.UserCourseRoleMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCourseRoleMapping">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCourseRoleMapping_UserId">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserCourseRoleMapping" Type="Self.UserCourseRoleMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCourseRoleMapping">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="unswbotdevModelStoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TutorialGroup" EntityType="Self.TutorialGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TutorialGroupMembership" EntityType="Self.TutorialGroupMembership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserCourseRoleMapping" EntityType="Self.UserCourseRoleMapping" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Question_AnswerPoster" Association="Self.FK_Question_AnswerPoster">
+            <End Role="User" EntitySet="User" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_CourseId" Association="Self.FK_Question_CourseId">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_OriginalPoster" Association="Self.FK_Question_OriginalPoster">
+            <End Role="User" EntitySet="User" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorialGroup_CourseId" Association="Self.FK_TutorialGroup_CourseId">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="TutorialGroup" EntitySet="TutorialGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorialGroupMembership_TutorialGroupId" Association="Self.FK_TutorialGroupMembership_TutorialGroupId">
+            <End Role="TutorialGroup" EntitySet="TutorialGroup" />
+            <End Role="TutorialGroupMembership" EntitySet="TutorialGroupMembership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorialGroupMembership_UserId" Association="Self.FK_TutorialGroupMembership_UserId">
+            <End Role="User" EntitySet="User" />
+            <End Role="TutorialGroupMembership" EntitySet="TutorialGroupMembership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCourseRoleMapping_CourseId" Association="Self.FK_UserCourseRoleMapping_CourseId">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="UserCourseRoleMapping" EntitySet="UserCourseRoleMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCourseRoleMapping_RoleId" Association="Self.FK_UserCourseRoleMapping_RoleId">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserCourseRoleMapping" EntitySet="UserCourseRoleMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCourseRoleMapping_UserId" Association="Self.FK_UserCourseRoleMapping_UserId">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserCourseRoleMapping" EntitySet="UserCourseRoleMapping" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QBotModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="QBotEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Courses" EntityType="QBotModel.Course" />
+          <EntitySet Name="Questions" EntityType="QBotModel.Question" />
+          <EntitySet Name="Roles" EntityType="QBotModel.Role" />
+          <EntitySet Name="TutorialGroups" EntityType="QBotModel.TutorialGroup" />
+          <EntitySet Name="TutorialGroupMemberships" EntityType="QBotModel.TutorialGroupMembership" />
+          <EntitySet Name="Users" EntityType="QBotModel.User" />
+          <EntitySet Name="UserCourseRoleMappings" EntityType="QBotModel.UserCourseRoleMapping" />
+          <AssociationSet Name="FK_Question_CourseId" Association="QBotModel.FK_Question_CourseId">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorialGroup_CourseId" Association="QBotModel.FK_TutorialGroup_CourseId">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="TutorialGroup" EntitySet="TutorialGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCourseRoleMapping_CourseId" Association="QBotModel.FK_UserCourseRoleMapping_CourseId">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="UserCourseRoleMapping" EntitySet="UserCourseRoleMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCourseRoleMapping_RoleId" Association="QBotModel.FK_UserCourseRoleMapping_RoleId">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserCourseRoleMapping" EntitySet="UserCourseRoleMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorialGroupMembership_TutorialGroupId" Association="QBotModel.FK_TutorialGroupMembership_TutorialGroupId">
+            <End Role="TutorialGroup" EntitySet="TutorialGroups" />
+            <End Role="TutorialGroupMembership" EntitySet="TutorialGroupMemberships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorialGroupMembership_UserId" Association="QBotModel.FK_TutorialGroupMembership_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="TutorialGroupMembership" EntitySet="TutorialGroupMemberships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCourseRoleMapping_UserId" Association="QBotModel.FK_UserCourseRoleMapping_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserCourseRoleMapping" EntitySet="UserCourseRoleMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_AnswerPoster" Association="QBotModel.FK_Question_AnswerPoster">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Question_OriginalPoster" Association="QBotModel.FK_Question_OriginalPoster">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GroupId" Type="Guid" Nullable="false" />
+          <Property Name="PredictiveQnAServiceHost" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="PredictiveQnAKnowledgeBaseId" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="PredictiveQnAEndpointKey" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="PredictiveQnAHttpEndpoint" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="PredictiveQnAHttpKey" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="PredictiveQnAKnowledgeBaseName" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="PredictiveQnAConfidenceThreshold" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="DeployedURL" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Questions" Relationship="QBotModel.FK_Question_CourseId" FromRole="Course" ToRole="Question" />
+          <NavigationProperty Name="TutorialGroups" Relationship="QBotModel.FK_TutorialGroup_CourseId" FromRole="Course" ToRole="TutorialGroup" />
+          <NavigationProperty Name="UserCourseRoleMappings" Relationship="QBotModel.FK_UserCourseRoleMapping_CourseId" FromRole="Course" ToRole="UserCourseRoleMapping" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="TenantId" Type="Guid" />
+          <Property Name="GroupId" Type="Guid" />
+          <Property Name="TeamId" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="TeamName" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="ConversationId" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="MessageId" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="Topic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalPosterId" Type="Int32" Nullable="false" />
+          <Property Name="DateSubmitted" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Link" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="AnswerText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AnswerMessageId" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="AnswerPosterId" Type="Int32" />
+          <Property Name="DateAnswered" Type="DateTime" Precision="3" />
+          <Property Name="AnswerCardActivityId" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Course" Relationship="QBotModel.FK_Question_CourseId" FromRole="Question" ToRole="Course" />
+          <NavigationProperty Name="AnswerUser" Relationship="QBotModel.FK_Question_AnswerPoster" FromRole="Question" ToRole="User" />
+          <NavigationProperty Name="QuestionUser" Relationship="QBotModel.FK_Question_OriginalPoster" FromRole="Question" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserCourseRoleMappings" Relationship="QBotModel.FK_UserCourseRoleMapping_RoleId" FromRole="Role" ToRole="UserCourseRoleMapping" />
+        </EntityType>
+        <EntityType Name="TutorialGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Course" Relationship="QBotModel.FK_TutorialGroup_CourseId" FromRole="TutorialGroup" ToRole="Course" />
+          <NavigationProperty Name="TutorialGroupMemberships" Relationship="QBotModel.FK_TutorialGroupMembership_TutorialGroupId" FromRole="TutorialGroup" ToRole="TutorialGroupMembership" />
+        </EntityType>
+        <EntityType Name="TutorialGroupMembership">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TutorialGroupId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TutorialGroup" Relationship="QBotModel.FK_TutorialGroupMembership_TutorialGroupId" FromRole="TutorialGroupMembership" ToRole="TutorialGroup" />
+          <NavigationProperty Name="User" Relationship="QBotModel.FK_TutorialGroupMembership_UserId" FromRole="TutorialGroupMembership" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserPrincipalName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="StudentId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PersonalConversationContactData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TutorialGroupMemberships" Relationship="QBotModel.FK_TutorialGroupMembership_UserId" FromRole="User" ToRole="TutorialGroupMembership" />
+          <NavigationProperty Name="UserCourseRoleMappings" Relationship="QBotModel.FK_UserCourseRoleMapping_UserId" FromRole="User" ToRole="UserCourseRoleMapping" />
+          <NavigationProperty Name="AnswerPoster" Relationship="QBotModel.FK_Question_AnswerPoster" FromRole="User" ToRole="Question" />
+          <NavigationProperty Name="OriginalPoster" Relationship="QBotModel.FK_Question_OriginalPoster" FromRole="User" ToRole="Question" />
+          <Property Name="IsGlobalAdmin" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="UserCourseRoleMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="QBotModel.FK_UserCourseRoleMapping_CourseId" FromRole="UserCourseRoleMapping" ToRole="Course" />
+          <NavigationProperty Name="Role" Relationship="QBotModel.FK_UserCourseRoleMapping_RoleId" FromRole="UserCourseRoleMapping" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="QBotModel.FK_UserCourseRoleMapping_UserId" FromRole="UserCourseRoleMapping" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Question_CourseId">
+          <End Type="QBotModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="QBotModel.Question" Role="Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorialGroup_CourseId">
+          <End Type="QBotModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="QBotModel.TutorialGroup" Role="TutorialGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TutorialGroup">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCourseRoleMapping_CourseId">
+          <End Type="QBotModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="QBotModel.UserCourseRoleMapping" Role="UserCourseRoleMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCourseRoleMapping">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCourseRoleMapping_RoleId">
+          <End Type="QBotModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="QBotModel.UserCourseRoleMapping" Role="UserCourseRoleMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCourseRoleMapping">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorialGroupMembership_TutorialGroupId">
+          <End Type="QBotModel.TutorialGroup" Role="TutorialGroup" Multiplicity="1" />
+          <End Type="QBotModel.TutorialGroupMembership" Role="TutorialGroupMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TutorialGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TutorialGroupMembership">
+              <PropertyRef Name="TutorialGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorialGroupMembership_UserId">
+          <End Type="QBotModel.User" Role="User" Multiplicity="1" />
+          <End Type="QBotModel.TutorialGroupMembership" Role="TutorialGroupMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TutorialGroupMembership">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCourseRoleMapping_UserId">
+          <End Type="QBotModel.User" Role="User" Multiplicity="1" />
+          <End Type="QBotModel.UserCourseRoleMapping" Role="UserCourseRoleMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCourseRoleMapping">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_AnswerPoster">
+          <End Type="QBotModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="QBotModel.Question" Role="Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="AnswerPosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Question_OriginalPoster">
+          <End Type="QBotModel.User" Role="User" Multiplicity="1" />
+          <End Type="QBotModel.Question" Role="Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="OriginalPosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="unswbotdevModelStoreContainer" CdmEntityContainer="QBotEntities" >
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="QBotModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="DeployedURL" ColumnName="DeployedURL" />
+                <ScalarProperty Name="PredictiveQnAConfidenceThreshold" ColumnName="PredictiveQnAConfidenceThreshold" />
+                <ScalarProperty Name="PredictiveQnAKnowledgeBaseName" ColumnName="PredictiveQnAKnowledgeBaseName" />
+                <ScalarProperty Name="PredictiveQnAHttpKey" ColumnName="PredictiveQnAHttpKey" />
+                <ScalarProperty Name="PredictiveQnAHttpEndpoint" ColumnName="PredictiveQnAHttpEndpoint" />
+                <ScalarProperty Name="PredictiveQnAEndpointKey" ColumnName="PredictiveQnAEndpointKey" />
+                <ScalarProperty Name="PredictiveQnAKnowledgeBaseId" ColumnName="PredictiveQnAKnowledgeBaseId" />
+                <ScalarProperty Name="PredictiveQnAServiceHost" ColumnName="PredictiveQnAServiceHost" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="QBotModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="AnswerCardActivityId" ColumnName="AnswerCardActivityId" />
+                <ScalarProperty Name="DateAnswered" ColumnName="DateAnswered" />
+                <ScalarProperty Name="AnswerPosterId" ColumnName="AnswerPosterId" />
+                <ScalarProperty Name="AnswerMessageId" ColumnName="AnswerMessageId" />
+                <ScalarProperty Name="AnswerText" ColumnName="AnswerText" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="DateSubmitted" ColumnName="DateSubmitted" />
+                <ScalarProperty Name="OriginalPosterId" ColumnName="OriginalPosterId" />
+                <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="ConversationId" ColumnName="ConversationId" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="QBotModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TutorialGroups">
+            <EntityTypeMapping TypeName="QBotModel.TutorialGroup">
+              <MappingFragment StoreEntitySet="TutorialGroup">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TutorialGroupMemberships">
+            <EntityTypeMapping TypeName="QBotModel.TutorialGroupMembership">
+              <MappingFragment StoreEntitySet="TutorialGroupMembership">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TutorialGroupId" ColumnName="TutorialGroupId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="QBotModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsGlobalAdmin" ColumnName="IsGlobalAdmin" />
+                <ScalarProperty Name="PersonalConversationContactData" ColumnName="PersonalConversationContactData" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="UserPrincipalName" ColumnName="UserPrincipalName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserCourseRoleMappings">
+            <EntityTypeMapping TypeName="QBotModel.UserCourseRoleMapping">
+              <MappingFragment StoreEntitySet="UserCourseRoleMapping">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

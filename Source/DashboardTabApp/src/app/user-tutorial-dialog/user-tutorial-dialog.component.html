@@ -1,0 +1,17 @@
+<h1>{{user.fullName}}</h1>
+<div mat-dialog-content>
+    <p>Select/remove tutorials for this user.</p>
+</div>
+<form [formGroup]="tutorialForm">
+    <div>
+        <mat-selection-list formControlName="tutorials"  [(ngModel)]="selectedTutorials">
+            <mat-list-option *ngFor="let tutorial of tutorials; let i = index" [selected]="data.user.tutorialGroups[i]!=undefined ? data.user.tutorialGroups[i].id == (tutorial.id): false" [value]="tutorial">
+                {{tutorial.code + " " + tutorial.name}}
+            </mat-list-option>
+        </mat-selection-list>
+    </div>
+</form>
+<div mat-dialog-actions>
+    <button mat-button (click)="onOkClick()">OK</button>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+</div>

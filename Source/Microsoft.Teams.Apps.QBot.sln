@@ -1,0 +1,106 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Teams.Apps.QBot.Bot", "Microsoft.Teams.Apps.QBot.Bot\Microsoft.Teams.Apps.QBot.Bot.csproj", "{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft.Teams.Apps.QBot.Bot", "Microsoft.Teams.Apps.QBot.Bot", "{47FDD072-7A22-41E1-8028-A8C9A674614C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5486CBE2-CCC5-4624-8E95-B987731819A0}"
+	ProjectSection(SolutionItems) = preProject
+		.tfignore = .tfignore
+		NuGet.config = NuGet.config
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Teams.Apps.QBot.Data", "Microsoft.Teams.Apps.QBot.Data\Microsoft.Teams.Apps.QBot.Data.csproj", "{4E7A14CA-80CD-447C-8C3D-615B45C56939}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Teams.Apps.QBot.Model", "Microsoft.Teams.Apps.QBot.Model\Microsoft.Teams.Apps.QBot.Model.csproj", "{5C7943E8-9C2A-4C81-90B3-A672876DCBDD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Encryption", "Encryption", "{947E8F2F-DF22-4D54-9E5F-651FA6307386}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptionHelper", "EncryptionHelper\EncryptionHelper.csproj", "{8392407D-7934-4D2A-B0F0-BD6E866A2E38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringEncryption", "StringEncryption\StringEncryption.csproj", "{735D1174-B386-4010-A48B-31E33CC89492}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuestionsTabApp", "QuestionsTabApp\QuestionsTabApp.csproj", "{B727F5C1-8569-4873-A44D-2823B3D3E092}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DashboardTabApp", "DashboardTabApp\DashboardTabApp.csproj", "{398A1B5D-838E-42C2-B1DE-75E7E571C8C1}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Microsoft.Teams.Apps.QBot.Database", "Microsoft.Teams.Apps.QBot.Database\Microsoft.Teams.Apps.QBot.Database.sqlproj", "{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release.CQU|Any CPU = Release.CQU|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release.CQU|Any CPU.ActiveCfg = Release.CQU|Any CPU
+		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release.CQU|Any CPU.Build.0 = Release.CQU|Any CPU
+		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E7A14CA-80CD-447C-8C3D-615B45C56939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E7A14CA-80CD-447C-8C3D-615B45C56939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E7A14CA-80CD-447C-8C3D-615B45C56939}.Release.CQU|Any CPU.ActiveCfg = Release.CQU|Any CPU
+		{4E7A14CA-80CD-447C-8C3D-615B45C56939}.Release.CQU|Any CPU.Build.0 = Release.CQU|Any CPU
+		{4E7A14CA-80CD-447C-8C3D-615B45C56939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E7A14CA-80CD-447C-8C3D-615B45C56939}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C7943E8-9C2A-4C81-90B3-A672876DCBDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C7943E8-9C2A-4C81-90B3-A672876DCBDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C7943E8-9C2A-4C81-90B3-A672876DCBDD}.Release.CQU|Any CPU.ActiveCfg = Release.CQU|Any CPU
+		{5C7943E8-9C2A-4C81-90B3-A672876DCBDD}.Release.CQU|Any CPU.Build.0 = Release.CQU|Any CPU
+		{5C7943E8-9C2A-4C81-90B3-A672876DCBDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C7943E8-9C2A-4C81-90B3-A672876DCBDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8392407D-7934-4D2A-B0F0-BD6E866A2E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8392407D-7934-4D2A-B0F0-BD6E866A2E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8392407D-7934-4D2A-B0F0-BD6E866A2E38}.Release.CQU|Any CPU.ActiveCfg = Release.CQU|Any CPU
+		{8392407D-7934-4D2A-B0F0-BD6E866A2E38}.Release.CQU|Any CPU.Build.0 = Release.CQU|Any CPU
+		{8392407D-7934-4D2A-B0F0-BD6E866A2E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8392407D-7934-4D2A-B0F0-BD6E866A2E38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{735D1174-B386-4010-A48B-31E33CC89492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{735D1174-B386-4010-A48B-31E33CC89492}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{735D1174-B386-4010-A48B-31E33CC89492}.Release.CQU|Any CPU.ActiveCfg = Release.CQU|Any CPU
+		{735D1174-B386-4010-A48B-31E33CC89492}.Release.CQU|Any CPU.Build.0 = Release.CQU|Any CPU
+		{735D1174-B386-4010-A48B-31E33CC89492}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{735D1174-B386-4010-A48B-31E33CC89492}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B727F5C1-8569-4873-A44D-2823B3D3E092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B727F5C1-8569-4873-A44D-2823B3D3E092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B727F5C1-8569-4873-A44D-2823B3D3E092}.Release.CQU|Any CPU.ActiveCfg = Release.CQU|Any CPU
+		{B727F5C1-8569-4873-A44D-2823B3D3E092}.Release.CQU|Any CPU.Build.0 = Release.CQU|Any CPU
+		{B727F5C1-8569-4873-A44D-2823B3D3E092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B727F5C1-8569-4873-A44D-2823B3D3E092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{398A1B5D-838E-42C2-B1DE-75E7E571C8C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{398A1B5D-838E-42C2-B1DE-75E7E571C8C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{398A1B5D-838E-42C2-B1DE-75E7E571C8C1}.Release.CQU|Any CPU.ActiveCfg = Release.CQU|Any CPU
+		{398A1B5D-838E-42C2-B1DE-75E7E571C8C1}.Release.CQU|Any CPU.Build.0 = Release.CQU|Any CPU
+		{398A1B5D-838E-42C2-B1DE-75E7E571C8C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{398A1B5D-838E-42C2-B1DE-75E7E571C8C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Release.CQU|Any CPU.ActiveCfg = Release.CQU|Any CPU
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Release.CQU|Any CPU.Build.0 = Release.CQU|Any CPU
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Release.CQU|Any CPU.Deploy.0 = Release.CQU|Any CPU
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4} = {47FDD072-7A22-41E1-8028-A8C9A674614C}
+		{4E7A14CA-80CD-447C-8C3D-615B45C56939} = {47FDD072-7A22-41E1-8028-A8C9A674614C}
+		{5C7943E8-9C2A-4C81-90B3-A672876DCBDD} = {47FDD072-7A22-41E1-8028-A8C9A674614C}
+		{8392407D-7934-4D2A-B0F0-BD6E866A2E38} = {947E8F2F-DF22-4D54-9E5F-651FA6307386}
+		{735D1174-B386-4010-A48B-31E33CC89492} = {947E8F2F-DF22-4D54-9E5F-651FA6307386}
+		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22} = {47FDD072-7A22-41E1-8028-A8C9A674614C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1697AC8A-8C72-4B33-B818-4E1950D95446}
+	EndGlobalSection
+EndGlobal

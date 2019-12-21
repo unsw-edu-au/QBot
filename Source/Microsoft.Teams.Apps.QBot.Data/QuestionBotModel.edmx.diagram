@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c942e33e8f594eab940b408fdfb5c17b" Name="Diagram1" ZoomLevel="82" >
+        <EntityTypeShape EntityType="QBotModel.Course" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="QBotModel.Question" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="QBotModel.Role" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="QBotModel.TutorialGroup" Width="1.5" PointX="3" PointY="6" />
+        <EntityTypeShape EntityType="QBotModel.TutorialGroupMembership" Width="2.5" PointX="5.25" PointY="6.125" />
+        <EntityTypeShape EntityType="QBotModel.User" Width="1.5" PointX="0.75" PointY="9.625" />
+        <EntityTypeShape EntityType="QBotModel.UserCourseRoleMapping" Width="2" PointX="3" PointY="2.625" />
+        <AssociationConnector Association="QBotModel.FK_Question_CourseId" />
+        <AssociationConnector Association="QBotModel.FK_TutorialGroup_CourseId" />
+        <AssociationConnector Association="QBotModel.FK_UserCourseRoleMapping_CourseId" />
+        <AssociationConnector Association="QBotModel.FK_UserCourseRoleMapping_RoleId" />
+        <AssociationConnector Association="QBotModel.FK_TutorialGroupMembership_TutorialGroupId" />
+        <AssociationConnector Association="QBotModel.FK_TutorialGroupMembership_UserId" />
+        <AssociationConnector Association="QBotModel.FK_UserCourseRoleMapping_UserId" />
+        <AssociationConnector Association="QBotModel.FK_Question_AnswerPoster" />
+        <AssociationConnector Association="QBotModel.FK_Question_OriginalPoster" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

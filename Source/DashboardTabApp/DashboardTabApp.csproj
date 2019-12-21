@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <Configurations>Debug;Release;Release.CQU</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <PostBuildEvent>ng build --aot</PostBuildEvent>
+    <UserSecretsId>9758154d-5763-4d11-9572-166c88d6e5b9</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="src\app\app.service.ts" />
+    <None Remove="src\app\edit.service.ts" />
+    <None Remove="src\app\models\Course.ts" />
+    <None Remove="src\app\models\Question.ts" />
+    <None Remove="src\app\models\TeamChannel.ts" />
+    <None Remove="src\app\models\TeamGroupDetail.ts" />
+    <None Remove="src\app\models\Tutorial.ts" />
+    <None Remove="src\app\models\TutorialGroup.ts" />
+    <None Remove="src\app\models\User.ts" />
+    <None Remove="src\app\models\UserCourseRoleModel.ts" />
+    <None Remove="src\app\question\question.component.ts" />
+    <None Remove="src\app\config\config.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Teams.Apps.QBot.Model\Microsoft.Teams.Apps.QBot.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="src\app\app.service.ts" />
+    <TypeScriptCompile Include="src\app\edit.service.ts" />
+    <TypeScriptCompile Include="src\app\models\Course.ts" />
+    <TypeScriptCompile Include="src\app\models\Question.ts" />
+    <TypeScriptCompile Include="src\app\models\TeamChannel.ts" />
+    <TypeScriptCompile Include="src\app\models\TeamGroupDetail.ts" />
+    <TypeScriptCompile Include="src\app\models\Tutorial.ts" />
+    <TypeScriptCompile Include="src\app\models\TutorialGroup.ts" />
+    <TypeScriptCompile Include="src\app\models\User.ts" />
+    <TypeScriptCompile Include="src\app\models\UserCourseRoleModel.ts" />
+    <TypeScriptCompile Include="src\app\question\question.component.ts" />
+    <TypeScriptCompile Include="src\app\config\config.component.ts" />
+  </ItemGroup>
+
+</Project>

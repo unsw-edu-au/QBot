@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup Label="Globals">
+        <SccProjectName>SAK</SccProjectName>
+        <SccProvider>SAK</SccProvider>
+        <SccAuxPath>SAK</SccAuxPath>
+        <SccLocalPath>SAK</SccLocalPath>
+        <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+        <Configurations>Debug;Release;Release.CQU</Configurations>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+        <PostBuildEvent>ng build --aot</PostBuildEvent>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="src\app.service.ts" />
+      <None Remove="src\app\config\config.component.ts" />
+      <None Remove="src\app\models\Question.ts" />
+      <None Remove="src\app\models\User.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Microsoft.Teams.Apps.QBot.Model\Microsoft.Teams.Apps.QBot.Model.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <TypeScriptCompile Include="src\app\app.service.ts" />
+      <TypeScriptCompile Include="src\app\config\config.component.ts" />
+      <TypeScriptCompile Include="src\app\models\Question.ts" />
+      <TypeScriptCompile Include="src\app\models\User.ts" />
+    </ItemGroup>
+
+</Project>

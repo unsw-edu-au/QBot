@@ -1,0 +1,71 @@
+<!--<h1>loggedIn: {{authService.loggedIn}}</h1>-->
+
+<div *ngIf="!authService.loggedIn">
+    <br />
+    <h2>Please sign in to continue</h2>
+    <button (click)="SignIn($event)">Sign In</button>
+</div>
+
+
+<div *ngIf="authService.loggedIn">
+    <!--<button (click)="SignOut($event)">Sign Out</button>-->
+
+    <h3 class="teamsTitle">Topic: {{currentTopic}} </h3>
+
+    <tabs>
+        <tab tabTitle="Unanswered Questions" tabActive="true">
+            <div id="unansweredCardDiv" class="cardDiv card-body">
+            </div>
+        </tab>
+        <tab tabTitle="Answered Questions">
+            <div id="answeredCardDiv" class="cardDiv card-body">
+            </div>
+        </tab>
+    </tabs>
+</div>
+
+<!--<button class="filterCollapseButton" (click)="showHideUnanswered($event)">
+    <i [className]="unanswered_plusminus"></i>
+    Unanswered
+</button>
+
+<div *ngIf="unansweredContentVisible" id="unansweredCardDiv"></div>
+
+
+<button class="filterCollapseButton" (click)="showHideAnswered($event)">
+    <i [className]="answered_plusminus"></i>
+    Answered
+</button>
+
+<div *ngIf="answeredContentVisible" id="answeredCardDiv"></div>-->
+<!--<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button class="questionsCollapseButton btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" (click)="showHideUnanswered($event)">
+                    <i [ngClass]="{'plusminus fa': true,'fa-minus': unansweredContentVisible, 'fa-plus': !unansweredContentVisible}"></i>
+                    Unanswered Questions
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+            <div id="unansweredCardDiv" class="cardDiv card-body">
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+                <button class="questionsCollapseButton btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" (click)="showHideAnswered($event)">
+                    <i [ngClass]="{'plusminus fa': true,'fa-minus': answeredContentVisible, 'fa-plus': !answeredContentVisible}"></i>
+                    Answered Questions
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo">
+            <div id="answeredCardDiv" class="cardDiv card-body">
+            </div>
+        </div>
+    </div>
+</div>-->

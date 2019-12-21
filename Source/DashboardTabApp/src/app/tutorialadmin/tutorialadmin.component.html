@@ -1,0 +1,59 @@
+<h1 style="padding-bottom:10px">Tutorial Group Administration</h1>
+<p>
+    Use the table below to administer tutorials by course.
+</p>
+<p>
+    Select a course to begin
+</p>
+
+
+<div>
+    <label style="padding-right:5px; font-weight:bold">Select Course</label>
+    <mat-form-field>
+        <mat-select [(ngModel)]="selectedCourseName" style="padding-left:5px">
+            <mat-option *ngFor="let course of courseList" [value]="course.name" (onSelectionChange)="updateTutorialMappingTable(course)">
+                {{course.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div style="padding-bottom:5px" *ngIf="selectedCourseName != undefined">
+    <button mat-raised-button (click)="addRow()">
+        <mat-icon>add</mat-icon> New Tutorial
+    </button>
+</div>
+<div style="padding-bottom:20px; padding-top:10px">
+    <mat-table #table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="tutorialcode">
+            <mat-header-cell class="firstColumnTutorial" *matHeaderCellDef>Tutorial Code</mat-header-cell>
+            <mat-cell class="firstColumnTutorial" *matCellDef="let tutorial">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="Tutorial Code" [value]="tutorial.code" [(ngModel)]="tutorial.code">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell class="innerColumnTutorial" *matHeaderCellDef>Tutorial Name </mat-header-cell>
+            <mat-cell class="innerColumnTutorial" *matCellDef="let tutorial">
+                <mat-form-field floatLabel="never">
+                    <input matInput placeholder="Tutorial Name" [value]="tutorial.name" [(ngModel)]="tutorial.name">
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell class="lastColumnTutorial" *matHeaderCellDef>Actions</mat-header-cell>
+            <mat-cell class="lastColumnTutorial" *matCellDef="let tutorial; let i = index;">
+                <button mat-button (click)="deleteRow(tutorial, i)"><mat-icon>delete</mat-icon></button>
+                <button mat-button (click)="saveRow(i)"><mat-icon>save</mat-icon></button>
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

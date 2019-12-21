@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5C7943E8-9C2A-4C81-90B3-A672876DCBDD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Teams.Apps.QBot.Model</RootNamespace>
+    <AssemblyName>Microsoft.Teams.Apps.QBot.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.CQU|AnyCPU'">
+    <OutputPath>bin\Release.CQU\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\dotnet\sdk\NuGetFallbackFolder\newtonsoft.json\10.0.1\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
+    <Compile Include="AssessmentModel.cs" />
+    <Compile Include="AttachmentModel.cs" />
+    <Compile Include="AzureSearch\AzureSearchResult.cs" />
+    <Compile Include="CourseModel.cs" />
+    <Compile Include="Graph\GraphMemberOfResult.cs" />
+    <Compile Include="Graph\GraphTeamsOwnedResult.cs" />
+    <Compile Include="Graph\GraphTeamSPSite.cs" />
+    <Compile Include="Graph\GraphUsers.cs" />
+    <Compile Include="Graph\ResultsItem.cs" />
+    <Compile Include="Graph\TeamChannelResult.cs" />
+    <Compile Include="Graph\TeamGroupDetail.cs" />
+    <Compile Include="Mappers\ModelMapper.cs" />
+    <Compile Include="QnA\AnswerJson.cs" />
+    <Compile Include="QnA\QnAResponse.cs" />
+    <Compile Include="QnA\QnAPayload.cs" />
+    <Compile Include="QuestionModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleModel.cs" />
+    <Compile Include="Teams\TeamsAttachment.cs" />
+    <Compile Include="Teams\TeamsMention.cs" />
+    <Compile Include="Teams\TeamsMessageBody.cs" />
+    <Compile Include="Teams\TeamsMember.cs" />
+    <Compile Include="Teams\TeamsMessage.cs" />
+    <Compile Include="Teams\TeamsMessageGraphResult.cs" />
+    <Compile Include="Teams\TeamsReaction.cs" />
+    <Compile Include="Teams\TeamsUser.cs" />
+    <Compile Include="TopicModel.cs" />
+    <Compile Include="TutorialGroupModel.cs" />
+    <Compile Include="UserModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Teams.Apps.QBot.Data\Microsoft.Teams.Apps.QBot.Data.csproj">
+      <Project>{4E7A14CA-80CD-447C-8C3D-615B45C56939}</Project>
+      <Name>Microsoft.Teams.Apps.QBot.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
