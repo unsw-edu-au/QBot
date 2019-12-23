@@ -1,15 +1,16 @@
 # QBot Setup
 ## Azure Resources
 Here is a summary of all Azure resources that need to be created
+
 |#|Resource Type|Description|
-|:-|:-|:-|:-|
+|:-|:-|:-|
 |1|Resource Group|Logical container to place all QBot related Azure resources|
 |2|Bot Channels Registration|QBot Bot Channels Registration|
 |3|Cognitive Services|Cognitive Services to host QnA KBs|
 |4|Search Service|Part of Cognitive Services for QnA KBs|
 |5|QnA Knowledge Base|The backing QnA KB where QBot will get answers from.<br>You are required to have one QnA KB per Course|
 |6|SQL Database|Stores QBot related processing data|
-|8|App Service|Hosts the [QBot API Web Service]()|
+|8|App Service|Hosts the [QBot API Web Service](#qbot-api-web-app)|
 |9|App Service|Hosts the [Dashboard Tab App](#dashboard-tab-web-app) Angular site|
 |10|App Service|Hosts the [Questions Tab App](#questions-tab-web-app) Angular site|
 |11|App Registration|To support the Bot Channels Registration|
@@ -61,6 +62,7 @@ Create a new **Web App** with the following values
 
 ### SQL Server
 Create a new **SQL Database** with the following values
+
 |Setting|Value|
 |:-|:-|
 |Collation|SQL_Latin1_General_CP1_CI_AS|
@@ -189,14 +191,14 @@ The following values need to be updated, depending on the environment and instal
 |:-|:-|:-|
 |BotId|The Bot ID|`Question`|
 |BaseUrl|The root URL where the [QBot API Web App](#qbot-api-web-app) was deployed|`https://qbot-api.au.ngrok.io`|
-|MicrosoftAppId|Bot Channels Registration Microsoft App ID|Refer to steps in [Bot Registration](https://)|
-|MicrosoftAppPassword|Bot Channels Registration Secret|Refer to steps in [Bot Registration](https://)|
+|MicrosoftAppId|Bot Channels Registration Microsoft App ID|Refer to steps in [Bot Registration](#bot-channels-registration)|
+|MicrosoftAppPassword|Bot Channels Registration Secret|Refer to steps in [Bot Registration](#bot-channels-registration)|
 |AADAuthority|Graph API target resource identifier|`https://login.microsoftonline.com/(tenantId)`|
 |AADServiceName|QBot service account. Must be a valid Teams account|svc_qbot@unsw.edu.au|
 |AADServicePassword|Encrypted password of the above QBot service account|Use the encryption project to encrypt the password|
-|AADClientId|Client ID of the Azure App Registration that uses Graph API to access Teams  conversations and replies|Refer to steps in [Graph API App Registration](https://)|
-|ida:ClientId|Client ID of the Azure App Registration reuired to authenticate the QBot API|Refer to steps in [QBot API Authentication App Registration](https://)|
-|ida:TenantId|QBot API Auth Azure App Registration - Tenant ID|Refer to steps in [QBot API Authentication App Registration](https://)|
+|AADClientId|Client ID of the Azure App Registration that uses Graph API to access Teams  conversations and replies|Refer to steps in [Graph API App Registration](#graph-api-access-app-registration)|
+|ida:ClientId|Client ID of the Azure App Registration reuired to authenticate the QBot API|Refer to steps in [QBot API Authentication App Registration](#qbot-api-auth-app-registration)|
+|ida:TenantId|QBot API Auth Azure App Registration - Tenant ID|Refer to steps in [QBot API Authentication App Registration](#qbot-api-auth-app-registration)|
 |ida:Audience|QBot API Auth Azure App Registration - Application ID|api://5e55f7ba-8453-41b2-a274-75b6a71e4473|
 
 ``` xml
@@ -279,6 +281,7 @@ Key|Value
 apiBaseUrl|The URL where the [QBot API Web App](#qbot-api-web-app) is deployed, with `/api/Request/` appended
 tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
 clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
+selfUrl|The base URL where this [Questions Tab App](#questions-tab-web-app) (Angular app is deployed), eg: `https://qbot-questions-tab.azurewebsites.net`|
 
 Run the following commands to restore packages and build
 ```
@@ -409,13 +412,13 @@ Congratulations, you have succesfully built the QBot solution, and added the App
 |Setting| Value|
 |:-|:-|
 |CourseName|Dropdown will show all Teams that you are a owner of. Select the Team to use as your course|
-|[PredictiveQnAServiceHost]|Host property + “/” when the QnA maker is published.<sup>1</sup>|
-|[PredictiveQnAKnowledgeBaseId]|GUID part of the POST command.<sup>2</sup>|
-|[PredictiveQnAEndpointKey]|GUID part of Authorization.<sup>3</sup>|
-|[PredictiveQnAHttpKey]|Key of the Cognitive Service.<sup>4</sup>|
-|[PredictiveQnAHttpEndpoint]|Endpoint of the Cognitive Service.<sup>5</sup>|
-|[PredictiveQnAKnowledgeBaseName]|Name of knowledgebase for the course on QnA Maker|
-|[PredictiveQnAConfidenceThreshold]|Integer that should be from 0-100 that reflects the confidence percentage an answer from QnA Maker must be if it is to be supplied as an answer to a question.|
+|PredictiveQnAServiceHost|**QnA Service Host** value from the [QnA Maker Setup](#qna-maker) step|
+|PredictiveQnAKnowledgeBaseId|**QnA Knowledge Base ID** value from the [QnA Maker Setup](#qna-maker) step|
+|PredictiveQnAEndpointKey|**QnA Endpoint Key** value from the [QnA Maker Setup](#qna-maker) step|
+|PredictiveQnAHttpKey|**QnA HTTP Key** value from the [QnA Maker Setup](#qna-maker) step|
+|PredictiveQnAHttpEndpoint|**QnA HTTP Endpoint** value from the [QnA Maker Setup](#qna-maker) step|
+|PredictiveQnAKnowledgeBaseName|Name of the QnA Knowledge Base from the [QnA Maker Setup](#qna-maker) step|
+|PredictiveQnAConfidenceThreshold|Integer that should be from 0-100 that reflects the confidence percentage an answer from QnA Maker must be if it is to be supplied as an answer to a question|
 
 4. Create the required Tutorial Groups
 5. Assign and Map Users. Click the *Synchronise from Teams* button and assign their roles and any necessary tutorial groups
