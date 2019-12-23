@@ -39,6 +39,16 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             _predictiveQnAKnowledgeBaseName = course.PredictiveQnAKnowledgeBaseName;
             _predictiveQnAHttpEndpoint = course.PredictiveQnAHttpEndpoint;
             _predictiveQnAHttpKey = course.PredictiveQnAHttpKey;
+
+            if (!string.IsNullOrEmpty(_predictiveQnAServiceHostName) && !_predictiveQnAServiceHostName.EndsWith("/"))
+            {
+                _predictiveQnAServiceHostName += "/";
+            }
+
+            if (!string.IsNullOrEmpty(_predictiveQnAHttpEndpoint) && !_predictiveQnAHttpEndpoint.EndsWith("/"))
+            {
+                _predictiveQnAHttpEndpoint += "/";
+            }
         }
 
         /// <summary>
