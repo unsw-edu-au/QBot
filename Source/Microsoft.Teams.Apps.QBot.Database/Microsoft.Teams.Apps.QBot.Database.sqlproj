@@ -76,11 +76,9 @@
     <Build Include="dbo\Tables\TutorialGroups.sql" />
     <Build Include="dbo\Tables\Roles.sql" />
     <Build Include="dbo\Tables\Questions.sql" />
-    <Build Include="dbo\Tables\GlobalConfig.sql" />
     <Build Include="dbo\Tables\Courses.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MasterData\GlobalConfig.sql" />
     <None Include="MasterData\Roles.sql" />
     <None Include="MasterData\Users.sql" />
   </ItemGroup>
