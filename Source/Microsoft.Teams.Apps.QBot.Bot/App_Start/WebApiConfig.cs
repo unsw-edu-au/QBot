@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -9,6 +10,8 @@ namespace Microsoft.Teams.Apps.QBot.Bot
     {
         public static void Register(HttpConfiguration config)
         {
+            config.Services.Add(typeof(IExceptionLogger), new TraceExceptionLogger());
+
             // Json settings
             config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
