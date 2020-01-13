@@ -9,5 +9,5 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-:r .\MasterData\Roles.sql
-:r .\MasterData\Users.sql
+:r .\MasterData\Role.sql
+:r .\MasterData\User.sql
