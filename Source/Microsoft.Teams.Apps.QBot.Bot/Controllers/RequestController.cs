@@ -47,6 +47,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Controllers
 
                 // First user in the system, they are made as global admin
                 SQLService.AddGlobalAdminUser(upn, firstName, lastName, email);
+                Trace.WriteLine("Bootstrapped initial user to database: " + upn);
             }
 
             return Ok();

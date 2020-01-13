@@ -424,7 +424,7 @@ namespace Microsoft.Teams.Apps.QBot.Data
         {
             using (var entities = new QBotEntities())
             {
-                return !entities.Users.Any();
+                return !entities.Users.Any(x => x.FirstName != "Question" && x.LastName != "Bot");
             }
         }
 
