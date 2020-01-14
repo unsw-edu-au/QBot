@@ -1,9 +1,8 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Web;
+
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Teams.Apps.QBot.Bot.Services
 {
@@ -19,27 +18,31 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
         public async Task<AuthenticationResult> AuthenticateSilently(string resource)
         {
-            // Try get token silently
+            // Try get Application permissions (AppId + Secret)
             try
             {
-                result = await context.AcquireTokenSilentAsync(resource, ServiceHelper.AppId);
+                var appCreds = new ClientCredential(ServiceHelper.ClientId, ServiceHelper.AppSecret);
+                result = await context.AcquireTokenAsync(resource, appCreds);
             }
             catch (Exception e)
             {
+                Trace.WriteLine("Could not authenticate using application permissions for AppID:  " + ServiceHelper.ClientId);
+                Trace.WriteLine(e.ToString());
                 result = null;
             }
 
             if (result == null)
             {
-                // Try with credentials
+                // Fallback to delegated permissions
                 try
                 {
                     var uc = new UserPasswordCredential(ServiceHelper.ServiceAccountName, ServiceHelper.ServiceAccountPassword);
-                    //var cc = new ClientCredential(ServiceHelper.AppId, ServiceHelper.AppSecret);
                     result = await context.AcquireTokenAsync(resource, ServiceHelper.ClientId, uc);
                 }
                 catch (Exception e)
                 {
+                    Trace.WriteLine("Could not authenticate using delegated permissions for AppID:  " + ServiceHelper.ClientId + ", Username: " + ServiceHelper.ServiceAccountName);
+                    Trace.WriteLine(e.ToString());
                     result = null;
                 }
             }
