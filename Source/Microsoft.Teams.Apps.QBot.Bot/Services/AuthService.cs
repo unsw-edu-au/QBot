@@ -21,8 +21,10 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             // Try get Application permissions (AppId + Secret)
             try
             {
-                var appCreds = new ClientCredential(ServiceHelper.ClientId, ServiceHelper.AppSecret);
+                var appCreds = new ClientCredential(ServiceHelper.ClientId, ServiceHelper.ClientSecret);
                 result = await context.AcquireTokenAsync(resource, appCreds);
+
+                Trace.WriteLine("Authenticated OK using application permissions for AppID:  " + ServiceHelper.ClientId);
             }
             catch (Exception e)
             {
@@ -38,6 +40,8 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 {
                     var uc = new UserPasswordCredential(ServiceHelper.ServiceAccountName, ServiceHelper.ServiceAccountPassword);
                     result = await context.AcquireTokenAsync(resource, ServiceHelper.ClientId, uc);
+
+                    Trace.WriteLine("Authenticate OK using delegated permissions for AppID:  " + ServiceHelper.ClientId + ", Username: " + ServiceHelper.ServiceAccountName);
                 }
                 catch (Exception e)
                 {

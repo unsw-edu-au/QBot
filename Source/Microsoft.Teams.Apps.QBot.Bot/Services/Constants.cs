@@ -27,5 +27,6 @@
         public const string SERVICE_ACCOUNT_PASSWORD_KEY = "AADServicePassword";
         public const string AAD_GRAPHROOT_KEY = "AADGraphRoot";
         public const string AAD_CLIENTID_KEY = "AADClientId";
+        public const string AAD_CLIENTSECRET_KEY = "AADClientSecret";
     }
 }
