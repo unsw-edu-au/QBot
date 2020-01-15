@@ -185,7 +185,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot
             // tag demonstrators, regular workflow
 
             // get question details
-            int questionId = Convert.ToInt32((activity.Value as dynamic)["QuestionId"]);
+            int questionId = Convert.ToInt32((activity.Value as dynamic)["questionId"]);
             var question = SQLService.GetQuestion(questionId);
 
             // get user details
@@ -219,7 +219,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot
                 var conversationId = activity.Conversation.Id;
                 string messageId = conversationId.Split('=')[1];
 
-                string originalStudentUpn = (activity.Value as dynamic)["UserUpn"];
+                string originalStudentUpn = (activity.Value as dynamic)["userUpn"];
                 var student = SQLService.GetUser(originalStudentUpn);
 
                 var adminsOnTeams = new List<ChannelAccount>();
