@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
-using Newtonsoft;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Microsoft.Teams.Apps.QBot.Model;
+
 using Microsoft.Teams.Apps.QBot.Model.Graph;
 using Microsoft.Teams.Apps.QBot.Model.Teams;
+
+using Newtonsoft.Json;
 
 namespace Microsoft.Teams.Apps.QBot.Bot.Services
 {
@@ -31,9 +30,10 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             return null;
         }
 
-       
         public async Task<byte[]> GetGroupPhoto(string accessToken, string groupId)
         {
+            // At time of writing, getting Group photo is not supported via Application permissions
+            // https://docs.microsoft.com/en-us/graph/known-issues#groups
             string endpoint = ServiceHelper.GraphRootUri + @"/v1.0";
             string queryParameter = @"/groups/" + groupId + @"/photo/$value";
             HttpResponseMessage response = await ServiceHelper.SendRequest(HttpMethod.Get, endpoint + queryParameter, accessToken);
@@ -44,6 +44,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 stream.Read(bytes, 0, (int)stream.Length);
                 return bytes;
             }
+
             return null;
         }
 
@@ -186,9 +187,13 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
                     return JsonConvert.DeserializeObject<GraphTeamsOwnedResult>(jsonString);
-                    //var deserializedResultDictionary = deserializedResult.Items.ToDictionary(x => x.id, x => x.displayName);
-                    //return deserializedResultDictionary;
                 }
+                else
+                {
+                    Trace.TraceError("Error calling Graph API for GetOwnedObjects");
+                    Trace.TraceError(response.ToString());
+                }
+
                 return null;
             }
             catch (Exception e)
@@ -219,140 +224,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             {
                 return null;
             }
-
         }
-
-
-
-
-        /*
-        public async Task<IEnumerable<ResultsItem>> GetMyTeams(string accessToken)
-        {
-            string resourcePropId = @"ID :";
-
-            string endpoint = ServiceHelper.GraphRootUri + "me/joinedTeams";
-            string idPropertyName = "id";
-            string displayPropertyName = "displayName";
-
-            List<ResultsItem> items = new List<ResultsItem>();
-            HttpResponseMessage response = await ServiceHelper.SendRequest(HttpMethod.Get, endpoint, accessToken);
-            if (response != null && response.IsSuccessStatusCode)
-            {
-                items = await ServiceHelper.GetResultsItem(response, idPropertyName, displayPropertyName, resourcePropId);
-
-            }
-            return items;
-        }
-
-        
-        public async Task<Tuple<HttpResponseMessage, string>> CreateNewTeamAndGroup(string accessToken, string groupName, string userPrincipalName)
-        {
-            Group group = new Group()
-            {
-                id = Guid.NewGuid().ToString(),
-                displayName = groupName,
-                description = groupName,
-                mailNickname = groupName.Replace(" ", ""),
-            };
-
-            // create group
-            string endpoint = ServiceHelper.GraphRootUri + "groups";
-            if (group != null)
-            {
-                group.groupTypes = new string[] { "Unified" };
-                group.mailEnabled = true;
-                group.securityEnabled = false;
-                group.visibility = "Private";
-            }
-
-            HttpResponseMessage response = await ServiceHelper.SendRequest(HttpMethod.Post, endpoint, accessToken, group);
-            if (!response.IsSuccessStatusCode)
-            {
-                return new Tuple<HttpResponseMessage, string>(response, string.Empty);
-            }
-
-            string responseBody = await response.Content.ReadAsStringAsync(); ;
-            string groupId = responseBody.Deserialize<Group>().id;
-
-            // add me as member
-            //string me = await GetMyId(accessToken);
-
-            // add user as member
-            string me = await GetUserId(userPrincipalName, accessToken);
-            string payload = $"{{ '@odata.id': '{ServiceHelper.GraphRootUri}users/{me}' }}";
-            HttpResponseMessage responseRef = await ServiceHelper.SendRequest(HttpMethod.Post,
-                ServiceHelper.GraphRootUri + $"groups/{groupId}/members/$ref",
-                accessToken, payload);
-
-
-            // add user as OWNER
-            //HttpResponseMessage responseRef = await ServiceHelper.SendRequest(HttpMethod.Post,
-            //    ServiceHelper.GraphRootUri + $"groups/{groupId}/owners/$ref",
-            //    accessToken, payload);
-
-
-            if (!responseRef.IsSuccessStatusCode)
-            {
-                return new Tuple<HttpResponseMessage, string>(responseRef, groupId);
-            }
-
-            // create team
-            var responseFinal = await AddTeamToGroup(groupId, accessToken);
-            return new Tuple<HttpResponseMessage, string>(responseFinal, groupId);
-        }
-
-        public async Task<string> GetSiteUrlFromGroup(string groupId, String accessToken)
-        {
-            string endpoint = ServiceHelper.GraphRootUri + @"groups/" + groupId + @"/sites/root";
-            String webUrl = "";
-            HttpResponseMessage response = await ServiceHelper.SendRequest(HttpMethod.Get, endpoint, accessToken);
-            if (response != null && response.IsSuccessStatusCode)
-            {
-                var json = JObject.Parse(await response.Content.ReadAsStringAsync());
-                webUrl = json.GetValue("webUrl").ToString();
-            }
-            return webUrl?.Trim();
-        }
-
-        public async Task<string> GetUserId(string userPrincipalName, String accessToken)
-        {
-            string endpoint = ServiceHelper.GraphRootUri + @"users/";
-            string queryParameter = userPrincipalName;
-            String userId = "";
-            HttpResponseMessage response = await ServiceHelper.SendRequest(HttpMethod.Get, endpoint + queryParameter, accessToken);
-            if (response != null && response.IsSuccessStatusCode)
-            {
-                var json = JObject.Parse(await response.Content.ReadAsStringAsync());
-                userId = json.GetValue("id").ToString();
-            }
-            return userId?.Trim();
-        }
-
-        public async Task<string> GetMyId(String accessToken)
-        {
-            string endpoint = "https://graph.microsoft.com/v1.0/me";
-            string queryParameter = "?$select=id";
-            String userId = "";
-            HttpResponseMessage response = await ServiceHelper.SendRequest(HttpMethod.Get, endpoint + queryParameter, accessToken);
-            if (response != null && response.IsSuccessStatusCode)
-            {
-                var json = JObject.Parse(await response.Content.ReadAsStringAsync());
-                userId = json.GetValue("id").ToString();
-            }
-            return userId?.Trim();
-        }
-
-        public async Task<HttpResponseMessage> AddTeamToGroup(string groupId, string accessToken)
-        {
-            string endpoint = ServiceHelper.GraphRootUri + "groups/" + groupId + "/team";
-            Team team = new TeamsPoC.Services.Models.Team();
-            team.guestSettings = new TeamsPoC.Services.Models.TeamGuestSettings() { allowCreateUpdateChannels = false, allowDeleteChannels = false };
-
-            HttpResponseMessage response = await ServiceHelper.SendRequest(HttpMethod.Put, endpoint, accessToken, team);
-            if (!response.IsSuccessStatusCode)
-                throw new Exception(response.ReasonPhrase);
-            return response;
-        }
-            */
     }
 }

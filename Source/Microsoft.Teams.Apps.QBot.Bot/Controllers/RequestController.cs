@@ -187,15 +187,18 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Controllers
                 var graphService = new GraphService();
                 var teamGroup = await graphService.GetTeamGroupSPUrl(authResult.AccessToken, groupId);
 
-                var imageBytes = await graphService.GetGroupPhoto(authResult.AccessToken, groupId);
-                var picUrl = Convert.ToBase64String(imageBytes);
-
                 teamGroupDetail.Id = groupId;
                 teamGroupDetail.Name = teamGroup.Name;
                 teamGroupDetail.DisplayName = teamGroup.DisplayName;
                 teamGroupDetail.Description = teamGroup.Description;
                 teamGroupDetail.WebUrl = teamGroup.WebUrl;
-                teamGroupDetail.PhotoByteUrl = picUrl;
+
+                var imageBytes = await graphService.GetGroupPhoto(authResult.AccessToken, groupId);
+                if (imageBytes != null)
+                {
+                    var picUrl = Convert.ToBase64String(imageBytes);
+                    teamGroupDetail.PhotoByteUrl = picUrl;
+                }
 
                 return teamGroupDetail;
             }
@@ -241,10 +244,11 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Controllers
             {
                 var graphService = new GraphService();
                 var imageBytes = await graphService.GetGroupPhoto(authResult.AccessToken, groupId);
-
-                var picUrl = @"data:image/png;base64," + Convert.ToBase64String(imageBytes);
-
-                return picUrl;
+                if (imageBytes != null)
+                {
+                    var picUrl = @"data:image/png;base64," + Convert.ToBase64String(imageBytes);
+                    return picUrl;
+                }
             }
 
             return null;
