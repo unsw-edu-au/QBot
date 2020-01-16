@@ -28,5 +28,6 @@
         public const string AAD_GRAPHROOT_KEY = "AADGraphRoot";
         public const string AAD_CLIENTID_KEY = "AADClientId";
         public const string AAD_CLIENTSECRET_KEY = "AADClientSecret";
+        public const string AAD_PERMISSIONTYPE_KEY = "AADPermissionType";
     }
 }

@@ -35,11 +35,20 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 return ConfigurationManager.AppSettings[Constants.AAD_CLIENTID_KEY];
             }
         }
+
         public static string ClientSecret
         {
             get
             {
                 return ConfigurationManager.AppSettings[Constants.AAD_CLIENTSECRET_KEY];
+            }
+        }
+
+        public static string ClientPermissionType
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[Constants.AAD_PERMISSIONTYPE_KEY];
             }
         }
 

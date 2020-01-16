@@ -18,24 +18,27 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
         public async Task<AuthenticationResult> AuthenticateSilently(string resource)
         {
-            // Try get Application permissions (AppId + Secret)
-            try
+            AuthenticationResult result = null;
+            if (ServiceHelper.ClientPermissionType == "Application")
             {
-                var appCreds = new ClientCredential(ServiceHelper.ClientId, ServiceHelper.ClientSecret);
-                result = await context.AcquireTokenAsync(resource, appCreds);
+                // Try get Application permissions (AppId + Secret)
+                try
+                {
+                    var appCreds = new ClientCredential(ServiceHelper.ClientId, ServiceHelper.ClientSecret);
+                    result = await context.AcquireTokenAsync(resource, appCreds);
 
-                Trace.WriteLine("Authenticated OK using application permissions for AppID:  " + ServiceHelper.ClientId);
+                    Trace.WriteLine("Authenticated OK using application permissions for AppID:  " + ServiceHelper.ClientId);
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine("Could not authenticate using application permissions for AppID:  " + ServiceHelper.ClientId);
+                    Trace.WriteLine(e.ToString());
+                    result = null;
+                }
             }
-            catch (Exception e)
+            else
             {
-                Trace.WriteLine("Could not authenticate using application permissions for AppID:  " + ServiceHelper.ClientId);
-                Trace.WriteLine(e.ToString());
-                result = null;
-            }
-
-            if (result == null)
-            {
-                // Fallback to delegated permissions
+                // Use Delegated permissions
                 try
                 {
                     var uc = new UserPasswordCredential(ServiceHelper.ServiceAccountName, ServiceHelper.ServiceAccountPassword);
