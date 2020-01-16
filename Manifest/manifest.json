@@ -47,7 +47,7 @@
   ],
     "configurableTabs": [
       {
-        "configurationUrl": "https://qbot-questions-tab.azurewebsites.net/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}",
+        "configurationUrl": "https://qbot-questions-tab.azurewebsites.net/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}",
         "canUpdateConfiguration": true,
         "scopes": [
           "team"
@@ -67,7 +67,7 @@
     {
       "entityId": "DashboardTab",
       "name": "Dashboard",
-      "contentUrl": "https://qbot-dashboard-tab.azurewebsites.net/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}",
+      "contentUrl": "https://qbot-dashboard-tab.azurewebsites.net/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}",
       "scopes": [ "personal" ]
     }
   ],
