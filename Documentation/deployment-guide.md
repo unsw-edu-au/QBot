@@ -86,7 +86,7 @@ Create a new **SQL Database** with the following values
 
 Go to Firewall settings, and ensure the "Allow Azure services and resources to access this server" switch is turned ON.
 
-![](images\sql-firewall.png)
+![](images/sql-firewall.png)
 
 > Please note the following settings for later: <br>
 > The Azure SQL Server connection string<br>
@@ -147,7 +147,7 @@ When granting admin consent for these, you will need to be a Global Administrato
 Go to Certificates and Secrets, add a new client secret with a suitable expiration date. Remember to copy the generated client secret.
 
 If using Delegated permissions, go to the Authentication tab, and set to treat application as public client by default
-![](images\app-reg-default-client-type.png)
+![](images/app-reg-default-client-type.png)
 
 > Please note the following settings for later:<br>**Application (Client) ID**
 > <br>**Client Secret**
@@ -171,7 +171,7 @@ When finished, go into the newly created Bot Channels Registration, under **Sett
 
 Click on Channels setting, and add *Microsoft Teams* as a featured channel
 
-![](images\bot-reg-teams-channel.png)
+![](images/bot-reg-teams-channel.png)
 
 
 ### QnA Maker Service
@@ -186,11 +186,11 @@ https://www.qnamaker.ai/Create
 
 
 > Please take note of the following settings for later:<br><br>
-> ![](images\qna-deploy.png)
+> ![](images/qna-deploy.png)
 > 1. **QnA Service Host** - The full Host header
 > 2. **QnA Knowledge Base ID** - The GUID part of the POST URL
 > 3. **QnA Endpoint Key** - The GUID part of the Authorization header<br><br>
-> ![](images\qna-configure.png)
+> ![](images/qna-configure.png)
 > 4. **QnA HTTP Endpoint**
 > 5. **QnA HTTP Key**
 
@@ -346,7 +346,7 @@ Run the included SSDT package to create the initial SQL database schema and seed
 To do this within Visual Studio, right click on the "Microsoft.Teams.Apps.QBot.Database" project, and choose "Publish".
 Fill in the target database connection based on the [provisioned SQL Server](#sql-server) settings
 
-![](images\publish-database.png)
+![](images/publish-database.png)
 
 
 ### Deploy the Bot to Teams

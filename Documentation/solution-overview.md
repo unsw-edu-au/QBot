@@ -1,5 +1,5 @@
 # Solution Overview
-![overview](images\overview.png)
+![overview](images/overview.png)
 
 The QBot solution has the following main components:
 * **Bot Registration**: The Azure Bot surfaced in a Teams channel
