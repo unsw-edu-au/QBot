@@ -48,7 +48,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             return null;
         }
 
-
         public async Task<TeamsMessage> GetMessage(string accessToken, string teamId, string channelId, string messageId)
         {
             try
@@ -62,10 +61,12 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                     var teamsMessage = JsonConvert.DeserializeObject<TeamsMessage>(jsonString);
                     return teamsMessage;
                 }
+
                 return null;
             }
             catch (Exception e)
             {
+                Trace.TraceError(e.ToString());
                 return null;
             }
         }
@@ -84,10 +85,12 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                     var teamsMessages = teamsMessageGraphResult.TeamsMesages;
                     return teamsMessages;
                 }
+
                 return null;
             }
             catch (Exception e)
             {
+                Trace.TraceError(e.ToString());
                 return null;
             }
         }
@@ -105,10 +108,12 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                     var teamsChannelResult = JsonConvert.DeserializeObject<TeamChannelResult>(jsonString);
                     return teamsChannelResult.TeamChannels;
                 }
+
                 return null;
             }
             catch (Exception e)
             {
+                Trace.TraceError(e.ToString());
                 return null;
             }
         }
@@ -125,7 +130,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                     var jsonString = await response.Content.ReadAsStringAsync();
                     var teamsSPSiteResult = JsonConvert.DeserializeObject<GraphTeamSPSite>(jsonString);
 
-
                     string endpoint2 = ServiceHelper.GraphRootUri + @"/v1.0";
                     string queryParameter2 = "/groups/" + groupId;
                     HttpResponseMessage response2 = await ServiceHelper.SendRequest(HttpMethod.Get, endpoint2 + queryParameter2, accessToken);
@@ -137,12 +141,15 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
                         teamsSPSiteResult.DisplayName = teamsDisplayName;
                     }
+
                     return teamsSPSiteResult;
                 }
+
                 return null;
             }
             catch (Exception e)
             {
+                Trace.TraceError(e.ToString());
                 return null;
             }
         }
@@ -172,6 +179,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             }
             catch (Exception e)
             {
+                Trace.TraceError(e.ToString());
                 return null;
             }
         }
@@ -198,9 +206,9 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             }
             catch (Exception e)
             {
+                Trace.TraceError(e.ToString());
                 return null;
             }
-
         }
 
         public async Task<GraphUsers> GetMembers(string accessToken, string groupId)
@@ -213,15 +221,15 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 if (response != null && response.IsSuccessStatusCode)
                 {
                     var jsonString = await response.Content.ReadAsStringAsync();
-                    var test =  JsonConvert.DeserializeObject<GraphUsers>(jsonString);
-                    return test;
-                    //var deserializedResultDictionary = deserializedResult.Items.ToDictionary(x => x.id, x => x.displayName);
-                    //return deserializedResultDictionary;
+                    var result = JsonConvert.DeserializeObject<GraphUsers>(jsonString);
+                    return result;
                 }
+
                 return null;
             }
             catch (Exception e)
             {
+                Trace.TraceError(e.ToString());
                 return null;
             }
         }
