@@ -295,16 +295,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
         {
             try
             {
-                //var admins = new List<UserCourseRoleMapping>();
-
-                //var rawUsers = SQLAdapter.GetUsersByTutorialCode(tutorialCode);
-
-                //foreach (var user in rawUsers)
-                //{
-                //    var retrievedUser = SQLAdapter.GetUserById(user.Id);
-                //    if (retrievedUser.Role.Name != "Student")
-                //        admins.Add(retrievedUser);
-                //}
                 var demonstrators = SQLAdapter.GetDemonstrators(courseId);
 
                 var result = ModelMapper.MapToUsersModel(demonstrators);
@@ -361,55 +351,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 return null;
             }
         }
-        #endregion
-
-        #region Assessment
-
-        //public static AssessmentModel GetNextTest(DateTime date)
-        //{
-        //    try
-        //    {
-        //        var test = SQLAdapter.GetNextTest(date);
-        //        return ModelMapper.MapToAssessmentModel(test);
-        //    } catch (Exception e)
-        //    {
-        //        return null;
-        //    }
-        //}
-
-        //public static List<AssessmentModel> GetActivitiesThisWeek(DateTime date)
-        //{
-        //    try
-        //    {
-        //        var activities = SQLAdapter.GetActivitiesThisWeek(date);
-
-        //        return ModelMapper.MapToAssessmentModels(activities);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return null;
-        //    }
-        //}
-
-
-        #endregion
-
-
-
-        #region QR
-
-        //public static QRQuestionModel GetQRQuestion(string questionCode)
-        //{
-        //    try
-        //    {
-        //        var qrQuestion = SQLAdapter.GetQRQuestionLookup(questionCode);
-        //        return ModelMapper.MapToQRQuestionModel(qrQuestion);
-        //    } catch (Exception e)
-        //    {
-        //        return null;
-        //    }
-        //}
-
         #endregion
 
         #region Course
@@ -499,6 +440,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 return null;
             }
         }
+
         public static List<UserCourseRoleMappingModel> DeleteUserCourseRoleMapping(UserCourseRoleMapping ucrm)
         {
             try

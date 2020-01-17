@@ -529,79 +529,6 @@ namespace Microsoft.Teams.Apps.QBot.Data
             }
         }
 
-
-
-        #endregion
-
-        #region Assessments
-        //public static Assessment GetNextTest(DateTime today)
-        //{
-        //    using (var entities = new QBotEntities())
-        //    {
-        //        try
-        //        {
-
-        //            var tests = (from a in entities.Assessments
-        //                         where a.SubType == "Test" && today < a.Date
-        //                         select a).OrderBy(x => x.Id).ToList();
-        //            return tests.FirstOrDefault();
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //}
-
-        //public static List<Assessment> GetActivitiesThisWeek(DateTime today)
-        //{
-        //    using (var entities = new QBotEntities())
-        //    {
-        //        try
-        //        {
-        //            // get homework between dates
-        //            // get quizzes between dates
-        //            // get next blocktest if within week
-        //            // get next lab if within week
-
-        //            var all = entities.Assessments.ToList();
-        //            var notNull = all.Where(a => a.Date != null && a.DateEnd != null).ToList();
-        //            var filtered = notNull.Where(a =>
-        //                    (a.SubType == "Quiz" && (today > a.Date && today < a.DateEnd) || today.InSameWeek(a.Date.Value)) ||
-        //                    (a.SubType == "Homework" && today > a.Date && today < a.DateEnd) ||
-        //                    (a.SubType == "Test" && today.InSameWeek(a.Date.Value)) ||
-        //                    (a.SubType == "Lab" && today.InSameWeek(a.Date.Value))
-        //                ).Distinct().OrderBy(x => x.Id).ToList();
-
-
-        //            return filtered;
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //}
-
-        #endregion
-
-        #region QR
-        //public static QRQuestionLookup GetQRQuestionLookup(string questionCode)
-        //{
-        //    using (var entities = new QBotEntities())
-        //    {
-        //        try
-        //        {
-        //            var qrQuestion = entities.QRQuestionLookups
-        //                .Where(x => x.QuestionCode == questionCode).ToList().FirstOrDefault();
-        //            return qrQuestion;
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            return null;
-        //        }
-        //    }
-        //}
         #endregion
 
         #region Tutorials
@@ -628,7 +555,6 @@ namespace Microsoft.Teams.Apps.QBot.Data
             {
                 try
                 {
-                    //entities.Database.ExecuteSqlCommand("TRUNCATE TABLE dbo.Users");
                     var u = entities.Users.AddRange(users);
                     entities.SaveChanges();
 
@@ -648,7 +574,6 @@ namespace Microsoft.Teams.Apps.QBot.Data
             {
                 try
                 {
-                    //entities.Database.ExecuteSqlCommand("TRUNCATE TABLE dbo.UserTutorialGroups");
                     var utg = entities.TutorialGroupMemberships.AddRange(tutorialGroupMembership);
                     entities.SaveChanges();
 
@@ -662,13 +587,6 @@ namespace Microsoft.Teams.Apps.QBot.Data
             }
         }
         #endregion
-
-        private static bool InSameWeek(this DateTime date1, DateTime date2)
-        {
-            // Uses the default calendar of the InvariantCulture.
-            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
-            return (myCal.GetWeekOfYear(date1, CalendarWeekRule.FirstDay, DayOfWeek.Sunday) == myCal.GetWeekOfYear(date2, CalendarWeekRule.FirstDay, DayOfWeek.Sunday));
-        }
 
         #region Course
         public static Course GetCourse(int courseID)
@@ -806,14 +724,11 @@ namespace Microsoft.Teams.Apps.QBot.Data
                     int studentRoleId = entities.Roles.Where(x => x.Name == "Student").FirstOrDefault().Id;
                     foreach (User student in students)
                     {
-                        //TutorialGroup tutorialGroup = entities.TutorialGroups.Where(x => x.Code == student.Temp_Tutorial).FirstOrDefault();// gets the new/updated tutorial group
                         int studentID = 0;
-                        if (course != null) // will likely always be true
+                        if (course != null)
                         {
                             User studentToUpdate = entities.Users.Where(x => x.Email == student.Email).FirstOrDefault();
-                            //entities.UserCourseRoleMappings.Where(x => x.CourseId == course.Id && x.UserId == studentID).Select(x => x.User).FirstOrDefault();
 
-                            //entities.Users.Where(x => x.StudentId == student.StudentId && x.RoleId == studentRoleId && x.CourseID == course.CourseID).FirstOrDefault();
                             if (studentToUpdate != null) // existing student
                             {
                                 studentToUpdate.FirstName = student.FirstName;
@@ -836,6 +751,7 @@ namespace Microsoft.Teams.Apps.QBot.Data
                                 entities.SaveChanges(); // need this line to generate identity 
                                 studentID = newStudent.Id;
                             }
+
                             //write course role mapping 
                             UserCourseRoleMapping ucrm = entities.UserCourseRoleMappings.Where(x => x.CourseId == course.Id && x.UserId == studentID).FirstOrDefault();
                             if (ucrm == null)
