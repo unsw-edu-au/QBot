@@ -340,7 +340,9 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Controllers
             {
                 var result = new List<UserCourseRoleMappingModel>();
                 var authService = new AuthService(ServiceHelper.Authority);
-                var authResult = await authService.AuthenticateSilently(ServiceHelper.GraphResource);
+
+                // BUG: On some EDU tenants, listing group members return nothing when authenticated using Delegate permissions
+                var authResult = await authService.AuthenticateSilently(ServiceHelper.GraphResource, "Application");
                 if (authResult != null)
                 {
                     var graphService = new GraphService();
@@ -362,9 +364,10 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Controllers
                             });
                         }
 
+                        Trace.WriteLine(string.Format("RefreshUsers - Got {0} members to sync", users.Count));
+
                         result = ModelMapper.MapToUsersModel(SQLService.AddStudents(users, course.Name));
                     }
-
                 }
 
                 return result;

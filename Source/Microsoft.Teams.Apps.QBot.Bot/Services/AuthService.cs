@@ -18,43 +18,79 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
         public async Task<AuthenticationResult> AuthenticateSilently(string resource)
         {
-            AuthenticationResult result = null;
-            if (ServiceHelper.ClientPermissionType == "Application")
-            {
-                // Try get Application permissions (AppId + Secret)
-                try
-                {
-                    var appCreds = new ClientCredential(ServiceHelper.ClientId, ServiceHelper.ClientSecret);
-                    result = await context.AcquireTokenAsync(resource, appCreds);
+            return await AuthenticateSilently(resource, ServiceHelper.ClientPermissionType);
+        }
 
-                    Trace.WriteLine("Authenticated OK using application permissions for AppID:  " + ServiceHelper.ClientId);
-                }
-                catch (Exception e)
-                {
-                    Trace.WriteLine("Could not authenticate using application permissions for AppID:  " + ServiceHelper.ClientId);
-                    Trace.WriteLine(e.ToString());
-                    result = null;
-                }
+        public async Task<AuthenticationResult> AuthenticateSilently(string resource, string clientPermissionType, bool fallback = true)
+        {
+            AuthenticationResult result = null;
+            if (clientPermissionType == "Application")
+            {
+                result = await AuthenticateUsingApplicationPermissions(resource);
             }
             else
             {
-                // Use Delegated permissions
-                try
-                {
-                    var uc = new UserPasswordCredential(ServiceHelper.ServiceAccountName, ServiceHelper.ServiceAccountPassword);
-                    result = await context.AcquireTokenAsync(resource, ServiceHelper.ClientId, uc);
+                result = await AuthenticateUsingDelegatePermissions(resource);
+            }
 
-                    Trace.WriteLine("Authenticate OK using delegated permissions for AppID:  " + ServiceHelper.ClientId + ", Username: " + ServiceHelper.ServiceAccountName);
-                }
-                catch (Exception e)
+            if (result == null && fallback)
+            {
+                // Fallback to authenticating using the OTHER permission type
+                if (clientPermissionType == "Application")
                 {
-                    Trace.WriteLine("Could not authenticate using delegated permissions for AppID:  " + ServiceHelper.ClientId + ", Username: " + ServiceHelper.ServiceAccountName);
-                    Trace.WriteLine(e.ToString());
-                    result = null;
+                    result = await AuthenticateUsingDelegatePermissions(resource);
+                }
+                else
+                {
+                    result = await AuthenticateUsingApplicationPermissions(resource);
                 }
             }
 
             return result;
         }
+
+        private async Task<AuthenticationResult> AuthenticateUsingApplicationPermissions(string resource)
+        {
+            AuthenticationResult result = null;
+            // Try get Application permissions (AppId + Secret)
+            try
+            {
+                var appCreds = new ClientCredential(ServiceHelper.ClientId, ServiceHelper.ClientSecret);
+                result = await context.AcquireTokenAsync(resource, appCreds);
+
+                Trace.WriteLine("Authenticated OK using application permissions for AppID:  " + ServiceHelper.ClientId);
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("Could not authenticate using application permissions for AppID:  " + ServiceHelper.ClientId);
+                Trace.WriteLine(e.ToString());
+                result = null;
+            }
+
+            return result;
+        }
+
+        private async Task<AuthenticationResult> AuthenticateUsingDelegatePermissions(string resource)
+        {
+            AuthenticationResult result = null;
+
+            // Use Delegated permissions
+            try
+            {
+                var uc = new UserPasswordCredential(ServiceHelper.ServiceAccountName, ServiceHelper.ServiceAccountPassword);
+                result = await context.AcquireTokenAsync(resource, ServiceHelper.ClientId, uc);
+
+                Trace.WriteLine("Authenticate OK using delegated permissions for AppID:  " + ServiceHelper.ClientId + ", Username: " + ServiceHelper.ServiceAccountName);
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("Could not authenticate using delegated permissions for AppID:  " + ServiceHelper.ClientId + ", Username: " + ServiceHelper.ServiceAccountName);
+                Trace.WriteLine(e.ToString());
+                result = null;
+            }
+
+            return result;
+        }
+
     }
 }

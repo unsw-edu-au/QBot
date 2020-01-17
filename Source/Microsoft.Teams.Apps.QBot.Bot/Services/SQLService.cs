@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Web;
+
 using Microsoft.Teams.Apps.QBot.Data;
 using Microsoft.Teams.Apps.QBot.Model;
 
@@ -480,6 +481,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             }
             catch (Exception e)
             {
+                Trace.TraceError(e.ToString());
                 return null;
             }
         }
