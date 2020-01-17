@@ -27,6 +27,12 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 stream.Read(bytes, 0, (int)stream.Length);
                 return bytes;
             }
+            else
+            {
+                Trace.TraceError("Error calling Graph API for GetProfilePhoto");
+                Trace.TraceError(response.ToString());
+            }
+
             return null;
         }
 
@@ -44,6 +50,11 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 stream.Read(bytes, 0, (int)stream.Length);
                 return bytes;
             }
+            else
+            {
+                Trace.TraceError("Error calling Graph API for GetGroupPhoto");
+                Trace.TraceError(response.ToString());
+            }
 
             return null;
         }
@@ -60,6 +71,11 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                     var jsonString = await response.Content.ReadAsStringAsync();
                     var teamsMessage = JsonConvert.DeserializeObject<TeamsMessage>(jsonString);
                     return teamsMessage;
+                }
+                else
+                {
+                    Trace.TraceError("Error calling Graph API for GetMessage");
+                    Trace.TraceError(response.ToString());
                 }
 
                 return null;
@@ -85,6 +101,11 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                     var teamsMessages = teamsMessageGraphResult.TeamsMesages;
                     return teamsMessages;
                 }
+                else
+                {
+                    Trace.TraceError("Error calling Graph API for GetRepliesToMessage");
+                    Trace.TraceError(response.ToString());
+                }
 
                 return null;
             }
@@ -107,6 +128,11 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                     var jsonString = await response.Content.ReadAsStringAsync();
                     var teamsChannelResult = JsonConvert.DeserializeObject<TeamChannelResult>(jsonString);
                     return teamsChannelResult.TeamChannels;
+                }
+                else
+                {
+                    Trace.TraceError("Error calling Graph API for GetChannels");
+                    Trace.TraceError(response.ToString());
                 }
 
                 return null;
@@ -141,8 +167,18 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
                         teamsSPSiteResult.DisplayName = teamsDisplayName;
                     }
+                    else
+                    {
+                        Trace.TraceError("Error calling Graph API for GetTeamGroupSPUrl - groups");
+                        Trace.TraceError(response.ToString());
+                    }
 
                     return teamsSPSiteResult;
+                }
+                else
+                {
+                    Trace.TraceError("Error calling Graph API for GetTeamGroupSPUrl - sites/root");
+                    Trace.TraceError(response.ToString());
                 }
 
                 return null;
@@ -173,6 +209,11 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                     var groupMemberOfResult = JsonConvert.DeserializeObject<GraphMemberOfResult>(jsonString);
 
                     return groupMemberOfResult.Items.Select(x => x.Id).ToList();
+                }
+                else
+                {
+                    Trace.TraceError("Error calling Graph API for GetGroupMemberOf");
+                    Trace.TraceError(response.ToString());
                 }
 
                 return null;
@@ -223,6 +264,11 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                     var jsonString = await response.Content.ReadAsStringAsync();
                     var result = JsonConvert.DeserializeObject<GraphUsers>(jsonString);
                     return result;
+                }
+                else
+                {
+                    Trace.TraceError("Error calling Graph API for GetMembers");
+                    Trace.TraceError(response.ToString());
                 }
 
                 return null;
