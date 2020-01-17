@@ -167,8 +167,8 @@ export class UserAdmin implements OnInit {
                 } else {
                     this.openDialog("Failure", "User was not saved, try again.")
                 }
-                this.userList = users;
-                this.dataSource = new MatTableDataSource(this.userList);
+                
+                this.refreshUsers();
 
             });
     }

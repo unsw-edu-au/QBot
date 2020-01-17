@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
-using System.Globalization;
 using System.Linq;
 
 namespace Microsoft.Teams.Apps.QBot.Data
@@ -38,7 +37,7 @@ namespace Microsoft.Teams.Apps.QBot.Data
                     {
                         entities.Questions.Add(question);
                     }
-                    //entities.Questions.AddOrUpdate(question);
+
                     entities.SaveChanges();
                     return question.Id;
                 }
@@ -64,10 +63,6 @@ namespace Microsoft.Teams.Apps.QBot.Data
                         .Include(x => x.Course.UserCourseRoleMappings)
                         .Include(x => x.Course.Questions)
                         .Include(x => x.Course.TutorialGroups)
-
-                        //.Include(x => x.)
-                        //.Include("Attachments")
-                        //.Include("QRQuestionLookup")
                         .Where(x => x.Id == id);
                     if (questions != null)
                     {
@@ -327,6 +322,7 @@ namespace Microsoft.Teams.Apps.QBot.Data
                         .Include(x => x.Course.TutorialGroups)
                         .Include(x => x.Course.UserCourseRoleMappings)
                         .Where(x => x.User.UserPrincipalName == upn).Distinct();
+
                     if (users != null)
                     {
                         return users.ToList();
@@ -351,10 +347,8 @@ namespace Microsoft.Teams.Apps.QBot.Data
                 try
                 {
                     var users = entities.UserCourseRoleMappings
-                        //.Include("UserTutorialGroups")
-                        //.Include("UserTutorialGroups.TutorialGroup")
-                        //.Include("Role")
                         .Where(x => x.UserId == id);
+
                     if (users != null)
                     {
                         return users.FirstOrDefault();
@@ -471,6 +465,7 @@ namespace Microsoft.Teams.Apps.QBot.Data
                         entities.UserCourseRoleMappings.Add(ucrm);
                         entities.SaveChanges();
                     }
+
                     return ucrm;
                 }
                 catch (Exception e)
@@ -487,7 +482,6 @@ namespace Microsoft.Teams.Apps.QBot.Data
             {
                 try
                 {
-
                     entities.Configuration.ProxyCreationEnabled = false;
                     return entities.TutorialGroupMemberships
                         .Where(x => x.TutorialGroup.Code == code)
@@ -729,7 +723,8 @@ namespace Microsoft.Teams.Apps.QBot.Data
                         {
                             User studentToUpdate = entities.Users.Where(x => x.Email == student.Email).FirstOrDefault();
 
-                            if (studentToUpdate != null) // existing student
+                            // Existing student
+                            if (studentToUpdate != null)
                             {
                                 studentToUpdate.FirstName = student.FirstName;
                                 studentToUpdate.LastName = student.LastName;
@@ -748,11 +743,13 @@ namespace Microsoft.Teams.Apps.QBot.Data
                                     Email = student.Email,
                                 };
                                 entities.Users.Add(newStudent);
-                                entities.SaveChanges(); // need this line to generate identity 
+
+                                // Need this line to generate identity
+                                entities.SaveChanges();
                                 studentID = newStudent.Id;
                             }
 
-                            //write course role mapping 
+                            // Write course role mapping 
                             UserCourseRoleMapping ucrm = entities.UserCourseRoleMappings.Where(x => x.CourseId == course.Id && x.UserId == studentID).FirstOrDefault();
                             if (ucrm == null)
                             {
@@ -814,8 +811,11 @@ namespace Microsoft.Teams.Apps.QBot.Data
                             foreach (TutorialGroupMembership tgm in u.User.TutorialGroupMemberships)
                             {
                                 if (tgm.TutorialGroup.CourseId != courseId)
+                                {
                                     tgmsToRemove.Add(tgm);
+                                }
                             }
+
                             if (tgmsToRemove != null)
                             {
                                 foreach (TutorialGroupMembership tgms in tgmsToRemove)
@@ -825,6 +825,7 @@ namespace Microsoft.Teams.Apps.QBot.Data
                             }
                         }
                     }
+
                     return ucrms;
                 }
             }
@@ -880,17 +881,25 @@ namespace Microsoft.Teams.Apps.QBot.Data
                     var ucrmToUpdate = entities.UserCourseRoleMappings.Where(x => x.Id == ucrm.Id).FirstOrDefault();
                     if (ucrm == null)
                     {
-                        entities.UserCourseRoleMappings.Add(ucrm);
+                        ucrmToUpdate = new UserCourseRoleMapping();
+                        ucrmToUpdate.UserId = ucrm.UserId;
+                        ucrmToUpdate.CourseId = courseId;
                     }
-                    else
-                    {
-                        ucrmToUpdate.RoleId = ucrm.RoleId;
 
-                        // only thing that can really change
-                    }
-                    List<TutorialGroupMembership> membershipsToDelete = entities.TutorialGroupMemberships.Where(x => x.UserId == ucrm.UserId).ToList();
+                    ucrmToUpdate.RoleId = ucrm.RoleId;
+                    entities.UserCourseRoleMappings.AddOrUpdate(ucrmToUpdate);
+
+                    // Reset all tutorial group memberships for this course
+                    List<TutorialGroupMembership> membershipsToDelete = entities.TutorialGroupMemberships
+                        .Where(x => x.UserId == ucrm.UserId && x.TutorialGroup.CourseId == courseId)
+                        .ToList();
+
                     if (membershipsToDelete != null)
+                    {
                         entities.TutorialGroupMemberships.RemoveRange(membershipsToDelete);
+                    }
+
+                    // Add in tutorial group memberships from the UI
                     foreach (int i in tutorialIds)
                     {
                         entities.TutorialGroupMemberships.Add(new TutorialGroupMembership()
@@ -899,7 +908,9 @@ namespace Microsoft.Teams.Apps.QBot.Data
                             UserId = ucrm.UserId,
                         });
                     }
+
                     entities.SaveChanges();
+
                     var updatedList = entities.UserCourseRoleMappings.Where(x => x.CourseId == courseId)
                         .Include(x => x.User)
                         .Include(x => x.User.TutorialGroupMemberships)
@@ -916,7 +927,6 @@ namespace Microsoft.Teams.Apps.QBot.Data
                 return null;
             }
         }
-
 
         public static List<Role> GetRoles()
         {
@@ -959,7 +969,7 @@ namespace Microsoft.Teams.Apps.QBot.Data
             {
                 try
                 {
-                    if (tutorial.Id == 0)//new course
+                    if (tutorial.Id == 0)
                     {
                         entities.TutorialGroups.Add(tutorial);
                     }
@@ -998,9 +1008,11 @@ namespace Microsoft.Teams.Apps.QBot.Data
                         {
                             entities.TutorialGroupMemberships.RemoveRange(tutorialGroupMappingsToDelete);
                         }
+
                         entities.TutorialGroups.Remove(tutorialGroupToDelete);
                         entities.SaveChanges();
                     }
+
                     return entities.TutorialGroups.Where(x => x.CourseId == CourseId).ToList();
                 }
                 catch (Exception e)
