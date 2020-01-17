@@ -34,7 +34,16 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Controllers
                 var claimsIdentity = HttpContext.Current.User.Identity as ClaimsIdentity;
                 if (claimsIdentity != null)
                 {
-                    upn = claimsIdentity.Claims.Where(c => c.Type == "name").Select(c => c.Value).FirstOrDefault();
+                    upn = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Upn).Select(c => c.Value).FirstOrDefault();
+                    if (string.IsNullOrEmpty(upn))
+                    {
+                        upn = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).FirstOrDefault();
+                    }
+                    if (string.IsNullOrEmpty(upn))
+                    {
+                        upn = claimsIdentity.Claims.Where(c => c.Type == "name").Select(c => c.Value).FirstOrDefault();
+                    }
+
                     firstName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.GivenName).Select(c => c.Value).FirstOrDefault();
                     lastName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Surname).Select(c => c.Value).FirstOrDefault();
                     email = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).FirstOrDefault();
@@ -342,7 +351,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Controllers
                 var authService = new AuthService(ServiceHelper.Authority);
 
                 // BUG: On some EDU tenants, listing group members return nothing when authenticated using Delegate permissions
-                var authResult = await authService.AuthenticateSilently(ServiceHelper.GraphResource, "Application");
+                var authResult = await authService.AuthenticateSilently(ServiceHelper.GraphResource, "Application", true);
                 if (authResult != null)
                 {
                     var graphService = new GraphService();

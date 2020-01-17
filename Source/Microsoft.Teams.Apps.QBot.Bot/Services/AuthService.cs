@@ -18,7 +18,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
         public async Task<AuthenticationResult> AuthenticateSilently(string resource)
         {
-            return await AuthenticateSilently(resource, ServiceHelper.ClientPermissionType);
+            return await AuthenticateSilently(resource, ServiceHelper.ClientPermissionType, false);
         }
 
         public async Task<AuthenticationResult> AuthenticateSilently(string resource, string clientPermissionType, bool fallback = true)
@@ -35,7 +35,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
             if (result == null && fallback)
             {
-                // Fallback to authenticating using the OTHER permission type
+                // Fallback to authenticating using the OTHER permission type if the first try failed
                 if (clientPermissionType == "Application")
                 {
                     result = await AuthenticateUsingDelegatePermissions(resource);
@@ -52,6 +52,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
         private async Task<AuthenticationResult> AuthenticateUsingApplicationPermissions(string resource)
         {
             AuthenticationResult result = null;
+
             // Try get Application permissions (AppId + Secret)
             try
             {
