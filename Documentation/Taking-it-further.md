@@ -1,0 +1,2 @@
+## QBot Personal Chat
+QBot doesn't reply with answers in a private chat. It will be possible to implement this behaviour, however group collaboration and tagging won't be possible if QBot can't find the answer

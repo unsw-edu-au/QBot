@@ -1,13 +1,30 @@
-# QBot Setup
-## Azure Resources
-Here is a summary of all Azure resources that need to be created
+# Prerequisites
+To begin, we will need:
+* A "Teams tenant", ie. a tenant with Microsoft Teams turned on
+* Access to create a new Team within the "Teams tenant"
+* Access to create new App Registrations the "Teams tenant"
+* Access grant admin consent for either Delegated or Application API permissions
+* A QBot Service Account (if using [Delegated permissions](#graph-api-access-app-registration) when calling Graph API)
+
+* An Azure subscription where you can create the following types of resources
+  * App Service
+  * App Service Plan
+  * SQL Database
+  * Bot Channels Registration
+  * QnA Service
+  * QnA Knowledge Base
+* A copy of the QBot GitHub repo
+* Some familiarity with building a .NET Web API project
+* Some familiarity with building an Angular 7 application
+
+Here is a summary of all Azure resources that need to be created:
 
 |#|Resource Type|Description|
 |:-|:-|:-|
 |1|Resource Group|Logical container to place all QBot related Azure resources|
 |2|Bot Channels Registration|QBot Bot Channels Registration|
-|3|Cognitive Services|Cognitive Services to host QnA KBs|
-|4|Search Service|Part of Cognitive Services for QnA KBs|
+|3|QnA Service|Cognitive Services to host QnA KBs|
+|4|Azure Search Service|Provisioned as part of QnA Service, if required|
 |5|QnA Knowledge Base|The backing QnA KB where QBot will get answers from.<br>You are required to have one QnA KB per Course|
 |6|SQL Database|Stores QBot related processing data|
 |8|App Service|Hosts the [QBot API Web Service](#qbot-api-web-app)|
@@ -21,8 +38,8 @@ Here is a summary of all Azure resources that need to be created
 ---
 
 ### QBot Resource Group
-Create new Azure *Resource Group* as a logical container to place all resources provisioned
-This can help you monitor costs more easily.
+Create new Azure Resource Group as a logical container to place all resources provisioned
+This can help manage resources and monitor costs more easily.
 
 ### QBot API Web App
 Create a new **Web App** with the following values
@@ -33,7 +50,7 @@ Create a new **Web App** with the following values
 |Runtime Stack|ASP.NET V4.7|
 
 > Please note the following settings for later: <br>
-> The QBot API Web App URL<br>
+> The resulting QBot API Web App URL<br>
 > eg: `https://qbot-api.azurewebsites.net`
 
 ### Dashboard Tab Web App
@@ -67,6 +84,10 @@ Create a new **SQL Database** with the following values
 |:-|:-|
 |Collation|SQL_Latin1_General_CP1_CI_AS|
 
+Go to Firewall settings, and ensure the "Allow Azure services and resources to access this server" switch is turned ON.
+
+![](images\sql-firewall.png)
+
 > Please note the following settings for later: <br>
 > The Azure SQL Server connection string<br>
 > eg: `data source=qbot-azure-sql-server;initial catalog=qbot-db;user id=sql-user;password=*****;MultipleActiveResultSets=True;App=EntityFramework&quot;`
@@ -74,6 +95,8 @@ Create a new **SQL Database** with the following values
 
 #### Bot Channels App Registration
 Create a new Azure *App Registration* for the purpose of Bot Channels Registration.
+
+This App Registration does not have to be on the same tenant as your Teams instance.
 You will need to be an Application Administrator on your tenant
 
 |Setting|Value|
@@ -85,8 +108,13 @@ You will need to be an Application Administrator on your tenant
 #### QBot API Auth App Registration
 The custom Teams tabs are Angular apps that call the QBot API service (.NET Web API). This App Registration is used to authenticate these API calls.
 
+This App Registration does not have to be on the same tenant as your Teams instance.
+
 Create a new **App Registration** for the purpose of QBot API Authentication.
+
+This App Registration MUST be on the same tenant as your Teams instance.
 You will need to be an Application Administrator on your tenant
+
 
 |Setting|Value|
 |:-|:-|
@@ -100,15 +128,29 @@ You will need to be an Application Administrator on your tenant
 #### Graph API Access App Registration
 The QBot API service in turn calls Graph API to retrieve information like the questions asked, and conversations within a channel. This App Registration is used to authenticate these Graph API calls.
 
-Create a new **App Registration** to allow Graph API access.
-You will need to be an Application Administrator on your tenant.
+Create a new **App Registration** to allow Graph API access. You will need to be an Application Administrator on the "Teams tenant" to do this.
+
+Note that this App Registration MUST be on the same tenant as your Teams instance.
+
+##### Application vs Delegated Permissions
+You will need to grant Graph API permissions to this App Registration (the full list of permissions is below). QBot supports both Application and Delegated permission types, so choose one that is most appropriate for your organisation.
+
+One thing to be aware of is that QBot does use the **Teams Protected APIs** to retrieve things like channel messages. If you decide to use [Application Permissions](https://docs.microsoft.com/en-us/graph/auth/auth-concepts#microsoft-graph-permissions), then you must submit a request form so that this App Registration can use these protected APIs. More information can be found here: https://docs.microsoft.com/en-us/graph/teams-protected-apis
 
 |Setting|Value|
 |:-|:-|
 |Account Type|*Accounts in any organizational directory (Any Azure AD directory - Multitenant)*|
-|API Permissions|Add the following API permissions:<br>Name: **Reports.ReadAll**<br>Type: **Application**<br>Consent: **Required**
+|API Permissions|Add the following API permissions:<br><br>Name: **User.Read.All**<br>Type: **Application** or **Delegate**<br>Consent: **Required**<br><br>Name: **Group.ReadWrite.All**<br>Type: **Application** or **Delegate**<br>Consent: **Required**<br><br>Name: **Sites.ReadWrite.All**<br>Type: **Application** or **Delegate**<br>Consent: **Required**
+
+When granting admin consent for these, you will need to be a Global Administrator on the respective tenant.
+
+Go to Certificates and Secrets, add a new client secret with a suitable expiration date. Remember to copy the generated client secret.
+
+If using Delegated permissions, go to the Authentication tab, and set to treat application as public client by default
+![](images\app-reg-default-client-type.png)
 
 > Please note the following settings for later:<br>**Application (Client) ID**
+> <br>**Client Secret**
 
 ### Bot Channels Registration
 Create a new **Bot Channels Registration** resource with the following values:
@@ -129,10 +171,10 @@ When finished, go into the newly created Bot Channels Registration, under **Sett
 
 Click on Channels setting, and add *Microsoft Teams* as a featured channel
 
-![](bot-reg-teams-channel.png)
+![](images\bot-reg-teams-channel.png)
 
 
-### QnA Maker
+### QnA Maker Service
 QBot uses QnA maker as it's knowlege base of questions and answers. Each course in QBot will require a back-end QnA KB provisioned, and this relationship is 1-1, ie. One QnA KB required per QBot Course.
 
 https://www.qnamaker.ai/Create
@@ -144,11 +186,11 @@ https://www.qnamaker.ai/Create
 
 
 > Please take note of the following settings for later:<br><br>
-> ![](qna-deploy.png)
+> ![](images\qna-deploy.png)
 > 1. **QnA Service Host** - The full Host header
 > 2. **QnA Knowledge Base ID** - The GUID part of the POST URL
 > 3. **QnA Endpoint Key** - The GUID part of the Authorization header<br><br>
-> ![](qna-configure.png)
+> ![](images\qna-configure.png)
 > 4. **QnA HTTP Endpoint**
 > 5. **QnA HTTP Key**
 
@@ -181,6 +223,8 @@ The following values need to be updated, depending on the environment and instal
     <add key="AADServiceName" value="" />
     <add key="AADServicePassword" value="" />
     <add key="AADClientId" value="" />
+    <add key="AADClientSecret" value="" />
+    <add key="AADPermissionType" value="" />
 
     <add key="ida:ClientId" value="" />
     <add key="ida:TenantId" value="" />
@@ -194,9 +238,11 @@ The following values need to be updated, depending on the environment and instal
 |MicrosoftAppId|Bot Channels Registration Microsoft App ID|Refer to steps in [Bot Registration](#bot-channels-registration)|
 |MicrosoftAppPassword|Bot Channels Registration Secret|Refer to steps in [Bot Registration](#bot-channels-registration)|
 |AADAuthority|Graph API target resource identifier|`https://login.microsoftonline.com/(tenantId)`|
-|AADServiceName|QBot service account. Must be a valid Teams account|svc_qbot@unsw.edu.au|
-|AADServicePassword|Encrypted password of the above QBot service account|Use the encryption project to encrypt the password|
+|AADServiceName|QBot service account. Must be a valid Teams account. Only applicable when using **Delegate** permissions (see AADPermissionType below)|svc_qbot@unsw.edu.au|
+|AADServicePassword|Encrypted password of the above QBot service account.  Only applicable when using **Delegate** permissions (see AADPermissionType below)|Use the **StringEncryption** project to encrypt the password of the QBot service account|
 |AADClientId|Client ID of the Azure App Registration that uses Graph API to access Teams  conversations and replies|Refer to steps in [Graph API App Registration](#graph-api-access-app-registration)|
+|AADClientSecret|Client secret of the Azure App Registration that uses Graph API to access Teams  conversations and replies|Refer to steps in [Graph API App Registration](#graph-api-access-app-registration)|
+|AADPermissionType|Either **Application** or **Delegate**, depending on how API access permissions were set up|Refer to steps in [Graph API App Registration](#graph-api-access-app-registration)|
 |ida:ClientId|Client ID of the Azure App Registration reuired to authenticate the QBot API|Refer to steps in [QBot API Authentication App Registration](#qbot-api-auth-app-registration)|
 |ida:TenantId|QBot API Auth Azure App Registration - Tenant ID|Refer to steps in [QBot API Authentication App Registration](#qbot-api-auth-app-registration)|
 |ida:Audience|QBot API Auth Azure App Registration - Application ID|api://5e55f7ba-8453-41b2-a274-75b6a71e4473|
@@ -210,7 +256,7 @@ The following values need to be updated, depending on the environment and instal
 </connectionStrings>
 ```
 
-Finally Right-click and publish to your [QBot API](#qbot) web site 
+Finally, right-click on the "Microsoft.Teams.Apps.QBot.Bot" project, and choose "Publish" to your [QBot API](#qbot) web site 
 
 ### Angular apps - Dashboard Tab & Questions Tab
 There are 2 Teams tabs, developed as Angular applications. They are in the projects: `DashboardTabApp` and `QuestionsTabApp`. Both are built and deployed in the same way.
@@ -296,7 +342,11 @@ For the Angular `QuestionsTabApp` application, copy these files to the [Question
 
 
 ### SQL Database configuration
-Run the included SSDT package to create the initial SQL database structure to the [SQL Server]()
+Run the included SSDT package to create the initial SQL database schema and seed data.
+To do this within Visual Studio, right click on the "Microsoft.Teams.Apps.QBot.Database" project, and choose "Publish".
+Fill in the target database connection based on the [provisioned SQL Server](#sql-server) settings
+
+![](images\publish-database.png)
 
 
 ### Deploy the Bot to Teams
@@ -348,7 +398,7 @@ Edit the `manifest.json` file, and replace the following values:
   ],
     "configurableTabs": [
       {
-        "configurationUrl": "https://qbot-questions-tab.azurewebsites.net/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}",
+        "configurationUrl": "https://qbot-questions-tab.azurewebsites.net/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}",
         "canUpdateConfiguration": true,
         "scopes": [
           "team"
@@ -368,7 +418,7 @@ Edit the `manifest.json` file, and replace the following values:
     {
       "entityId": "DashboardTab",
       "name": "Dashboard",
-      "contentUrl": "https://qbot-dashboard-tab.azurewebsites.net/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}",
+      "contentUrl": "https://qbot-dashboard-tab.azurewebsites.net/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}",
       "scopes": [ "personal" ]
     }
   ],
