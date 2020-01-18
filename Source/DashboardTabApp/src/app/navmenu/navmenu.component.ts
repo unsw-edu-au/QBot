@@ -188,9 +188,4 @@ export class NavMenuComponent implements OnInit {
         this.router.navigate(['settings/'], { queryParams: { upn: environment.upn, tid: environment.tid } });
 
     }
-
-    analyticsNav() {
-        this.router.navigate(['analytics/'], { queryParams: { upn: environment.upn, tid: environment.tid } });
-
-    }
 }

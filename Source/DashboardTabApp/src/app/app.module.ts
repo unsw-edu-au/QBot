@@ -12,7 +12,6 @@ import { NavMenuComponent } from './navmenu/navmenu.component';
 import { HomeComponent } from './home/home.component';
 import { ConfigComponent } from './config/config.component';
 import { MyStudentsComponent } from './mystudents/mystudents.component';
-import { AnalyticsComponent } from './analytics/analytics.component';
 
 import { Tabs } from './tabcontrol/tabs';
 import { Tab } from './tabcontrol/tab';
@@ -48,7 +47,6 @@ const appRoutes: Routes = [
     { path: 'question/:id', component: QuestionComponent, runGuardsAndResolvers: 'always' },
     { path: 'config', component: ConfigComponent },
     { path: 'mystudents', component: MyStudentsComponent },
-    { path: 'analytics', component: AnalyticsComponent },
     { path: 'courseadmin', component: CourseadminComponent },
     { path: 'app-silent-start', component: SilentStartComponent },
     { path: 'app-silent-end', component: SilentEndComponent },
@@ -68,7 +66,6 @@ const appRoutes: Routes = [
         QuestionComponent,
         ConfigComponent,
         MyStudentsComponent,
-        AnalyticsComponent,
         Tabs,
         Tab,
         CourseadminComponent,

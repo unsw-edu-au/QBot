@@ -10,7 +10,6 @@
             <ul class='nav navbar-nav'>
                 <li *ngFor="let team of teamGroupDetail" [routerLinkActive]="['link-active']">
                     <a routerLink="/question/{{team.id}}" (click)="teamNav(team.id)" class="teamsText navtext">
-                        <!--<span class='glyphicon glyphicon-th-list'></span>-->
                         <span class="nav-icon">
                             <img [src]="team.safePhotoByteUrl" width="32" height="32" />
                         </span>
@@ -24,26 +23,17 @@
                 </li>
                 <li *ngIf="(isLecturer || isDemonstrator ||isAdmin)&& authService.loggedIn" [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/app-useradmin']" (click)="addStudentNav()" class="teamsText navtext">
-                        <!--<span class="glyphicon glyphicon-plus" width="32" height="32">-->
-                        <!--</span>-->
                         <fa-icon [icon]="faUsersCog" size="2x"></fa-icon>User Admin
                     </a>
                 </li>
                 <li *ngIf="(isLecturer || isDemonstrator ||isAdmin)&& authService.loggedIn" [routerLinkActive]="['link-active']">
                     <a [routerLink]="['/tutorialadmin']" (click)="tutorialAdminNav()" class="teamsText navtext">
-                        <!--<span class="glyphicon glyphicon-book" width="32" height="32">
-            </span>-->
                         <fa-icon [icon]="faUserFriends" size="2x"></fa-icon>Tutorial Admin
                     </a>
                 </li>
                 <li *ngIf="(isLecturer || isDemonstrator ||isAdmin)&& authService.loggedIn" [routerLinkActive]="['link-active']" #MyStudentsActive="routerLinkActive">
                     <a [routerLink]="['/mystudents']" (click)="myStudentNav()" class="teamsText navtext">
                         <fa-icon [icon]="faUsers" size="2x"></fa-icon>My Students (D)
-                    </a>
-                </li>
-                <li *ngIf="(isLecturer||isAdmin) && authService.loggedIn" [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/analytics']" (click)="analyticsNav()" class="teamsText navtext">
-                        <fa-icon [icon]="faChalkboardTeacher" size="2x"></fa-icon>Analytics (L)
                     </a>
                 </li>
                 <li *ngIf="!authService.loggedIn" [routerLinkActive]="['link-active']">
