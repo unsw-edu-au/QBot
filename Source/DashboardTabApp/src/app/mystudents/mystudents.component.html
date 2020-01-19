@@ -7,17 +7,6 @@
     <button [ngClass]="{'btn classFilterBtn' : true,'active': selectedTutorial === 'ALL'}" (click)="filterByCode('ALL')"> Show all</button>
     <button [ngClass]="{'btn classFilterBtn' : true,'active': selectedTutorial === tutorial.code}" *ngFor="let tutorial of currentUser.tutorialGroups" (click)="filterByCode(tutorial.code)">{{tutorial.code}}</button>
 </div>
-<!--<ul>
-    <li *ngFor="let tutorial of currentUser.tutorialGroups">Code: {{tutorial.code}}, Location: {{tutorial.location}} </li>
-</ul>-->
-
-
-<!--<tabs>
-    <tab [tabTitle]="tutorial.code" *ngFor="let tutorial of currentUser.tutorialGroups">
-        <p>Code: {{tutorial.code}}, Location: {{tutorial.location}}</p>
-    </tab>
-</tabs>-->
-
 
 <tabs>
     <tab tabTitle="Unanswered Questions" tabActive="true">
