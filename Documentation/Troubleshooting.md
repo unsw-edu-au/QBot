@@ -1,3 +1,5 @@
+# Troubleshooting
+
 ## Bot is having code issues
 After initial setup, you will see the "Sorry, my bot code is having an issue" response when trying to interact with QBot within a channel.
 Often this is due to misconfigured QBot API settings. QBot solution uses `System.Diagnostics.Trace` to output errors and debugging messages.
