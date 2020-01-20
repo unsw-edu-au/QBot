@@ -1,10 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AppService } from '../app.service';
 import { Course } from '../models/Course';
-import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ViewEncapsulation, ViewChild } from '@angular/core';
-//import { TooltipDirective } from '@progress/kendo-angular-tooltip';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { environment } from 'src/environments/environment';
 import { AddCourseDialogComponent } from '../add-course-dialog/add-course-dialog.component';
@@ -127,7 +125,6 @@ export class CourseadminComponent implements OnInit {
     }
 
     saveRow(course: Course) {
-        //this.editService.save(course, isNew);
         this.appService.saveCourse(course)
             .subscribe(courses => {
                 if (courses != null) {// api returns null if an exception is caught
@@ -140,12 +137,6 @@ export class CourseadminComponent implements OnInit {
                 this.dataSource = new MatTableDataSource(this.courses);
 
             });
-    }
-
-    openInstructions() {
-        var height = outerHeight * (4 / 5);
-        var width = outerWidth * (2 / 3);
-        open("#/courseinfo", "test", "height=" + height + ", width =" + width);
     }
 
     openDialog(outcome: string, message: string): void {
