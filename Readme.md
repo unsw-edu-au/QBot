@@ -13,7 +13,7 @@ Once the app is deployed to a Team, a student can ask a question on the channel 
 
 ![](Documentation/images/demo.png)
 ## Get Started
-Begin with the [Solution overview](Documentation/solution-overview.md) to read about what the app does and how it works.
+Begin with the [Solution Overview](Documentation/solution-overview.md) to read about what the app does and how it works.
 
 When you're ready to try out QBot, or to use it in your own organization, follow the steps in the [Deployment Guide](Documentation/deployment-guide.md).
 
