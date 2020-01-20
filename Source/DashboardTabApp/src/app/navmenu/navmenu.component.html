@@ -33,7 +33,7 @@
                 </li>
                 <li *ngIf="(isLecturer || isDemonstrator ||isAdmin)&& authService.loggedIn" [routerLinkActive]="['link-active']" #MyStudentsActive="routerLinkActive">
                     <a [routerLink]="['/mystudents']" (click)="myStudentNav()" class="teamsText navtext">
-                        <fa-icon [icon]="faUsers" size="2x"></fa-icon>My Students (D)
+                        <fa-icon [icon]="faUsers" size="2x"></fa-icon>My Students
                     </a>
                 </li>
                 <li *ngIf="!authService.loggedIn" [routerLinkActive]="['link-active']">

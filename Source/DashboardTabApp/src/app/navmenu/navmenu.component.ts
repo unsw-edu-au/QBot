@@ -61,9 +61,6 @@ export class NavMenuComponent implements OnInit {
             this.spinnerService.show();
             this.authService.onAuthUpdate(this.onAuthUpdate.bind(this));
         }
-        else {
-            this.showError("Please ensure both upn and tid are specified in querystring");
-        }
     }
 
     onAuthUpdate() {
