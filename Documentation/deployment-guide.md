@@ -442,7 +442,7 @@ Zip up into a new package file (eg. `qbot-manifest.zip`) ready for upload into M
 
 
 ## QBot Setup
-Congratulations, you have succesfully built the QBot solution, and added the App into Teams. Final step is to set up the different courses
+Congratulations, you have successfully built the QBot solution, and added the App into Teams. Final step is to set up the different courses and parameters as follows:
 
 1. Go to the dashboard tab (initiate a personal coversation with the Bot)
 2. Create a new course
@@ -461,3 +461,6 @@ Congratulations, you have succesfully built the QBot solution, and added the App
 
 4. Create the required Tutorial Groups
 5. Assign and Map Users. Click the *Sync Users from Teams* button and assign their roles and any necessary tutorial groups
+
+## Start using!
+You can now at-mention QBot as follows in a class team/channel: `@Question what is the most awesome community learning app in Teams?` 
