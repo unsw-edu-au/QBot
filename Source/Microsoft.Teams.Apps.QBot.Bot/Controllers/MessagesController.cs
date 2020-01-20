@@ -315,7 +315,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot
                 // update old activity
                 Microsoft.Bot.Connector.Activity updatedReply = activity.CreateReply();
 
-
                 var actionJson = "{\"Type\":\"" + Constants.ACTIVITY_SELECT_ANSWER + "\",\"QuestionId\": \"" + questionId + "\"}";
 
                 var card = new HeroCard()
@@ -338,7 +337,12 @@ namespace Microsoft.Teams.Apps.QBot.Bot
                 Microsoft.Bot.Connector.Activity newReply = activity.CreateReply();
 
                 // Tag Admins
-                foreach (var admin in adminsOnTeams)
+                var distinct = adminsOnTeams
+                    .GroupBy(p => p.Id)
+                    .Select(g => g.First())
+                    .ToList();
+
+                foreach (var admin in distinct)
                 {
                     newReply.AddMentionToText(admin, MentionTextLocation.AppendText);
                 }

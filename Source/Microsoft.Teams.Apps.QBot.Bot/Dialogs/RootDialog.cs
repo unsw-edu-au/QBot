@@ -212,6 +212,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Dialogs
             {
                 mentionOnlyReply.AddMentionToText(admin, MentionTextLocation.AppendText);
             }
+
             var r1 = await connector.Conversations.ReplyToActivityAsync(mentionOnlyReply);
 
             var reply = activity.CreateReply();
@@ -307,7 +308,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Dialogs
                             tutorialAdmins.AddRange(SQLService.GetDemonstrators(courseID));
                         }
 
-
                         if (tutorialAdmins != null)
                         {
                             foreach (var admin in tutorialAdmins)
@@ -357,6 +357,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Dialogs
                     var adminOnTeams = teamsMembers.Where(x =>
                         (x.Email == admin.Email || x.Email == admin.UserName || x.UserPrincipalName == admin.UserName || x.UserPrincipalName == admin.Email)
                     ).FirstOrDefault();
+
                     if (adminOnTeams != null)
                     {
                         adminsOnTeams.Add(adminOnTeams);
@@ -364,7 +365,13 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Dialogs
                 }
             }
 
-            return adminsOnTeams;
+            // Avoid tagging same person twice if they are part of multiple tutorial groups
+            var distinct = adminsOnTeams
+                .GroupBy(p => p.Id)
+                .Select(g => g.First())
+                .ToList();
+
+            return distinct;
         }
 
         private Attachment CreateBotAnswerCard(int qnaId, string answerText, double confidenceScore, int questionId, string userUpn)
