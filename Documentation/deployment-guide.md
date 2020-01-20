@@ -1,8 +1,10 @@
-# Prerequisites
+# Deployment Guide
+
+## Pre-Requisites
 To begin, we will need:
-* A "Teams tenant", ie. a tenant with Microsoft Teams turned on
-* Access to create a new Team within the "Teams tenant"
-* Access to create new App Registrations the "Teams tenant"
+* An Office 365 tenant with Microsoft Teams turned on for the target set of users
+* Access to create a new Team within the "O365 tenant"
+* Access to create new App Registrations in the "Azure Active Directory" of the tenant
 * Access grant admin consent for either Delegated or Application API permissions
 * A QBot Service Account (if using [Delegated permissions](#graph-api-access-app-registration) when calling Graph API)
 
@@ -13,7 +15,7 @@ To begin, we will need:
   * Bot Channels Registration
   * QnA Service
   * QnA Knowledge Base
-* A copy of the QBot GitHub repo
+* A copy of the code cloned from the QBot GitHub repo
 * Some familiarity with building a .NET Web API project
 * Some familiarity with building an Angular 7 application
 
