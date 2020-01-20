@@ -191,8 +191,8 @@ https://www.qnamaker.ai/Create
 > 2. **QnA Knowledge Base ID** - The GUID part of the POST URL
 > 3. **QnA Endpoint Key** - The GUID part of the Authorization header<br><br>
 > ![](images/qna-configure.png)
-> 4. **QnA HTTP Endpoint**
-> 5. **QnA HTTP Key**
+> 4. **QnA HTTP Key**
+> 5. **QnA HTTP Endpoint**
 
 
 
