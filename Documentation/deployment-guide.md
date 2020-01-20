@@ -355,50 +355,33 @@ Edit the `manifest.json` file, and replace the following values:
 
 ``` json
 {
-  "$schema": "https://statics.teams.microsoft.com/sdk/v1.2/manifest/MicrosoftTeams.schema.json",
-  "manifestVersion": "1.2",
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.5",
   "version": "1.0.0",
   "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
   "packageName": "qbot",
   "developer": {
     "name": "UNSW Sydney",
-    "websiteUrl": "https://www.unsw.edu.au/",
-    "privacyUrl": "https://www.unsw.edu.au/",
-    "termsOfUseUrl": "https://www.unsw.edu.au/"
+    "websiteUrl": "https://www.unsw.edu.au/QBot",
+    "privacyUrl": "https://www.unsw.edu.au/QBot/privacy",
+    "termsOfUseUrl": "https://www.unsw.edu.au/QBot/tou"
   },
   "icons": {
-    "outline": "qbot.png",
-    "color": "qbot.png"
+    "outline": "Outline.png",
+    "color": "Color.png"
   },
   "name": {
     "short": "Question",
-    "full": "Question"
+    "full": "Question - The Community Learning App"
   },
   "description": {
     "short": "QBot",
-    "full": "QBot keeps track of answered and unanswered questions, sends notifications to tutors and teachers in charge, and dynamically constructs its own knowledge database on the subject to help suggest answers in future. Just tag @question in the conversations tab of your class Team."
+    "full": "QBot keeps track of answered and unanswered questions, sends notifications to tutors and teachers in charge, and dynamically constructs its own knowledge database on the subject to help suggest answers in future. Just tag @Question in the conversations tab of your class team."
   },
-  "accentColor": "#3F487F",
-  "composeExtensions": [
-    {
-      "botId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
-      "canUpdateConfiguration": true,
-      "commands": [
-        {
-          "id": "SelectAnswer",
-          "description": "Select an answer",
-          "title": "Select answer",
-          "type": "action",
-          "context": [ "message" ],
-          "fetchTask": true,
-          "parameters": [ { "name": "SelectAnswer", "title": "Select Answer" } ]
-        }
-      ]
-    }
-  ],
-    "configurableTabs": [
+  "accentColor": "#6264A7",
+  "configurableTabs": [
       {
-        "configurationUrl": "https://qbot-questions-tab.azurewebsites.net/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}",
+        "configurationUrl": "https://qbot-questions-tab.azurewebsites.net/config?upn={loginHint}&tid={tid}&gid={groupId}&cname={channelName}",
         "canUpdateConfiguration": true,
         "scopes": [
           "team"
@@ -409,8 +392,7 @@ Edit the `manifest.json` file, and replace the following values:
     {
       "botId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
       "scopes": [
-        "team",
-        "personal"
+        "team"
       ]
     }
   ],
@@ -418,7 +400,7 @@ Edit the `manifest.json` file, and replace the following values:
     {
       "entityId": "DashboardTab",
       "name": "Dashboard",
-      "contentUrl": "https://qbot-dashboard-tab.azurewebsites.net/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}",
+      "contentUrl": "https://qbot-dashboard-tab.azurewebsites.net/home?upn={loginHint}&tid={tid}&gid={groupId}&uid={userObjectId}",
       "scopes": [ "personal" ]
     }
   ],
@@ -439,15 +421,22 @@ contentUrl|URL of the deployed [Dashboard Tab Angular web application](#dashboar
 validDomains|Array of three strings representing the domains of the [Bot API Web App](#qbot-api-web-app), [Question Tab](#questions-tab-web-app) and [Dashboard Tab](#dashboard-tab-web-app)
 
 
-So now, within Manifest` folder there will be 2 files
-* `manifest.json` - Manifest file, which we just updated in steps above
-* `bot_blue.png` - Starter bot icon
+So now, within Manifest` folder there will be 3 files
+* `manifest.json` - Manifest file, which we just updated in the steps above
+* `Outline.png` - Outline transparent bot icon
+* `Color.png` - Color bot icon
 
-Zip up into a new package file (eg. `qbot-manifest.zip`) ready for upload into Teams
+Zip up into a new package file (eg. `qbot-manifest.zip`) ready for upload into Microsoft Teams
 
-### Add QBot app into Teams
-1. You must be a team owner
-2. In Teams, go to the Team the Bot will be deployed to and click on the ‘+’ symbol under the Team title at the top of the window.
+### Option 1: Install QBot into your tenant app catalog (Recommended)
+1. You must be a Teams or O365 tenant admin.
+2. In Teams, go to the App Store from the left rail and choose *Upload a custom app* > Upload for your organization. 
+3. Select the .zip file created earlier which will add the bot to your organization's tenant app catalog.
+4. Any team owner can now click on the app from the Teams App Store > Built for your organization section and install it in the selected class team.
+
+### Option 2: Sideload QBot app into your class team
+1. You must be a team owner.
+2. In Teams, go to the team the Bot will be deployed to and click on the ‘+’ symbol under the Team title at the top of the window.
 3. In the popup click on *Manage apps* at the bottom right corner which will navigate to the Apps page for that team.
 4. At the bottom right corner click on *Upload a custom app* and select the .zip file created earlier which will add the bot to the Team.
 
@@ -471,4 +460,4 @@ Congratulations, you have succesfully built the QBot solution, and added the App
 |PredictiveQnAConfidenceThreshold|Integer that should be from 0-100 that reflects the confidence percentage an answer from QnA Maker must be if it is to be supplied as an answer to a question|
 
 4. Create the required Tutorial Groups
-5. Assign and Map Users. Click the *Synchronise from Teams* button and assign their roles and any necessary tutorial groups
+5. Assign and Map Users. Click the *Sync Users from Teams* button and assign their roles and any necessary tutorial groups
