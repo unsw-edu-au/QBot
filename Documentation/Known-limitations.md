@@ -1,3 +1,5 @@
+# Known Limitations
+
 ## QBot must be tagged
 QBot will only be triggered in a channel conversation if tagged by the user as part of a new message or reply. 
 If a question is posted in a message and QBot is not tagged, QBot will not be triggered. Editing the original message to tag QBot will still not trigger it. Replying to the original message and tagging QBot will trigger it.
