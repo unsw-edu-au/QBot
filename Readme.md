@@ -1,7 +1,7 @@
 # Microsoft Teams QBot
 
 | [Deployment Guide](Documentation/deployment-guide.md) | [Solution Overview & Architecture](Documentation/solution-overview.md) | [Troubleshooting](Documentation/Troubleshooting.md) | [Known Limitations](Documentation/Known-limitations.md) | [Taking it further](Documentation/Taking-it-further.md) | 
-| ---- | ---- | ---- |
+| ---- | ---- | ---- | ---- | ---- |
 
 
 ## Overview
