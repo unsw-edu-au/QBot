@@ -31,7 +31,7 @@ This is an Angular 6 application deployed to an Azure App Service. Within the QB
 The QnA Maker knowledge base drives all answering and learning aspects of the QBot.
 
 ## SQL Server Database
-Stores the list of users, roles, tutorial groups, user-tutorial mappings, assessments, questions, attachments and QR code references, and the configuration settings.
+Stores the list of users, roles, tutorial groups, user-tutorial mappings, assessments, questions, attachments, references and configuration settings.
 
 
 
