@@ -22,6 +22,7 @@ Thoughts? Questions? Ideas? Share them with us [here](https://github.com/unsw-ed
 
 Please report bugs and other code issues [here](https://github.com/unsw-edu-au/QBot/issues/new).
 
+## Taking it further
 If you're looking to build on top of this opensource code, [here](Documentation/Taking-it-further.md) are some ideas.
 
 ## Legal notice
