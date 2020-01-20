@@ -1,14 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
+
 using Microsoft.Teams.Apps.QBot.Model;
 using Microsoft.Teams.Apps.QBot.Model.QnA;
+
+using Newtonsoft.Json;
 
 namespace Microsoft.Teams.Apps.QBot.Bot.Services
 {
@@ -75,10 +77,14 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
                 var msg = await client.PostAsync(requestUri, httpContent);
 
+                var jsonDataResponse = await msg.Content.ReadAsStringAsync();
                 if (msg.IsSuccessStatusCode)
                 {
-                    var jsonDataResponse = await msg.Content.ReadAsStringAsync();
                     qnaResponse = JsonConvert.DeserializeObject<QnAResponse>(jsonDataResponse);
+                }
+                else
+                {
+                    Trace.TraceError("Error getting QnA response for query: " + query);
                 }
             }
 
@@ -91,7 +97,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
                 return null;
             }
         }
-
 
         public async Task<bool> PublishQnA()
         {
@@ -111,12 +116,18 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
                 if (msg.IsSuccessStatusCode)
                 {
+                    Trace.TraceError("QnA KB Published succesfully for " + requestUri);
                     return true;
+                }
+                else
+                {
+                    var jsonDataResponse = await msg.Content.ReadAsStringAsync();
+                    Trace.TraceError("There was an error publishing the QnA KB. " + msg.StatusCode);
+                    Trace.TraceError(jsonDataResponse);
                 }
             }
 
             return false;
-
         }
 
         public async Task<bool> PatchQnA(QnAPayload payload)
@@ -160,13 +171,11 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
             payload.Add.QnaList.Add(qnaItemToAdd);
 
-
             var addResult = await PatchQnA(payload);
 
             if (addResult)
             {
                 var publishResult = await PublishQnA();
-
                 return publishResult;
             }
             else

@@ -120,7 +120,7 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
         {
             try
             {
-                string endpoint = ServiceHelper.GraphRootUri + @"/beta";
+                string endpoint = ServiceHelper.GraphRootUri + @"/v1.0";
                 string queryParameter = "/teams/" + groupId + "/channels";
                 HttpResponseMessage response = await ServiceHelper.SendRequest(HttpMethod.Get, endpoint + queryParameter, accessToken);
                 if (response != null && response.IsSuccessStatusCode)
