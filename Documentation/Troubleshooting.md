@@ -10,7 +10,7 @@ Often this is due to misconfigured QBot API settings. QBot solution uses `System
 If the bot encounters an error when it is tagged, the issue could be due to the bot being unable to find a user in it's database. This can happen if new users are added to the Team, without synchronising the user to the bot database via the Dashboard Tab.
 
 ## Teams Bot Debugging
-QBot is a bot deployed in Teams. Please refer to the following documentation on [how to debug a teams bot]([https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/debug/locally-with-an-ide](https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/debug/locally-with-an-ide)) 
+QBot is a bot deployed in Teams. Please refer to the documentation on [how to debug a teams bot](https://docs.microsoft.com/en-us/microsoftteams/platform/bots/how-to/debug/locally-with-an-ide)
 
 ## Didn't find your problem here?
 Please report the issue [here](https://github.com/unsw-edu-au/QBot/issues/new)
