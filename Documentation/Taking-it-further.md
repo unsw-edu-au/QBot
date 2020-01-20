@@ -1,5 +1,5 @@
 ## QBot Personal Chat
-QBot doesn't reply with answers in a private chat. It will be possible to implement this behaviour, however group collaboration and tagging won't be possible if QBot can't find the answer
+QBot doesn't reply with answers in a private chat. It will be possible to implement this behaviour, however group collaboration and tagging won't be possible if QBot can't find the answer. Alternately. QBot can respond to course administration-related questions in the personal chat for eg: When's my next quiz? This will require you to creatively derive the course context from the user as one user can be part of multiple courses
 
 ## Improve answer selection experience
 1. Allow selected answer to be updated when a better answer comes in
