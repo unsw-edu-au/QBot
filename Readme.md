@@ -11,7 +11,7 @@ The solution was originally developed, and is currently deployed for the School 
 
 Once the app is deployed to a Team, a student can ask a question on the channel by @tagging QBot. QBot will respond with the correct answer, or tag a group of demonstrators allowing them to collaborate on a response. Accepted answers are subsequently used to train Qbot for future questions.
 
-![](Documentation/images/demo.png)
+![](Documentation/images/QBot%20Hero.png)
 ## Get Started
 Begin with the [Solution Overview](Documentation/solution-overview.md) to read about what the app does and how it works.
 
