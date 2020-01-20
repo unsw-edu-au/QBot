@@ -114,9 +114,9 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
                 var msg = await client.PostAsync(new Uri(requestUri), httpContent);
 
-                if (msg.IsSuccessStatusCode)
+                if (msg.StatusCode == System.Net.HttpStatusCode.NoContent)
                 {
-                    Trace.TraceError("QnA KB Published succesfully for " + requestUri);
+                    Trace.WriteLine("QnA KB Published succesfully for " + requestUri);
                     return true;
                 }
                 else
