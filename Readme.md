@@ -18,7 +18,7 @@ Begin with the [Solution overview](Documentation/solution-overview.md) to read a
 When you're ready to try out QBot, or to use it in your own organization, follow the steps in the [Deployment guide](Documentation/deployment-guide.md).
 
 ## Feedback
-Thoughts? Questions? Ideas? Share them with us on [here](https://github.com/unsw-edu-au/QBot/issues/new)!
+Thoughts? Questions? Ideas? Share them with us [here](https://github.com/unsw-edu-au/QBot/issues/new)!
 
 Please report bugs and other code issues [here](https://github.com/unsw-edu-au/QBot/issues/new).
 
