@@ -1,6 +1,6 @@
 # Microsoft Teams QBot
 
-| [Documentation](Documentation/wiki-home.md) | [Deployment guide](Documentation/deployment-guide.md) | [Architecture](Documentation/solution-overview.md) |
+| [Documentation](Documentation/wiki-home.md) | [Deployment guide](Documentation/deployment-guide.md) | [Solution Overview & Architecture](Documentation/solution-overview.md) |
 | ---- | ---- | ---- |
 
 
