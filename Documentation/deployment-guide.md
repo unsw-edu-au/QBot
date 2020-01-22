@@ -230,7 +230,7 @@ The following values need to be updated, depending on the environment and instal
 |AADPermissionType|Either **Application** or **Delegate**, depending on how API access permissions were set up|Refer to steps in [Graph API App Registration](#graph-api-access-app-registration)|
 |ida:ClientId|Client ID of the Azure App Registration reuired to authenticate the QBot API|Refer to steps in [QBot API Authentication App Registration](#qbot-api-auth-app-registration)|
 |ida:TenantId|QBot API Auth Azure App Registration - Tenant ID|Refer to steps in [QBot API Authentication App Registration](#qbot-api-auth-app-registration)|
-|ida:Audience|QBot API Auth Azure App Registration - Application ID|api://<Insert QBot API Authentication App Registration Client ID here>/Read|
+|ida:Audience|QBot API Auth Azure App Registration - Application ID|api://QBot API Authentication App Registration Client ID/Read|
 
 ``` xml
 <!-- connectionStrings.secret.config -->
