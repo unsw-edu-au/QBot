@@ -75,6 +75,7 @@
     <Compile Include="QnA\AnswerJson.cs" />
     <Compile Include="QnA\QnAResponse.cs" />
     <Compile Include="QnA\QnAPayload.cs" />
+    <Compile Include="QnA\QnAStatusResponse.cs" />
     <Compile Include="QuestionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleModel.cs" />
