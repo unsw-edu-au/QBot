@@ -13,7 +13,8 @@ Once the app is deployed to a Team, a student can ask a question on the channel 
 
 See a quick, animated demo of the various app scenarios [here](Documentation/demo.md).
 
-![](Documentation/images/QBot%20Hero.png)
+![](Documentation/images/QuestionDemo.gif)
+
 ## Get Started
 Begin with the [Solution Overview](Documentation/solution-overview.md) to read about what the app does and how it works.
 
