@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Html;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Microsoft.Teams.Apps.QBot.Bot.Services
 {
