@@ -32,7 +32,6 @@ Here is a summary of all Azure resources that need to be created:
 |8|App Service|Hosts the [QBot API Web Service](#qbot-api-web-app)|
 |9|App Service|Hosts the [Dashboard Tab App](#dashboard-tab-web-app) Angular site|
 |10|App Service|Hosts the [Questions Tab App](#questions-tab-web-app) Angular site|
-|11|App Registration|To support the Bot Channels Registration|
 |11|App Registration|To support the QBot API authentication|
 |12|App Registration|To support Graph API access|
 
@@ -55,7 +54,7 @@ Create a new **Web App** with the following values
 > The resulting QBot API Web App URL<br>
 > eg: `https://qbot-api.azurewebsites.net`
 
-### Dashboard Tab Web App
+### Dashboard Tab Web App (Personal Tab)
 Create a new **Web App** with the following values
 
 |Setting|Value|
@@ -67,7 +66,7 @@ Create a new **Web App** with the following values
 > The Dashboard Tab Web App URL<br>
 > eg: `https://qbot-dashboard-tab.azurewebsites.net`
 
-### Questions Tab Web App
+### Questions Tab Web App (Channel Tab)
 Create a new **Web App** with the following values
 
 |Setting|Value|
@@ -94,28 +93,13 @@ Go to Firewall settings, and ensure the "Allow Azure services and resources to a
 > The Azure SQL Server connection string<br>
 > eg: `data source=qbot-azure-sql-server;initial catalog=qbot-db;user id=sql-user;password=*****;MultipleActiveResultSets=True;App=EntityFramework&quot;`
 
-
-#### Bot Channels App Registration
-Create a new Azure *App Registration* for the purpose of Bot Channels Registration.
-
-This App Registration does not have to be on the same tenant as your Teams instance.
-You will need to be an Application Administrator on your tenant
-
-|Setting|Value|
-|:-|:-|
-|Account Type|*Accounts in any organizational directory (Any Azure AD directory - Multitenant)*|
-
-> Please note the following settings for later:<br>**Application (client) ID**
-
 #### QBot API Auth App Registration
-The custom Teams tabs are Angular apps that call the QBot API service (.NET Web API). This App Registration is used to authenticate these API calls.
+The custom Teams tabs are Angular apps that call the QBot API service (.NET Web API). This App Registration is used to authenticate these API calls. 
 
-This App Registration does not have to be on the same tenant as your Teams instance.
-
-Create a new **App Registration** for the purpose of QBot API Authentication.
+Create a new **App Registration** for the purpose of QBot API Authentication. 
 
 This App Registration MUST be on the same tenant as your Teams instance.
-You will need to be an Application Administrator on your tenant
+You will need to be an Application Administrator on your tenant.
 
 
 |Setting|Value|
@@ -130,14 +114,13 @@ You will need to be an Application Administrator on your tenant
 #### Graph API Access App Registration
 The QBot API service in turn calls Graph API to retrieve information like the questions asked, and conversations within a channel. This App Registration is used to authenticate these Graph API calls.
 
-Create a new **App Registration** to allow Graph API access. You will need to be an Application Administrator on the "Teams tenant" to do this.
+Create a new **App Registration** to allow Graph API access. 
 
-Note that this App Registration MUST be on the same tenant as your Teams instance.
+This App Registration MUST be on the same tenant as your Teams instance.
+You will need to be an Application Administrator on your tenant.
 
 ##### Application vs Delegated Permissions
 You will need to grant Graph API permissions to this App Registration (the full list of permissions is below). QBot supports both Application and Delegated permission types, so choose one that is most appropriate for your organisation.
-
-One thing to be aware of is that QBot does use the **Teams Protected APIs** to retrieve things like channel messages. If you decide to use [Application Permissions](https://docs.microsoft.com/en-us/graph/auth/auth-concepts#microsoft-graph-permissions), then you must submit a request form so that this App Registration can use these protected APIs. More information can be found here: https://docs.microsoft.com/en-us/graph/teams-protected-apis
 
 |Setting|Value|
 |:-|:-|
@@ -148,7 +131,7 @@ When granting admin consent for these, you will need to be a Global Administrato
 
 Go to Certificates and Secrets, add a new client secret with a suitable expiration date. Remember to copy the generated client secret.
 
-If using Delegated permissions, go to the Authentication tab, and set to treat application as public client by default
+If using any Delegated permissions, go to the Authentication tab, and set to treat application as public client by default
 ![](images/app-reg-default-client-type.png)
 
 > Please note the following settings for later:<br>**Application (Client) ID**
@@ -442,6 +425,7 @@ Zip up into a new package file (eg. `qbot-manifest.zip`) ready for upload into M
 3. In the popup click on *Manage apps* at the bottom right corner which will navigate to the Apps page for that team.
 4. At the bottom right corner click on *Upload a custom app* and select the .zip file created earlier which will add the bot to the Team.
 
+You should add the **QBot service account** to each class team so that Graph API calls in delegate permissions work fine.
 
 ## QBot Setup
 Congratulations, you have successfully built the QBot solution, and added the App into Teams. Final step is to set up the different courses and parameters as follows:
