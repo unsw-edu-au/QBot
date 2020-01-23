@@ -721,7 +721,7 @@ namespace Microsoft.Teams.Apps.QBot.Data
                         int studentID = 0;
                         if (course != null)
                         {
-                            User studentToUpdate = entities.Users.Where(x => x.Email == student.Email).FirstOrDefault();
+                            User studentToUpdate = entities.Users.Where(x => x.UserPrincipalName == student.UserPrincipalName).FirstOrDefault();
 
                             // Existing student
                             if (studentToUpdate != null)
@@ -1025,10 +1025,10 @@ namespace Microsoft.Teams.Apps.QBot.Data
 
         private static void LogExceptions(Exception e)
         {
-            System.Diagnostics.Trace.WriteLine(e.Message);
+            System.Diagnostics.Trace.WriteLine(e.ToString());
             if (e.InnerException != null)
             {
-                System.Diagnostics.Trace.WriteLine(e.InnerException.Message);
+                System.Diagnostics.Trace.WriteLine(e.InnerException.ToString());
             }
         }
     }
