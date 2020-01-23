@@ -5,9 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-
 
 using Microsoft.Teams.Apps.QBot.Model;
 using Microsoft.Teams.Apps.QBot.Model.QnA;
@@ -150,37 +148,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
 
                 if (msg.IsSuccessStatusCode)
                 {
-                    // Iteratively gets the state of the operation updating the
-                    // knowledge base. Once the operation state is something other
-                    // than "Running" or "NotStarted", the loop ends.
-                    var location = msg.Headers.GetValues("Location").First();
-
-                    var done = false;
-
-                    while (!done)
-                    {
-                        var operationStatusResponse = await GetStatus(location);
-
-                        var fields = JsonConvert.DeserializeObject<Dictionary<string, string>>(operationStatusResponse.ResponseBody);
-
-                        // Gets and checks the state of the operation.
-                        String state = fields["operationState"];
-                        if (state.CompareTo("Running") == 0 || state.CompareTo("NotStarted") == 0)
-                        {
-                            // QnA Maker is still updating the knowledge base. The thread is
-                            // paused for a number of seconds equal to the Retry-After
-                            // header value, and then the loop continues.
-                            var wait = operationStatusResponse.ResponseHeaders.GetValues("Retry-After").First();
-                            Console.WriteLine("Waiting " + wait + " seconds...");
-                            Thread.Sleep(Int32.Parse(wait) * 1000);
-                        }
-                        else
-                        {
-                            // QnA Maker has completed updating the knowledge base.
-                            done = true;
-                        }
-                    }
-
                     return true;
                 }
             }
@@ -260,24 +227,6 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             else
             {
                 return addResult;
-            }
-        }
-
-        private async Task<QnAStatusResponse> GetStatus(string operation)
-        {
-            string uri = _predictiveQnAHttpEndpoint + operation;
-            Console.WriteLine("Calling " + uri + ".");
-
-            using (var client = new HttpClient())
-            using (var request = new HttpRequestMessage())
-            {
-                request.Method = HttpMethod.Get;
-                request.RequestUri = new Uri(uri);
-                request.Headers.Add("Ocp-Apim-Subscription-Key", _predictiveQnAHttpKey);
-
-                var response = await client.SendAsync(request);
-                var responseBody = await response.Content.ReadAsStringAsync();
-                return new QnAStatusResponse(response.Headers, responseBody);
             }
         }
     }
