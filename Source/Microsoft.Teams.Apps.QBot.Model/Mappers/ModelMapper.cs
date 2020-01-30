@@ -395,6 +395,25 @@ namespace Microsoft.Teams.Apps.QBot.Model
             };
         }
 
+        public static UserCourseRoleMappingModel MapToUserModelOnly(UserCourseRoleMapping ucrm)
+        {
+            if (ucrm == null)
+                return null;
+            UserCourseRoleMappingModel user = MapToUserModelOnly(ucrm.User);
+            var userCourseRoleModel = new UserCourseRoleMappingModel()
+            {
+                ID = ucrm.Id,
+                UserId = ucrm.UserId.ToString(),
+                CourseId = ucrm.CourseId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email
+            };
+
+            return userCourseRoleModel;
+        }
+
         public static List<UserCourseRoleMappingModel> MapToUsersModel(List<UserCourseRoleMapping> users)
         {
             if (users == null)
@@ -405,6 +424,21 @@ namespace Microsoft.Teams.Apps.QBot.Model
             foreach (var user in users)
             {
                 userModels.Add(MapToUserModel(user));
+            }
+
+            return userModels;
+        }
+
+        public static List<UserCourseRoleMappingModel> MapToUsersModelOnly(List<UserCourseRoleMapping> users)
+        {
+            if (users == null)
+                return null;
+
+            var userModels = new List<UserCourseRoleMappingModel>();
+
+            foreach (var user in users)
+            {
+                userModels.Add(MapToUserModelOnly(user));
             }
 
             return userModels;

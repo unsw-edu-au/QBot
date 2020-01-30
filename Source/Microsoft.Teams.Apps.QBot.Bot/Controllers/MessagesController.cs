@@ -249,9 +249,9 @@ namespace Microsoft.Teams.Apps.QBot.Bot
                         {
                             // Notify demonstrator
                             var tutorialAdmins = new List<UserCourseRoleMappingModel>();
-                            foreach (var tutorialGroup in student.TutorialGroups)
+                            foreach (var tutorialGroup in student.TutorialGroups.Where(x => x.CourseId == courseID))
                             {
-                                tutorialAdmins.AddRange(SQLService.GetDemonstrators(courseID));
+                                tutorialAdmins.AddRange(SQLService.GetDemonstrators(courseID, tutorialGroup.ID));
                             }
 
 

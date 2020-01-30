@@ -495,7 +495,7 @@ namespace Microsoft.Teams.Apps.QBot.Data
             }
         }
 
-        public static List<UserCourseRoleMapping> GetDemonstrators(int courseId)
+        public static List<UserCourseRoleMapping> GetDemonstrators(int courseId, int tutorialId)
         {
             using (var entities = new QBotEntities())
             {
@@ -512,7 +512,11 @@ namespace Microsoft.Teams.Apps.QBot.Data
                         .Include(x => x.Course.Questions)
                         .Include(x => x.Course.TutorialGroups)
                         .Include(x => x.Course.UserCourseRoleMappings)
-                        .Where(x => x.CourseId == courseId && x.RoleId == 2).ToList();
+                        .Where(x => 
+                            x.CourseId == courseId && 
+                            x.RoleId == 2 && 
+                            x.User.TutorialGroupMemberships.Any(t => t.TutorialGroupId == tutorialId)
+                        ).ToList();
                     return demonstrators;
                 }
                 catch (Exception e)

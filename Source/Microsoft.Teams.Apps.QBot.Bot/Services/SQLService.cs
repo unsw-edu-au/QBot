@@ -291,13 +291,13 @@ namespace Microsoft.Teams.Apps.QBot.Bot.Services
             }
         }
 
-        public static List<UserCourseRoleMappingModel> GetDemonstrators(int courseId)
+        public static List<UserCourseRoleMappingModel> GetDemonstrators(int courseId, int tutorialId)
         {
             try
             {
-                var demonstrators = SQLAdapter.GetDemonstrators(courseId);
+                var demonstrators = SQLAdapter.GetDemonstrators(courseId, tutorialId);
 
-                var result = ModelMapper.MapToUsersModel(demonstrators);
+                var result = ModelMapper.MapToUsersModelOnly(demonstrators);
 
                 return result;
             }
