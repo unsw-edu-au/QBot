@@ -617,9 +617,11 @@ namespace Microsoft.Teams.Apps.QBot.Data
             }
         }
 
-        public static List<Course> GetCourses()
+        public static List<Course> GetCourses(string cs = null)
         {
-            using (var entities = new QBotEntities())
+            // if a connectionstring is manually provided, ensure the connectionstring is passed to the EF constructor
+            // this is used in the Function App
+            using (var entities = cs == null ? new QBotEntities() : new QBotEntities(cs))
             {
                 try
                 {

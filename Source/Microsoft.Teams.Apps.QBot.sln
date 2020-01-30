@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Teams.Apps.QBot.Bot", "Microsoft.Teams.Apps.QBot.Bot\Microsoft.Teams.Apps.QBot.Bot.csproj", "{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}"
 EndProject
@@ -29,6 +29,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DashboardTabApp", "DashboardTabApp\DashboardTabApp.csproj", "{398A1B5D-838E-42C2-B1DE-75E7E571C8C1}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Microsoft.Teams.Apps.QBot.Database", "Microsoft.Teams.Apps.QBot.Database\Microsoft.Teams.Apps.QBot.Database.sqlproj", "{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Teams.Apps.QBot.FunctionApp", "Microsoft.Teams.Apps.QBot.FunctionApp\Microsoft.Teams.Apps.QBot.FunctionApp.csproj", "{8479B05D-DF7D-4D29-8F98-0E4A84D3179C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,6 +90,12 @@ Global
 		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{8479B05D-DF7D-4D29-8F98-0E4A84D3179C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8479B05D-DF7D-4D29-8F98-0E4A84D3179C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8479B05D-DF7D-4D29-8F98-0E4A84D3179C}.Release.CQU|Any CPU.ActiveCfg = Release|Any CPU
+		{8479B05D-DF7D-4D29-8F98-0E4A84D3179C}.Release.CQU|Any CPU.Build.0 = Release|Any CPU
+		{8479B05D-DF7D-4D29-8F98-0E4A84D3179C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8479B05D-DF7D-4D29-8F98-0E4A84D3179C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +107,7 @@ Global
 		{8392407D-7934-4D2A-B0F0-BD6E866A2E38} = {947E8F2F-DF22-4D54-9E5F-651FA6307386}
 		{735D1174-B386-4010-A48B-31E33CC89492} = {947E8F2F-DF22-4D54-9E5F-651FA6307386}
 		{2B080127-D4C0-4E4E-BB8E-6CA10BE85D22} = {47FDD072-7A22-41E1-8028-A8C9A674614C}
+		{8479B05D-DF7D-4D29-8F98-0E4A84D3179C} = {47FDD072-7A22-41E1-8028-A8C9A674614C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1697AC8A-8C72-4B33-B818-4E1950D95446}
