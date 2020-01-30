@@ -223,24 +223,14 @@ namespace Microsoft.Teams.Apps.QBot.Bot
                 var student = SQLService.GetUser(originalStudentUpn);
 
                 var adminsOnTeams = new List<ChannelAccount>();
+                var tutorialAdmins = new List<UserCourseRoleMappingModel>();
+
                 if (student != null)
                 {
                     if (student.Role != null && student.Role.Name != Constants.STUDENT_ROLE)
                     {
                         // Not a student - notify lecturer
-                        var lecturers = SQLService.GetUsersByRole(Constants.LECTURER_ROLE, courseID);
-
-                        foreach (var admin in lecturers)
-                        {
-                            var adminOnTeams = teamsMembers.Where(x =>
-                                (x.Email == admin.Email || x.Email == admin.UserName || x.UserPrincipalName == admin.UserName || x.UserPrincipalName == admin.Email) &&
-                                (x.Email != student.Email && x.Email != student.UserName && x.UserPrincipalName != student.UserName && x.UserPrincipalName != student.Email)
-                            ).FirstOrDefault();
-                            if (adminOnTeams != null)
-                            {
-                                adminsOnTeams.Add(adminOnTeams);
-                            }
-                        }
+                        tutorialAdmins = SQLService.GetUsersByRole(Constants.LECTURER_ROLE, courseID);
                     }
                     else
                     {
@@ -248,47 +238,19 @@ namespace Microsoft.Teams.Apps.QBot.Bot
                         if (student.TutorialGroups != null && student.TutorialGroups.Count > 0)
                         {
                             // Notify demonstrator
-                            var tutorialAdmins = new List<UserCourseRoleMappingModel>();
-                            foreach (var tutorialGroup in student.TutorialGroups.Where(x => x.CourseId == courseID))
+                            foreach (var tutorialGroup in student.TutorialGroups.Where(x=>x.CourseId == courseID))
                             {
-                                tutorialAdmins.AddRange(SQLService.GetDemonstrators(courseID, tutorialGroup.ID));
-                            }
-
-
-                            if (tutorialAdmins != null)
-                            {
-                                foreach (var admin in tutorialAdmins)
+                                var demonstrators = SQLService.GetDemonstrators(courseID, tutorialGroup.ID);
+                                if (demonstrators != null && demonstrators.Count > 0)
                                 {
-                                    var adminOnTeams = teamsMembers.Where(x =>
-                                        (x.Email == admin.Email || x.Email == admin.UserName || x.UserPrincipalName == admin.UserName || x.UserPrincipalName == admin.Email) &&
-                                        (x.Email != student.Email && x.Email != student.UserName && x.UserPrincipalName != student.UserName && x.UserPrincipalName != student.Email)
-                                    ).FirstOrDefault();
-                                    if (adminOnTeams != null)
-                                    {
-                                        adminsOnTeams.Add(adminOnTeams);
-                                    }
+                                    tutorialAdmins.AddRange(demonstrators);
                                 }
                             }
                         }
                         else
                         {
                             // student without tutorial class?
-                            var allAdmins = SQLService.GetAllAdmins(student.CourseId).Distinct();
-
-                            if (allAdmins != null)
-                            {
-                                foreach (var admin in allAdmins)
-                                {
-                                    var adminOnTeams = teamsMembers.Where(x =>
-                                        (x.Email == admin.Email || x.Email == admin.UserName || x.UserPrincipalName == admin.UserName || x.UserPrincipalName == admin.Email) &&
-                                        (x.Email != student.Email && x.Email != student.UserName && x.UserPrincipalName != student.UserName && x.UserPrincipalName != student.Email)
-                                    ).FirstOrDefault();
-                                    if (adminOnTeams != null)
-                                    {
-                                        adminsOnTeams.Add(adminOnTeams);
-                                    }
-                                }
-                            }
+                            tutorialAdmins = SQLService.GetAllAdmins(student.CourseId).Distinct().ToList();
                         }
 
                     }
@@ -297,9 +259,12 @@ namespace Microsoft.Teams.Apps.QBot.Bot
                 {
                     // User not in database
                     // Notify lecturer
-                    var lecturers = SQLService.GetUsersByRole(Constants.LECTURER_ROLE, courseID);
+                    tutorialAdmins = SQLService.GetUsersByRole(Constants.LECTURER_ROLE, courseID);
+                }
 
-                    foreach (var admin in lecturers)
+                if (tutorialAdmins != null && tutorialAdmins.Count > 0)
+                {
+                    foreach (var admin in tutorialAdmins)
                     {
                         var adminOnTeams = teamsMembers.Where(x =>
                             (x.Email == admin.Email || x.Email == admin.UserName || x.UserPrincipalName == admin.UserName || x.UserPrincipalName == admin.Email) &&
@@ -336,36 +301,49 @@ namespace Microsoft.Teams.Apps.QBot.Bot
                 // create new tagging reply
                 Microsoft.Bot.Connector.Activity newReply = activity.CreateReply();
 
-                // Tag Admins
-                var distinct = adminsOnTeams
+                if (adminsOnTeams != null && adminsOnTeams.Count > 0)
+                {
+                    // Tag Admins
+                    var distinct = adminsOnTeams
                     .GroupBy(p => p.Id)
                     .Select(g => g.First())
                     .ToList();
 
-                foreach (var admin in distinct)
-                {
-                    newReply.AddMentionToText(admin, MentionTextLocation.AppendText);
-                }
+                    foreach (var admin in distinct)
+                    {
+                        newReply.AddMentionToText(admin, MentionTextLocation.AppendText);
+                    }
 
-                var newActionJson = "{\"type\":\"" + Constants.ACTIVITY_SELECT_ANSWER + "\",\"questionId\": \"" + questionId + "\"}";
+                    var newActionJson = "{\"type\":\"" + Constants.ACTIVITY_SELECT_ANSWER + "\",\"questionId\": \"" + questionId + "\"}";
 
-                var newCard = new HeroCard()
-                {
-                    Buttons = new List<CardAction>()
+                    var newCard = new HeroCard()
+                    {
+                        Buttons = new List<CardAction>()
                         {
                             new CardAction(ActivityTypes.Invoke, "Select an answer", value: newActionJson),
                         },
-                };
+                    };
 
-                newReply.Attachments.Add(newCard.ToAttachment());
+                    newReply.Attachments.Add(newCard.ToAttachment());
 
-                try
-                {
-                    var response = await connector.Conversations.ReplyToActivityAsync(activity.Conversation.Id, activity.ReplyToId, newReply);
-                }
-                catch (Exception e)
-                {
-                    Trace.TraceError(e.ToString());
+                    try
+                    {
+                        var response = await connector.Conversations.ReplyToActivityAsync(activity.Conversation.Id, activity.ReplyToId, newReply);
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.TraceError(e.ToString());
+                    }
+                } else {
+                    try
+                    {
+                        newReply.Text = "I'm sorry, I could not find anyone to tag. Please ensure the user has been assigned a tutorial group with atleast one demonstrator.";
+                        var response = await connector.Conversations.ReplyToActivityAsync(activity.Conversation.Id, activity.ReplyToId, newReply);
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.TraceError(e.ToString());
+                    }
                 }
             }
         }
