@@ -34,7 +34,7 @@ Here is a summary of all Azure resources that need to be created:
 |10|App Service|Hosts the [Questions Tab App](#questions-tab-web-app) Angular site|
 |11|App Registration|To support the QBot API authentication|
 |12|App Registration|To support Graph API access|
-
+|13|Azure Function App|To support the QnA Service|
 
 ---
 
@@ -180,6 +180,13 @@ https://www.qnamaker.ai/Create
 > 5. **QnA HTTP Endpoint**
 
 
+### Azure Function App
+Create a new Function App with the following values
+
+|Setting|Value|
+|:-|:-|
+|Name|Something easily identifiable as the Function App<br>Example: `qbot-function-app.azurewebsites.net`|
+|Runtime Stack|.NET Core |
 
 ## QBot Application Build & Deployment
 After your Azure resources are setup, next step is to Build QBot from source control. Grab the latest copy of all source code from the Git repo.
@@ -333,7 +340,6 @@ Fill in the target database connection based on the [provisioned SQL Server](#sq
 
 ![](images/publish-database.png)
 
-
 ### Deploy the Bot to Teams
 #### Prepare the manifest file
 Edit the `manifest.json` file, and replace the following values:
@@ -447,6 +453,27 @@ Congratulations, you have successfully built the QBot solution, and added the Ap
 
 4. Create the required Tutorial Groups
 5. Assign and Map Users. Click the *Sync Users from Teams* button and assign their roles and any necessary tutorial groups
+
+
+### Function App
+The Function App project is called `Microsoft.Teams.Apps.QBot.FunctionApp` and is a .NET Core Azure Function App
+Right click on the project and choose "Publish" to your Function App.
+
+After publishing, go to the Function App resource on Azure and navigate to Configuration settings. 
+Here, create a new connection string setting with the following values
+
+|Setting|Value|
+|:-|:-|
+|Name|QBotEntities
+|Value|Your SQL Connection String|
+|Type|Custom|
+
+Note that the connection string must not have double quotes, and the `&quot;` should be replaced with a single quote `'`
+``` xml
+<!-- Replace ***** with your SQL Server, database, username & password -->
+metadata=res://*/QuestionBotModel.csdl|res://*/QuestionBotModel.ssdl|res://*/QuestionBotModel.msl;provider=System.Data.SqlClient;provider connection string='data source=*****;initial catalog=*****;user id=*****;password=*****;MultipleActiveResultSets=True;App=EntityFramework'
+```
+
 
 ## Start using!
 You can now at-mention QBot as follows in a class team/channel: `@Question what is the most awesome community learning app in Teams?` 

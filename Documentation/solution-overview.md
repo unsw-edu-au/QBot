@@ -7,7 +7,8 @@ The QBot solution has the following main components:
 * **Dashboard Tab**: Angular 6 App surfaced as a tab in the QBot personal chat
 * **Questions Tab**: Angular 6 App surfaced as a channels tab
 * **SQL Database**: Stores QBot questions, user and course configuration
-* **QnA Maker**: Drives 
+* **QnA Maker**: Cognitive service that drives all the answering and learning of QBot
+* **Azure Function**: Scheduled service that auto publishes the QnA Maker knowledgebase
 
 There are also the various Azure App Registrations that are used to authenticate and authorise the various components. Full details can be found in the [deployment guide](deployment-guide.md)
 
@@ -28,10 +29,12 @@ This is an Angular 6 application deployed to an Azure App Service. Within the QB
 This is an Angular 6 application deployed to an Azure App Service. Within the QBot solution, it is hosted within a Microsoft Teams static tab. It faciliates administrative functions used to manage the QBot solution within the team.
 
 ## QnA Maker Service
-The QnA Maker knowledge base drives all answering and learning aspects of the QBot.
+This is a Natural Language Processing (NLP) service that finds the best match for a question within the knowledgebase. This service allows QBot to learn based on the interactions with the users
 
 ## SQL Server Database
 Stores the list of users, roles, tutorial groups, user-tutorial mappings, assessments, questions, attachments, references and configuration settings.
 
+## Azure Function
+An automated service that runs on a defined timer schedule to publish and complete the self training aspect of the QnA Maker service.
 
 
