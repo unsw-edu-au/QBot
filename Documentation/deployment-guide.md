@@ -465,9 +465,10 @@ Here, create a new connection string setting with the following values
 |Setting|Value|
 |:-|:-|
 |Name|QBotEntities
-|Value|Your SQL Connection String|
+|Value|SQL Connection String|
 |Type|Custom|
 
+SQL Connection String:
 Note that the connection string must not have double quotes, and the `&quot;` should be replaced with a single quote `'`
 ``` xml
 <!-- Replace ***** with your SQL Server, database, username & password -->
