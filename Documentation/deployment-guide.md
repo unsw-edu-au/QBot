@@ -465,14 +465,14 @@ Here, create a new connection string setting with the following values
 |Setting|Value|
 |:-|:-|
 |Name|QBotEntities
-|Value|SQL Connection String|
+|Value|See SQL Connection String below|
 |Type|Custom|
 
 SQL Connection String:
-Note that the connection string must not have double quotes, and the `&quot;` should be replaced with a single quote `'`
+The string is similar to the one you'd defined in `connectionStrings.secret.config` file under the QBot API project. Pick up the value defined in `connectionString=` parameter from the config file. Note that the connection string must not have double quotes, and the `&quot;` should be replaced with a single quote `'`. Your string will look something like the following:
 ``` xml
 <!-- Replace ***** with your SQL Server, database, username & password -->
-metadata=res://*/QuestionBotModel.csdl|res://*/QuestionBotModel.ssdl|res://*/QuestionBotModel.msl;provider=System.Data.SqlClient;provider connection string='data source=*****;initial catalog=*****;user id=*****;password=*****;MultipleActiveResultSets=True;App=EntityFramework'
+metadata=res://*/QuestionBotModel.csdl|res://*/QuestionBotModel.ssdl|res://*/QuestionBotModel.msl;provider=System.Data.SqlClient;provider connection string=';data source=*****;initial catalog=*****;user id=*****;password=*****;MultipleActiveResultSets=True;App=EntityFramework';
 ```
 
 
