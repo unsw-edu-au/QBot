@@ -93,7 +93,7 @@ Go to Firewall settings, and ensure the "Allow Azure services and resources to a
 > The Azure SQL Server connection string<br>
 > eg: `data source=qbot-azure-sql-server;initial catalog=qbot-db;user id=sql-user;password=*****;MultipleActiveResultSets=True;App=EntityFramework&quot;`
 
-#### QBot API Auth App Registration
+### QBot API Auth App Registration
 The custom Teams tabs are Angular apps that call the QBot API service (.NET Web API). This App Registration is used to authenticate these API calls. 
 
 Create a new **App Registration** for the purpose of QBot API Authentication. 
@@ -111,7 +111,7 @@ You will need to be an Application Administrator on your tenant.
 > **Application (client) ID**<br>
 > **Directory (tenant) ID**
 
-#### Graph API Access App Registration
+### Graph API Access App Registration
 The QBot API service in turn calls Graph API to retrieve information like the questions asked, and conversations within a channel. This App Registration is used to authenticate these Graph API calls.
 
 Create a new **App Registration** to allow Graph API access. 
