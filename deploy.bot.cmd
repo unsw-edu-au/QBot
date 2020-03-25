@@ -47,36 +47,40 @@ IF NOT DEFINED KUDU_SYNC_CMD (
   :: Locally just running "kuduSync" would also work
   SET KUDU_SYNC_CMD=%appdata%\npm\kuduSync.cmd
 )
-IF NOT DEFINED DEPLOYMENT_TEMP (
-  SET DEPLOYMENT_TEMP=%temp%\___deployTemp%random%
+
+  SET DEPLOYMENT_TEMP=%temp%\deploy
   SET CLEAN_LOCAL_DEPLOYMENT_TEMP=true
-)
+
 
 IF DEFINED CLEAN_LOCAL_DEPLOYMENT_TEMP (
   IF EXIST "%DEPLOYMENT_TEMP%" rd /s /q "%DEPLOYMENT_TEMP%"
   mkdir "%DEPLOYMENT_TEMP%"
 )
 
-IF DEFINED MSBUILD_PATH goto MsbuildPathDefined
-SET MSBUILD_PATH=%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe
-:MsbuildPathDefined
+SET MSBUILD_PATH=%MSBUILD_15_DIR%\MSBuild.exe
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
 :: ----------
 
-echo Handling ASP.NET Core Web Application deployment.
+echo Handling .NET Web Application deployment.
 
-:: 1. Restore nuget packages
-call :ExecuteCmd dotnet restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.sln"
-IF !ERRORLEVEL! NEQ 0 goto error
 
-:: 2. Build and publish
-call :ExecuteCmd dotnet publish "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.Bot\Microsoft.Teams.Apps.QBot.Bot.csproj" --output "%DEPLOYMENT_TEMP%" --configuration Release
-IF !ERRORLEVEL! NEQ 0 goto error
+  call :ExecuteCmd nuget restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.sln" -MSBuildPath "%MSBUILD_15_DIR%"
+  IF !ERRORLEVEL! NEQ 0 goto error
+echo building project
 
-:: 3. KuduSync
-call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
-IF !ERRORLEVEL! NEQ 0 goto error
+  call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.Bot\Microsoft.Teams.Apps.QBot.Bot.csproj" /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="%DEPLOYMENT_TEMP%";Configuration=Release;UseSharedCompilation=false /p:SolutionDir="%DEPLOYMENT_SOURCE%\Microsoft.Teams.App.KronosWfc\\"
+  IF !ERRORLEVEL! NEQ 0 goto error
+  echo done building project
+
+echo starting publish
+echo Temp %DEPLOYMENT_TEMP%
+echo Target %DEPLOYMENT_TARGET%
+echo manifest path %NEXT_MANIFEST_PATH%
+  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
+  echo done publish
+  IF !ERRORLEVEL! NEQ 0 goto error
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 goto end
