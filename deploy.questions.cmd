@@ -47,24 +47,35 @@ IF NOT DEFINED KUDU_SYNC_CMD (
   :: Locally just running "kuduSync" would also work
   SET KUDU_SYNC_CMD=%appdata%\npm\kuduSync.cmd
 )
+
+  SET DEPLOYMENT_TEMP=%temp%\deployconfig
+  SET CLEAN_LOCAL_DEPLOYMENT_TEMP=true
+
+
+IF DEFINED CLEAN_LOCAL_DEPLOYMENT_TEMP (
+  IF EXIST "%DEPLOYMENT_TEMP%" rd /s /q "%DEPLOYMENT_TEMP%"
+  mkdir "%DEPLOYMENT_TEMP%"
+)
+
+SET MSBUILD_PATH=%MSBUILD_15_DIR%\MSBuild.exe
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
 :: ----------
-echo Handling function App deployment with Msbuild.
+
+echo Handling ASP.NET Core Web Application deployment.
 
 :: 1. Restore nuget packages
-call :ExecuteCmd nuget.exe restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.Bot.sln" -MSBuildPath "%MSBUILD_15_DIR%"
+call :ExecuteCmd dotnet restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.sln"
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. Build and publish
-call :ExecuteCmd "%MSBUILD_15_DIR%\MSBuild.exe" "%DEPLOYMENT_SOURCE%\Source\QuestionsTabApp\QuestionsTabApp.csproj" /p:DeployOnBuild=true /p:configuration=Release /p:publishurl="%DEPLOYMENT_TEMP%" %SCM_BUILD_ARGS%
+call :ExecuteCmd dotnet publish "%DEPLOYMENT_SOURCE%\Source\QuestionsTabApp\QuestionsTabApp.csproj" --output "%DEPLOYMENT_TEMP%" --configuration Release
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 3. KuduSync
-IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
-  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
-  IF !ERRORLEVEL! NEQ 0 goto error
-)
+call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
+IF !ERRORLEVEL! NEQ 0 goto error
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 goto end
