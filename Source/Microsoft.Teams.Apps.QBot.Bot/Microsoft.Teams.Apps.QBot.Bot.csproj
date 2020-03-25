@@ -308,8 +308,6 @@
     <AdditionalFiles Include="..\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
-    <Content Include="appSettings.secret.config" />
-    <Content Include="connectionStrings.secret.config" />
     <None Include="Properties\PublishProfiles\Antares-AskHRPlus-BotAPI - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\Antares-AskHRPlus-BotAPI - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Antares-Qbot-BotApi - FTP.pubxml" />
