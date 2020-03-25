@@ -53,7 +53,7 @@ IF NOT DEFINED KUDU_SYNC_CMD (
 echo Handling function App deployment with Msbuild.
 
 :: 1. Restore nuget packages
-call :ExecuteCmd nuget.exe restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.Bot.sln" -MSBuildPath "%MSBUILD_15_DIR%"
+call :ExecuteCmd nuget.exe restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.sln" -MSBuildPath "%MSBUILD_15_DIR%"
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. Build and publish
