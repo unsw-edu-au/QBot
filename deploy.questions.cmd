@@ -64,7 +64,8 @@ SET MSBUILD_PATH=%MSBUILD_15_DIR%\MSBuild.exe
 :: ----------
 
 echo Handling ASP.NET Core Web Application deployment.
-
+echo %DEPLOYMENT_SOURCE%
+echo deployment source
 :: 1. Restore nuget packages
 call :ExecuteCmd nuget restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.sln" -MSBuildPath "%MSBUILD_15_DIR%"
 
