@@ -9,8 +9,12 @@ IF "%SITE_ROLE%" == "bot" (
 		IF "%SITE_ROLE%" == "questions" (
 			deploy.questions.cmd
 		) ELSE (
-			echo You have to set SITE_ROLE setting to either "bot" or "dashboard" or "questions" or "function"
-			exit /b 1
+			IF "%SITE_ROLE%" == "function" (
+				deploy.function.cmd
+			) ELSE (
+				echo You have to set SITE_ROLE setting to either "bot" or "dashboard" or "questions" or "function"
+				exit /b 1
+			)
 		)
 	)
 )
