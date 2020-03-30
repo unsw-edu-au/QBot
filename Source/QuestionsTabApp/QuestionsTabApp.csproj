@@ -12,6 +12,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+        <SpaRoot>\</SpaRoot>
     </PropertyGroup>
 
     <ItemGroup>
@@ -39,5 +40,23 @@
       <TypeScriptCompile Include="src\app\models\Question.ts" />
       <TypeScriptCompile Include="src\app\models\User.ts" />
     </ItemGroup>
+     
+     <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="npm install --no-audit" />
+		<Message Importance="high" Text="Building the client app using 'npm'. This may take several minutes..." />
+		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+		<Message Importance="high" Text="Finished building the client app" />
+
+		<!-- Include the newly-built files in the publish output -->
+		<ItemGroup>
+			<DistFiles Include="$(SpaRoot)build\**; $(SpaRoot)build-ssr\**" />
+			<ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+				<RelativePath>%(DistFiles.Identity)</RelativePath>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			</ResolvedFileToPublish>
+		</ItemGroup>
+	</Target>
 
 </Project>
