@@ -12,7 +12,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-        <SpaRoot>\</SpaRoot>
+        <SpaRoot></SpaRoot>
     </PropertyGroup>
 
     <ItemGroup>
