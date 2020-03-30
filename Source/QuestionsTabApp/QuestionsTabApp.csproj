@@ -12,7 +12,6 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-        <PostBuildEvent>ng build --aot</PostBuildEvent>
     </PropertyGroup>
 
     <ItemGroup>
