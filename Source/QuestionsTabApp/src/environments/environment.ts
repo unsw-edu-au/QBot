@@ -1,16 +1,12 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
     production: false,
-    apiBaseUrl: "https://qbot-api.azurewebsites.net/api/Request/",
-    selfUrl: "",
+    apiBaseUrl: "https://qbotapidemo.azurewebsites.net/api/Request/",
+    selfUrl: "https://qbotdemo-questions-tab.azurewebsites.net",
 
     authConfig: {
         instance: "https://login.microsoftonline.com/",
-        tenantId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
-        clientId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
+        tenantId: "f986a5cc-1665-4eb1-a645-cc46521cfbf2",
+        clientId: "f7e0fa26-6301-4fb0-bdc8-a692f2ae94ea",
         redirectUri: "/app-silent-end",
         cacheLocation: "localStorage",
         navigateToLoginRequestUrl: false,
@@ -27,11 +23,3 @@ export const environment = {
     gid: "",
     cname: ""
 };
-
-/*
- * In development mode, to ignore zone related error stack frames such as
- * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can
- * import the following file, but please comment it out in production mode
- * because it will have performance impact when throw error
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
