@@ -44,7 +44,7 @@
      <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
 		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
 		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes...$(SpaRoot)" />
-		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="npm install @angular/cli" />
+		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="npm install -g @angular/cli" />
 		<Message Importance="high" Text="Building the client app using 'npm'. This may take several minutes..." />
 		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="ng build --prod" />
 		<Message Importance="high" Text="Finished building the client app" />
