@@ -1,16 +1,11 @@
-// do not populate the following:
-// - token
-// - upn
-// - tid
 export const environment = {
-    production: true,
-    token: "",
-    upn: "",
-    tid: "",
+    production: false,
+    apiBaseUrl: "https://qbottesting13.azurewebsites.net/api/Request/",
+
     authConfig: {
         instance: "https://login.microsoftonline.com/",
-        tenantId: "",
-        clientId: "",
+        tenantId: "34b955cb-5ad9-4daf-b94d-9a234739b382",
+        clientId: "11535dc3-2360-40f6-bb46-bac309dd2ee2",
         redirectUri: "/app-silent-end",
         cacheLocation: "localStorage",
         navigateToLoginRequestUrl: false,
@@ -19,5 +14,9 @@ export const environment = {
         popUpUri: "/app-silent-start",
         popUpWidth: 600,
         popUpHeight: 535
-    }
+    },
+
+    // do not populate the following:
+    upn: "",
+    tid: "",
 };
