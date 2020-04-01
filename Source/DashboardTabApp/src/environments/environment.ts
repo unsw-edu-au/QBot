@@ -1,11 +1,12 @@
 export const environment = {
     production: false,
-    apiBaseUrl: "https://qbotapidemo.azurewebsites.net/api/Request/",
-    
+    apiBaseUrl: "https://qbottesting13.azurewebsites.net/api/Request/",
+    selfUrl: "https://qbottesting13-questions.azurewebsites.net",
+
     authConfig: {
         instance: "https://login.microsoftonline.com/",
-        tenantId: "f986a5cc-1665-4eb1-a645-cc46521cfbf2",
-        clientId: "f7e0fa26-6301-4fb0-bdc8-a692f2ae94ea",
+        tenantId: "34b955cb-5ad9-4daf-b94d-9a234739b382",
+        clientId: "11535dc3-2360-40f6-bb46-bac309dd2ee2",
         redirectUri: "/app-silent-end",
         cacheLocation: "localStorage",
         navigateToLoginRequestUrl: false,
@@ -19,4 +20,6 @@ export const environment = {
     // do not populate the following:
     upn: "",
     tid: "",
+    gid: "",
+    cname: ""
 };
