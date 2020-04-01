@@ -13,6 +13,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <UserSecretsId>9758154d-5763-4d11-9572-166c88d6e5b9</UserSecretsId>
+      <SpaRoot></SpaRoot>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,5 +53,24 @@
     <TypeScriptCompile Include="src\app\question\question.component.ts" />
     <TypeScriptCompile Include="src\app\config\config.component.ts" />
   </ItemGroup>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes...$(SpaRoot)" />
+		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="npm install -g @angular/cli" />
+         <Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="npm install --save-dev @angular-devkit/build-angular" />
+		<Message Importance="high" Text="Building the client app using 'npm'. This may take several minutes..." />
+		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="ng build --prod" />
+		<Message Importance="high" Text="Finished building the client app" />
+
+		<!-- Include the newly-built files in the publish output -->
+		<ItemGroup>
+			<DistFiles Include="$(SpaRoot)build\**; $(SpaRoot)build-ssr\**" />
+			<ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+				<RelativePath>%(DistFiles.Identity)</RelativePath>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			</ResolvedFileToPublish>
+		</ItemGroup>
+	</Target>
 
 </Project>
