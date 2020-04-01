@@ -72,12 +72,21 @@ call :ExecuteCmd dotnet restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. Build and publish
+echo building Data project
 call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.Data\Microsoft.Teams.Apps.QBot.Data.csproj" /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="%DEPLOYMENT_TEMP%";Configuration=Release;UseSharedCompilation=false /p:SolutionDir="%DEPLOYMENT_SOURCE%\Source\\"
+echo done building Data project
 
+echo building dashboard project
 call :ExecuteCmd dotnet publish "%DEPLOYMENT_SOURCE%\Source\DashboardTabApp\DashboardTabApp.csproj" --output "%DEPLOYMENT_TEMP%" --configuration Release
 IF !ERRORLEVEL! NEQ 0 goto error
+echo done building dashboard project
 
 :: 3. KuduSync
+echo starting publish
+echo Temp %DEPLOYMENT_TEMP%
+echo Target %DEPLOYMENT_TARGET%
+echo manifest path %NEXT_MANIFEST_PATH% 
+
 call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
 IF !ERRORLEVEL! NEQ 0 goto error
 
