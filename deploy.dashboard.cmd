@@ -66,10 +66,16 @@ SET MSBUILD_PATH=%MSBUILD_15_DIR%\MSBuild.exe
 echo Handling ASP.NET Core Web Application deployment.
 echo deployment source %DEPLOYMENT_SOURCE%
 :: 1. Restore nuget packages
+call :ExecuteCmd nuget restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.sln"
+
 call :ExecuteCmd dotnet restore "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.sln"
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. Build and publish
+echo building Data project
+call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\Source\Microsoft.Teams.Apps.QBot.Data\Microsoft.Teams.Apps.QBot.Data.csproj" /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="%DEPLOYMENT_TEMP%";Configuration=Release;UseSharedCompilation=false /p:SolutionDir="%DEPLOYMENT_SOURCE%\Source\\"
+echo done building Data project
+
 echo building dashboard project
 call :ExecuteCmd dotnet publish "%DEPLOYMENT_SOURCE%\Source\DashboardTabApp\DashboardTabApp.csproj" --output "%DEPLOYMENT_TEMP%" --configuration Release
 IF !ERRORLEVEL! NEQ 0 goto error
