@@ -48,9 +48,9 @@ Register two Azure AD applications in your tenant's directory: one for the bot, 
 	![app-registration](images/app-registration.png)
 4. Click on the "Register" button.
 5. When the app is registered, you'll be taken to the app's "Overview" page. Copy the **Application (client) ID**; we will need it later. Verify that the "Supported account types" is set to **Multiple organizations**.
-	![singletenant overview](https://github.com/OfficeDev/Kronos-Workforce-Central-Bot/wiki/Images/singletenant%20overview.png)
+	![app-registration-overview](images/app-registration-overview.png)
 6. On the side rail in the Manage section, navigate to the "Certificates & secrets" section. In the Client secrets section, click on "+ New client secret". Add a description for the secret and select an expiry time. Click "Add".
-	![singletenant-app-secret](https://github.com/OfficeDev/Kronos-Workforce-Central-Bot/wiki/Images/singletenant-app-secret.png)
+	![app-registration-secret](images/app-registration-secret.png)
 
 7. Once the client secret is created, copy its **Value**; we will need it later. Save the client secret.
 8. On the side rail in the Overview section, please note the following settings for later use:
@@ -162,7 +162,7 @@ selfUrl|The base URL where this [Questions Tab App](#questions-tab-web-app) (Ang
 
 # Step 3: Deploy to your Azure subscription
 1. Click on the "Deploy to Azure" button below.
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOfficeDev%2Fmicrosoft-teams-faqplusplus-app%2Fmaster%2FDeployment%2Fazuredeploy.json)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOfficeDev%2Fvishnuabhrapudi%2Fmaster%2FDeployment%2Fazuredeploy.json)
 
 2. When prompted, log in to your Azure subscription.
 
