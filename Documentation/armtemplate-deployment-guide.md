@@ -165,7 +165,7 @@ Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make th
 
 # Step 3: Deploy to your Azure subscription
 1. Click on the "Deploy to Azure" button below.
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fvishnuabhrapudi%2Fmaster%2FDeployment%2Fazuredeploy.json)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fvishnuabhrapudi%2FQBot%2Fmaster%2FDeployment%2Fazuredeploy.json)
 
 2. When prompted, log in to your Azure subscription.
 
