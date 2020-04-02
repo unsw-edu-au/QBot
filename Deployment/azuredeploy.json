@@ -9,39 +9,79 @@
                 "description": "The base name to use for the resources that will be provisioned."
             }
         },
-        "sku": {
+		"appDisplayName": {
             "type": "string",
-            "allowedValues": [
-                "Basic",
-                "Standard",
-                "Premium"
-            ],
-            "defaultValue": "Standard",
+            "minLength": 1,
+            "defaultValue": "QBot",
             "metadata": {
-                "description": "The pricing tier for the hosting plan."
+                "description": "The app (and bot) display name."
             }
         },
-        "planSize": {
+		"appDescription": {
             "type": "string",
-            "allowedValues": [
-                "1",
-                "2",
-                "3"
-            ],
-            "defaultValue": "1",
+            "minLength": 1,
+            "defaultValue": "QBot is a custom Teams app that was designed for an educational or classroom context.",
             "metadata": {
-                "description": "The size of the hosting plan (small, medium, or large)."
+                "description": "The app (and bot) description."
             }
         },
-        "SQLPlanSize": {
+		"appIconUrl": {
             "type": "string",
-            "allowedValues": [
-                "Basic",
-                "Standard"
-            ],
-            "defaultValue": "Basic",
+            "minLength": 1,
+            "defaultValue": "https://github.com/vishnuabhrapudi/QBot/blob/master/Manifest/Color.png",
             "metadata": {
-                "description": "The size of the SQL Server."
+                "description": "The link to the icon for the app. It must resolve to a PNG file."
+            }
+        },
+		"botClientId": {
+            "type": "string",
+            "minLength": 36,
+            "maxLength": 36,
+            "metadata": {
+                "description": "The client ID of the QBot API Azure AD app, e.g., 123e4567-e89b-12d3-a456-426655440000."
+            }
+        },
+		"botClientSecret": {
+            "type": "securestring",
+            "minLength": 1,
+            "metadata": {
+                "description": "The client secret of the QBot API Azure AD app."
+            }
+        },
+		"graphAPIClientId": {
+            "type": "string",
+            "minLength": 36,
+            "maxLength": 36,
+            "metadata": {
+                "description": "The client ID of the Graph API Azure AD app, e.g., 123e4567-e89b-12d3-a456-426655440000."
+            }
+        },
+		"graphAPIClientSecret": {
+            "type": "securestring",
+            "minLength": 1,
+            "metadata": {
+                "description": "The client secret of the Graph API Azure AD app."
+            }
+        },
+		"graphAPIAADPermissionType": {
+            "type": "string",
+            "minLength": 1,
+            "metadata": {
+                "description": "Either Application or Delegate, depending on how API access permissions were set up."
+            }
+        },
+		"qbotServiceAccount": {
+            "type": "string",
+            "minLength": 1,
+            "metadata": {
+                "description": "QBot service account. Must be a valid Teams account. Only applicable when using Delegate permissions."
+            }
+        },
+		"qbotServiceAccountPassword": {
+            "type": "securestring",
+            "minLength": 1,
+            "metadata": {
+                "description": "Encrypted password of the above QBot service account. Only applicable when using Delegate permissions."
             }
         },
         "sqlAdministratorLogin": {
@@ -63,57 +103,48 @@
                 "description": "Location for all resources."
             }
         },
-        "gitRepoUrl": {
+		"tenantId": {
+			"type": "string",
+			"defaultValue": "[subscription().tenantId]",
+			"minLength": 1,
+			"maxLength": 36,
+			"metadata": {
+				"description": "The ID of the tenant to which the app will be deployed."
+			}
+		},
+        "sku": {
             "type": "string",
+            "allowedValues": [
+                "Basic",
+                "Standard",
+                "Premium"
+            ],
+            "defaultValue": "Standard",
             "metadata": {
-                "description": "The URL to the GitHub repository to deploy."
-            },
-            "defaultValue": "https://github.com/unsw-edu-au/QBot.git"
-        },
-        "gitBranch": {
-            "type": "string",
-            "metadata": {
-                "description": "The branch of the GitHub repository to deploy."
-            },
-            "defaultValue": "master"
-        },
-        "appDisplayName": {
-            "type": "string",
-            "minLength": 1,
-            "defaultValue": "QBot",
-            "metadata": {
-                "description": "The app (and bot) display name."
+                "description": "The pricing tier for the hosting plan."
             }
         },
-        "appDescription": {
+		"planSize": {
             "type": "string",
-            "minLength": 1,
-            "defaultValue": "QBot is a custom Teams app that was designed for an educational or classroom context.",
+            "allowedValues": [
+                "1",
+                "2",
+                "3"
+            ],
+            "defaultValue": "1",
             "metadata": {
-                "description": "The app (and bot) description."
+                "description": "The size of the hosting plan (small, medium, or large)."
             }
         },
-        "appIconUrl": {
+        "sqlPlanSize": {
             "type": "string",
-            "minLength": 1,
-            "defaultValue": "https://github.com/unsw-edu-au/QBot/blob/master/Manifest/Color.png",
+            "allowedValues": [
+                "Basic",
+                "Standard"
+            ],
+            "defaultValue": "Basic",
             "metadata": {
-                "description": "The link to the icon for the app. It must resolve to a PNG file."
-            }
-        },
-        "botClientId": {
-            "type": "string",
-            "minLength": 36,
-            "maxLength": 36,
-            "metadata": {
-                "description": "The client ID of the bot Azure AD app, e.g., 123e4567-e89b-12d3-a456-426655440000."
-            }
-        },
-        "botClientSecret": {
-            "type": "securestring",
-            "minLength": 1,
-            "metadata": {
-                "description": "The client secret of the bot Azure AD app."
+                "description": "The size of the SQL Server."
             }
         },
         "searchServiceSku": {
@@ -139,6 +170,20 @@
             "metadata": {
                 "description": "The pricing tier for the QnAMaker service."
             }
+        },
+		"gitRepoUrl": {
+            "type": "string",
+            "metadata": {
+                "description": "The URL to the GitHub repository to deploy."
+            },
+            "defaultValue": "https://github.com/vishnuabhrapudi/QBot.git"
+        },
+        "gitBranch": {
+            "type": "string",
+            "metadata": {
+                "description": "The branch of the GitHub repository to deploy."
+            },
+            "defaultValue": "master"
         }
     },
     "variables": {
@@ -148,7 +193,7 @@
         "botAppUrl": "[concat('https://', variables('botAppDomain'))]",
         "hostingPlanName": "[parameters('baseResourceName')]",
         "botAppInsightsName": "[parameters('baseResourceName')]",
-        "sqlServerName": "[concat('qbotsqlserver', uniqueString(subscription().id, resourceGroup().id))]",
+        "sqlServerName": "[concat(parameters('baseResourceName'), uniqueString(subscription().id, resourceGroup().id))]",
         "databaseName": "[concat(parameters('baseResourceName'), 'DB')]",
         "databaseEdition": "[parameters('SQLplanSize')]",
         "databaseCollation": "SQL_Latin1_General_CP1_CI_AS",
@@ -159,9 +204,11 @@
         ],
         "isSharedPlan": "[contains(variables('sharedSkus'), parameters('sku'))]",
         "skuFamily": "[if(equals(parameters('sku'), 'Shared'), 'D', take(parameters('sku'), 1))]",
+		"dashboardAppDomain": "[concat(variables('botAppName'), '-dashboard.azurewebsites.net')]",
         "dashboardAppName": "[concat(parameters('baseResourceName'), '-dashboard')]",
         "dashboardAppInsightsName": "[concat(parameters('baseResourceName'), '-dashboardAppInsight')]",
-        "questionsAppName": "[concat(parameters('baseResourceName'), '-questions')]",
+        "questionsAppDomain": "[concat(variables('botAppName'), '-questions.azurewebsites.net')]",
+		"questionsAppName": "[concat(parameters('baseResourceName'), '-questions')]",
         "questionsAppInsightsName": "[concat(parameters('baseResourceName'), '-questionsAppInsight')]",
         "qnaMakerAccountName": "[parameters('baseResourceName')]",
         "qnaMakerLocation": "westus",
@@ -176,10 +223,13 @@
             "S2": "standard2"
         },
         "azureSearchSkuValue": "[variables('azureSearchSkus')[toUpper(substring(parameters('searchServiceSku'), 0, 2))]]",
-        "functionAppName": "[concat(parameters('baseResourceName'), '-function')]"
+        "functionAppName": "[concat(parameters('baseResourceName'), '-function')]",
+		"audience": "[concat('api://', parameters('baseResourceName'))]",
+		"configurationUrl": "[concat('https://', variables('questionsAppDomain'), '/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}']",
+		"contentUrl": "[concat('https://', variables('dashboardAppDomain'), '/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}']"
     },
     "resources": [
-        {
+		{
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2016-09-01",
             "name": "[variables('hostingPlanName')]",
@@ -203,6 +253,14 @@
             "name": "[variables('botAppName')]",
             "location": "[parameters('location')]",
             "kind": "app",
+			"dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+				"[resourceId('Microsoft.Web/sites', variables('qnaMakerAppServiceName'))]",
+				"[resourceId('Microsoft.CognitiveServices/accounts', variables('qnaMakerAccountName'))]",
+				"[resourceId('Microsoft.Search/searchServices', variables('azureSearchName'))]",
+				"[resourceId('Microsoft.Insights/components', variables('botAppInsightsName'))]",
+				"[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+            ],
             "properties": {
                 "name": "[variables('botAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
@@ -227,20 +285,71 @@
                             "name": "SITE_ROLE",
                             "value": "bot"
                         },
-                        {
-                            "name": "MicrosoftAppPassword",
-                            "value": "[parameters('botClientSecret')]"
-                        },
-                        {
-                            "name": "MicrosoftAppId",
-                            "value": "[parameters('botClientId')]"
-                        }
-                    ]
+						{
+							"name": "BotId",
+							"value": "[parameters('botClientId')]"
+						},
+						{
+							"name": "BaseUrl",
+							"value": "[variables('botAppUrl')]"
+						},
+						{
+							"name": "MicrosoftAppId",
+							"value": "[parameters('botClientId')]"
+						},
+						{
+							"name": "MicrosoftAppPassword",
+							"value": "[parameters('botClientSecret')]"
+						},
+						{
+							"name": "AADAuthority",
+							"value": "[concat('https://login.microsoftonline.com/', parameters('tenantId'))]"
+						},
+						{
+							"name": "AADServiceName",
+							"value": "[parameters('qbotServiceAccount')]"
+						},
+						{
+							"name": "AADServicePassword",
+							"value": "[parameters('qbotServiceAccountPassword')]"
+						},
+						{
+							"name": "AADClientId",
+							"value": "[parameters('graphAPIClientId')]"
+						},
+						{
+							"name": "AADClientSecret",
+							"value": "[parameters('graphAPIClientSecret')]"
+						},
+						{
+							"name": "AADPermissionType",
+							"value": "[parameters('graphAPIAADPermissionType')]"
+						},
+						{
+							"name": "ida:ClientId",
+							"value": "[parameters('botClientId')]"
+						},
+						{
+							"name": "ida:TenantId",
+							"value": "[parameters('tenantId')]"
+						},
+						{
+							"name": "ida:Audience",
+							"value": "[concat(variables('audience'), '/Read')]"
+						},
+						{
+							"name": "WEBSITE_NODE_DEFAULT_VERSION",
+							"value": "10.15.2"
+						}
+                    ],
+					"connectionStrings": [
+						{
+							"name": "QBotEntities",
+							"connectionString": "[concat('Server=tcp:',reference(variables('sqlServerName')).fullyQualifiedDomainName,',1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]"
+						}
+					]
                 }
             },
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
-            ],
             "resources": [
                 {
                     "apiVersion": "2016-08-01",
@@ -344,7 +453,11 @@
                         {
                             "name": "SITE_ROLE",
                             "value": "dashboard"
-                        }
+                        },
+						{
+							"name": "WEBSITE_NODE_DEFAULT_VERSION",
+							"value": "10.15.2"
+						}
                     ]
                 }
             },
@@ -383,11 +496,11 @@
             "apiVersion": "2016-08-01",
             "name": "[variables('questionsAppName')]",
             "location": "[parameters('location')]",
+			"kind": "app",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "[resourceId('Microsoft.Insights/components/', variables('questionsAppInsightsName'))]"
             ],
-            "kind": "app",
             "properties": {
                 "name": "[variables('questionsAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
@@ -412,7 +525,11 @@
                         {
                             "name": "SITE_ROLE",
                             "value": "questions"
-                        }
+                        },
+						{
+							"name": "WEBSITE_NODE_DEFAULT_VERSION",
+							"value": "10.15.2"
+						}
                     ]
                 }
             },
@@ -430,7 +547,23 @@
                         "branch": "[parameters('gitBranch')]",
                         "IsManualIntegration": true
                     }
-                }
+                },
+				{
+				  "name": "appsettings",
+				  "type": "config",
+				  "apiVersion": "2015-08-01",
+				  "dependsOn": [
+					"[resourceId('Microsoft.Web/sites', variables('questionsAppName'))]"
+				  ],
+				  "tags": {
+					"displayName": "appsettings"
+				  },
+				  "properties": {
+					"production": "false",
+					"apiBaseUrl": "[concat(variables('botAppUrl'), '/api/messages')]",
+					"SITE_ROLE": "questions"
+				  }
+				}
             ]
         },
         {
@@ -502,8 +635,8 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Web/Sites', variables('qnaMakerAppServiceName'))]",
-                "[resourceId('Microsoft.Search/searchServices/', variables('azureSearchName'))]",
-                "[resourceId('microsoft.insights/components/', variables('qnaMakerAppInsightsName'))]"
+                "[resourceId('Microsoft.Search/searchServices', variables('azureSearchName'))]",
+                "[resourceId('microsoft.insights/components', variables('qnaMakerAppInsightsName'))]"
             ]
         },
         {
@@ -571,7 +704,7 @@
                     "type": "config",
                     "dependsOn": [
                         "[resourceId('Microsoft.Web/Sites', variables('qnaMakerAppServiceName'))]",
-                        "[resourceId('Microsoft.Search/searchServices/', variables('azureSearchName'))]"
+                        "[resourceId('Microsoft.Search/searchServices', variables('azureSearchName'))]"
                     ],
                     "properties": {
                         "AzureSearchName": "[variables('azureSearchName')]",
@@ -603,7 +736,7 @@
 					"metadata": [
                         {
                             "name": "CURRENT_STACK",
-                            "value": ".NET Core"
+                            "value": ".NET Core 2.2"
                         }
                     ],
                     "appSettings": [
@@ -611,7 +744,13 @@
                             "name": "SITE_ROLE",
                             "value": "function"
                         }
-                    ]
+                    ],
+					"connectionStrings": [
+						{
+							"name": "QBotEntities",
+							"connectionString": "[concat('Server=tcp:',reference(variables('sqlServerName')).fullyQualifiedDomainName,',1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]"
+						}
+					]
                 }
             },
             "dependsOn": [
@@ -636,9 +775,25 @@
         }
     ],
     "outputs": {
-        "appDomain": {
+		"configurationUrl": {
+            "type": "string",
+            "value": "[variables('configurationUrl')]"
+        },
+		"contentUrl": {
+            "type": "string",
+            "value": "[variables('contentUrl')]"
+        },
+		"appDomain": {
             "type": "string",
             "value": "[variables('botAppDomain')]"
+        },
+		"dashboardAppDomain": {
+            "type": "string",
+            "value": "[variables('dashboardAppDomain')]"
+        },
+		"questionsAppDomain": {
+            "type": "string",
+            "value": "[variables('questionsAppDomain')]"
         },
         "sqlServerFqdn": {
             "type": "string",
