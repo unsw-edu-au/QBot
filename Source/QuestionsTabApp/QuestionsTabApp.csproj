@@ -47,7 +47,7 @@
 		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="npm install -g @angular/cli" />
          <Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="npm install --save-dev @angular-devkit/build-angular" />
 		<Message Importance="high" Text="Building the client app using 'npm'. This may take several minutes..." />
-		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="ng build --prod" />
+		<Exec Condition=" '$(KuduDeployment)' == '' " WorkingDirectory="$(SpaRoot)" Command="npm run build --prod" />
 		<Message Importance="high" Text="Finished building the client app" />
 
 		<!-- Include the newly-built files in the publish output -->
