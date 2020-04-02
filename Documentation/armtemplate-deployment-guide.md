@@ -124,7 +124,9 @@ apiBaseUrl|The URL where the QBot API Web App is deployed, with `/api/Request/` 
 tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
 clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
 
+Open up `Source\DashboardTabApp\src\environments\environment.prod.ts` and make the above changes.
 
+------------
 In the fork repository, open up `Source\QuestionTabApp\src\environments\environment.ts` and make the following changes
 ``` typescript
 export const environment = {
@@ -159,6 +161,7 @@ apiBaseUrl|The URL where the QBot API Web App is deployed, with `/api/Request/` 
 tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
 clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
 selfUrl|The base URL where this [Questions Tab App](#questions-tab-web-app) (Angular app is deployed), eg: `https://<<BaseResourceName>>-questions.azurewebsites.net`|
+Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make the above changes.
 
 # Step 3: Deploy to your Azure subscription
 1. Click on the "Deploy to Azure" button below.
