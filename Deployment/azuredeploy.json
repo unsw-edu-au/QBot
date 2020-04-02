@@ -348,6 +348,7 @@
 						{
 							"name": "QBotEntities",
 							"connectionString": "[concat('Server=tcp:',reference(variables('sqlServerName')).fullyQualifiedDomainName,',1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
+							"providerName": "System.Data.EntityClient",
 							"type": "custom"
 						}
 					]
@@ -736,6 +737,7 @@
 						{
 							"name": "QBotEntities",
 							"connectionString": "[concat('Server=tcp:',reference(variables('sqlServerName')).fullyQualifiedDomainName,',1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
+							"providerName": "System.Data.EntityClient",
 							"type": "custom"
 						}
 					]
