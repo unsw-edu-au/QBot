@@ -227,8 +227,8 @@
         "azureSearchSkuValue": "[variables('azureSearchSkus')[toUpper(substring(parameters('searchServiceSku'), 0, 2))]]",
         "functionAppName": "[concat(parameters('baseResourceName'), '-function')]",
 		"audience": "[concat('api://', parameters('baseResourceName'))]",
-		"configurationUrl": "[concat(variables('questionsAppUrl'), '/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}']",
-		"contentUrl": "[concat(variables('dashboardAppUrl'), '/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}']"
+		"configurationUrl": "[concat(variables('questionsAppUrl'), '/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}')]",
+		"contentUrl": "[concat(variables('dashboardAppUrl'), '/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}')]"
     },
     "resources": [
 		{
