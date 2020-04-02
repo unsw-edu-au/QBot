@@ -8,7 +8,7 @@ To begin, we will need:
 * Access to create a new Team within the "O365 tenant"
 * Access to create new App Registrations in the "Azure Active Directory" of the tenant
 * Access grant admin consent for either Delegated or Application API permissions
-* A QBot Service Account (if using [Delegated permissions](#graph-api-access-app-registration) when calling Graph API). QBot service account is user account created in O365 account.
+* A QBot Service Account (if using Delegated permissions when calling Graph API). QBot service account is user account created in O365 tenant.
 * An Azure subscription where you can create the following types of resources
   * App Service
   * App Service Plan
@@ -45,7 +45,7 @@ Register two Azure AD applications in your tenant's directory: one for the bot, 
 	1. **Name**: The name of your Teams app - if you are following the template for a default deployment, we recommend "Kronos workforce central".
 	2. **Supported account types**: Select "Accounts in any organizational directory (Any Azure AD directory - Multitenant)"
 3. Leave the "Redirect URI" field blank.
-	![singletenant-app-creation](https://github.com/OfficeDev/Kronos-Workforce-Central-Bot/wiki/Images/singletenant-app-creation.png)
+	![app-registration](images/app-registration.png)
 4. Click on the "Register" button.
 5. When the app is registered, you'll be taken to the app's "Overview" page. Copy the **Application (client) ID**; we will need it later. Verify that the "Supported account types" is set to **Multiple organizations**.
 	![singletenant overview](https://github.com/OfficeDev/Kronos-Workforce-Central-Bot/wiki/Images/singletenant%20overview.png)
