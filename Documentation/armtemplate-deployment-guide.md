@@ -163,7 +163,13 @@ clientId|The Application (client) ID of the [QBot API Auth App Registration](#qb
 selfUrl|The base URL where this [Questions Tab App](#questions-tab-web-app) (Angular app is deployed), eg: `https://<<BaseResourceName>>-questions.azurewebsites.net`|
 Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make the above changes.
 
-# Step 3: Deploy to your Azure subscription
+# Step 3: Encrypt QBot service account password
+1. In the local copy of the fork repository, open `StringEncryption.exe` under `PasswordEncryptionTool` folder.
+2. Provide the qbot service account password under Raw string field and click on Encrpt.
+	![password-encrption-tool](images/password-encrption-tool.png)
+3. Copy the string under Encrpted string field for later use.
+
+# Step 4: Deploy to your Azure subscription
 1. Click on the "Deploy to Azure" button below.
 [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fvishnuabhrapudi%2FQBot%2Fmaster%2FDeployment%2Fazuredeploy.json)
 
@@ -219,7 +225,7 @@ Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make th
     * appDomain - This is the base domain for the FAQ Plus Bot.
     * configurationAppUrl - This is the URL for the configuration web application.
 
-# Step 4: Set up authentication for the Dashboard and Questions apps
+# Step 5: Set up authentication for the Dashboard and Questions apps
 1. Note the location of the Dashboard app and Questions app that you deployed, which is `https://[BaseResourceName]-dashboard.azurewebsites.net` and `https://[BaseResourceName]-questions.azurewebsites.net`. For example, if you chose "contosoqbot" as the base name, the dahboard app will be at `https://contosoqbot-dashboard.azurewebsites.net` and the questions app will be at `https://contosoqbot-questions.azurewebsites.net`.
 2. Go back to the "App Registrations" page [here](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredAppsPreview).
 
@@ -236,14 +242,14 @@ Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make th
 
 6. Click "Save" to commit your changes.
 
-# Step 5: Setup SQL Server Schema
+# Step 6: Setup SQL Server Schema
 Clone the fork respository and open in Visual Studio. Run the included SSDT package to create the initial SQL database schema and seed data.
 To do this within Visual Studio, right click on the "Microsoft.Teams.Apps.QBot.Database" project, and choose "Publish".
 Fill in the target database connection which is saved from deployment output.
 
 ![](images/publish-database.png)
 
-# Step 6: Create the QnA Maker knowledge base
+# Step 7: Create the QnA Maker knowledge base
 QBot uses QnA maker as it's knowlege base of questions and answers. Each course in QBot will require a back-end QnA KB provisioned, and this relationship is 1-1, ie. One QnA KB required per QBot Course.
 
 https://www.qnamaker.ai/Create
@@ -263,7 +269,7 @@ https://www.qnamaker.ai/Create
 > 4. **QnA HTTP Key**
 > 5. **QnA HTTP Endpoint**
 
-# Step 7: Deploy the Bot to Teams
+# Step 8: Deploy the Bot to Teams
 ### Prepare the manifest file
 
 Edit the `manifest.json` file, and replace the following values:
@@ -357,7 +363,7 @@ Zip up into a new package file (eg. `qbot-manifest.zip`) ready for upload into M
 
 You should add the **QBot service account** to each class team so that Graph API calls in delegate permissions work fine.
 
-# Step 8: QBot Setup
+# Step 9: QBot Setup
 Congratulations, you have successfully built the QBot solution, and added the App into Teams. Final step is to set up the different courses and parameters as follows:
 
 1. Go to the dashboard tab (initiate a personal coversation with the Bot)
