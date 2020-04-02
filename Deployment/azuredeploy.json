@@ -549,23 +549,7 @@
                         "branch": "[parameters('gitBranch')]",
                         "IsManualIntegration": true
                     }
-                },
-				{
-				  "name": "appsettings",
-				  "type": "config",
-				  "apiVersion": "2015-08-01",
-				  "dependsOn": [
-					"[resourceId('Microsoft.Web/sites', variables('questionsAppName'))]"
-				  ],
-				  "tags": {
-					"displayName": "appsettings"
-				  },
-				  "properties": {
-					"production": "false",
-					"apiBaseUrl": "[concat(variables('botAppUrl'), '/api/messages')]",
-					"SITE_ROLE": "questions"
-				  }
-				}
+                }
             ]
         },
         {
