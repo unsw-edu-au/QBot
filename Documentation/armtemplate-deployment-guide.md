@@ -64,7 +64,7 @@ At this point you have 3 unique values:
 
 We recommend that you copy these values into a text file, using an application like Notepad. We will need these values later during deployment.
 
-###Graph API Access App Registration
+### Graph API Access App Registration
 The QBot API service in turn calls Graph API to retrieve information like the questions asked, and conversations within a channel. This App Registration is used to authenticate these Graph API calls.
 
 This App Registration MUST be on the same tenant as your Teams instance. You will need to be an Application Administrator on your tenant.
