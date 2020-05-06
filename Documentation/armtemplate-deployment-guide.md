@@ -254,11 +254,20 @@ QBot uses QnA maker as it's knowlege base of questions and answers. Each course 
 
 https://www.qnamaker.ai/Create
 
-1. Create a new QnA Service. Select an appropriate pricing tier to store all KBs for all required courses
-2. Create the KB, and take note of the KB Name
-3. (Optional) Populate your KB with initial data or add a chit-chat persona.
-4. Publish the KB
+Before executing this step, make sure you have access to the Azure subscription in which the ARM template was deployed in previous steps. 
+Create a knowledge base, following the instructions in the [QnA Maker documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/tutorials/create-publish-query-in-portal#create-a-knowledge-base).
 
+Skip the step, "Create a QnA service in Microsoft Azure", because the ARM template that you deployed in Step 2 "Deploy to your Azure subscription" already created the QnA service. Proceed directly to the next step, "Connect your QnA service to your KB".
+
+Use the following values when connecting to the QnA service:
+
+* **Microsoft Azure Directory ID**: The tenant associated with the Azure subscription selected in Step 2.1.
+* **Azure subscription name**: The Azure subscription to which the ARM template was deployed.
+* **Azure QnA service**: The QnA service created during the deployment. This is the same as the "Base resource name"; for example, if you chose "contosoqbot" as the base name, the QnA Maker service will be named `contosoqbot`.
+
+![Screenshot of settings](https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/media/qnamaker-tutorial-create-publish-query-in-portal/create-kb-step-2.png)
+
+**Note:** Kindly add at least one QnA pair, before publishing the knowledge base otherwise it will throw error.
 
 > Please take note of the following settings for later:<br><br>
 > ![](images/qna-deploy.png)
