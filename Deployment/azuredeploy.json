@@ -28,7 +28,7 @@
 		"appIconUrl": {
             "type": "string",
             "minLength": 1,
-            "defaultValue": "https://github.com/vishnuabhrapudi/QBot/blob/master/Manifest/Color.png",
+            "defaultValue": "",
             "metadata": {
                 "description": "The link to the icon for the app. It must resolve to a PNG file."
             }
@@ -176,7 +176,7 @@
             "metadata": {
                 "description": "The URL to the GitHub repository to deploy."
             },
-            "defaultValue": "https://github.com/vishnuabhrapudi/QBot.git"
+            "defaultValue": ""
         },
         "gitBranch": {
             "type": "string",
@@ -343,15 +343,7 @@
 							"name": "WEBSITE_NODE_DEFAULT_VERSION",
 							"value": "10.15.2"
 						}
-                    ],
-					"connectionStrings": [
-						{
-							"name": "QBotEntities",
-							"connectionString": "[concat('Server=tcp:',reference(variables('sqlServerName')).fullyQualifiedDomainName,',1433;Initial Catalog=',variables('databaseName'),';Persist Security Info=False;User ID=',parameters('sqlAdministratorLogin'),';Password=',parameters('sqlAdministratorLoginPassword'),';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;')]",
-							"providerName": "System.Data.EntityClient",
-							"type": "custom"
-						}
-					]
+                    ]
                 }
             },
             "resources": [
@@ -765,6 +757,18 @@
         }
     ],
     "outputs": {
+		"botId": {
+			"type": "string",
+			"value": "[parameters('botClientId')]"
+		},
+		"dashboardappUrl":{
+			"type": "string",
+			"value": "[variables('dashboardAppUrl')]"
+		},
+		"questionsappUrl":{
+			"type": "string",
+			"value": "[variables('questionsAppUrl')]"
+		},
 		"configurationUrl": {
             "type": "string",
             "value": "[variables('configurationUrl')]"

@@ -17,7 +17,7 @@ To begin, we will need:
   * QnA Service
   * QnA Knowledge Base
 * Some familiarity with building a .NET Web API project
-* Some familiarity with building an Angular 7 application
+* Editor application like Notepad to copy and save the values
 
 Here is a summary of all Azure resources that need to be created:
 
@@ -42,7 +42,7 @@ Register two Azure AD applications in your tenant's directory: one for the bot, 
 ### QBot API Auth App Registration
 1. Log in to the Azure Portal for your subscription, and go to the "App registrations" blade [here](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps).
 2. Click on "New registration", and create an Azure AD application.
-	1. **Name**: The name of your Teams app - if you are following the template for a default deployment, we recommend "Kronos workforce central".
+	1. **Name**: The name of your Teams app - if you are following the template for a default deployment, we recommend "Contoso QBot".
 	2. **Supported account types**: Select "Accounts in any organizational directory (Any Azure AD directory - Multitenant)"
 3. Leave the "Redirect URI" field blank.
 	![app-registration](images/app-registration.png)
@@ -62,7 +62,7 @@ At this point you have 3 unique values:
 - Client secret for the bot
 - Directory (tenant) ID
 
-We recommend that you copy these values into a text file, using an application like Notepad. We will need these values later during deployment.
+We recommend that you copy these values into a text file, using an application like Notepad and save the file regularly. We will need these values later during deployment.
 
 ### Graph API Access App Registration
 The QBot API service in turn calls Graph API to retrieve information like the questions asked, and conversations within a channel. This App Registration is used to authenticate these Graph API calls.
@@ -86,7 +86,7 @@ Go to Certificates and Secrets, add a new client secret with a suitable expirati
 If using any Delegated permissions, go to the Authentication tab, and set to treat application as public client by default
 ![](images/app-reg-default-client-type.png)
 
-Please note the below values:
+Please note the below values to the Notepad file:
 - Application (client) ID
 - Client secret
 
@@ -120,9 +120,9 @@ export const environment = {
 ```
 Key|Value
 :-|:-
-apiBaseUrl|The URL where the QBot API Web App is deployed, with `/api/Request/` appended
-tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
-clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
+apiBaseUrl|The URL where the QBot API Web App is deployed, with `/api/Request/` appended. eg: `https://<<BaseResourceName>>.azurewebsites.net/api/Request/`
+tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy the value from Notepad.
+clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy the value from Notepad.
 
 Open up `Source\DashboardTabApp\src\environments\environment.prod.ts` and make the above changes.
 
@@ -157,21 +157,22 @@ export const environment = {
 ```
 Key|Value
 :-|:-
-apiBaseUrl|The URL where the QBot API Web App is deployed, with `/api/Request/` appended
-tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
-clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration)
-selfUrl|The base URL where this [Questions Tab App](#questions-tab-web-app) (Angular app is deployed), eg: `https://<<BaseResourceName>>-questions.azurewebsites.net`|
+apiBaseUrl|The URL where the QBot API Web App is deployed, with `/api/Request/` appended. eg: `https://<<BaseResourceName>>.azurewebsites.net/api/Request/`
+tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy value from Notepad.
+clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy value from Notepad.
+selfUrl|The base URL where this [Questions Tab App](#questions-tab-web-app) (Angular app is deployed), eg: `https://<<BaseResourceName>>-questions.azurewebsites.net`
 Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make the above changes.
 
 # Step 3: Encrypt QBot service account password
 1. In the local copy of the fork repository, open `StringEncryption.exe` under `PasswordEncryptionTool` folder.
 2. Provide the qbot service account password under Raw string field and click on Encrpt.
 	![password-encrption-tool](images/password-encrption-tool.png)
-3. Copy the string under Encrpted string field for later use.
+3. Copy the string under Encrpted string field to Notepad file for later use.
 
 # Step 4: Deploy to your Azure subscription
 1. Click on the "Deploy to Azure" button below.
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fvishnuabhrapudi%2FQBot%2Fmaster%2FDeployment%2Fazuredeploy.json)
+
+	[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fvishnuabhrapudi%2FQBot%2Fmaster%2FDeployment%2Fazuredeploy.json)
 
 2. When prompted, log in to your Azure subscription.
 
@@ -221,26 +222,32 @@ Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make th
 10. Wait for the deployment to finish. You can check the progress of the deployment from the "Notifications" pane of the Azure Portal. It can take more than 10 minutes for the deployment to finish.
 
 11. Once the deployment has finished, you would be directed to a page that has the following fields:
-    * botId - This is the Microsoft Application ID for the FAQ Plus bot.
-    * appDomain - This is the base domain for the FAQ Plus Bot.
-    * configurationAppUrl - This is the URL for the configuration web application.
+    * botId - This is the Microsoft Application ID for the QBot bot.
+	* dashboardappUrl - Dashboard app URL.
+	* questionsappUrl - Questions app URL.
+	* configurationUrl - Configuration app URL.
+	* contentUrl - Content URL.
+	* appDomain - App domain.
+	* dashboardAppDomain - Dashboard app domain.
+	* questionsAppDomain - Questions app domain.
+	* sqlServerFqdn - SQL Server fully qualified domain name.
+	* databaseName - SQL database name.
 
 # Step 5: Set up authentication for the Dashboard and Questions apps
-1. Note the location of the Dashboard app and Questions app that you deployed, which is `https://[BaseResourceName]-dashboard.azurewebsites.net` and `https://[BaseResourceName]-questions.azurewebsites.net`. For example, if you chose "contosoqbot" as the base name, the dahboard app will be at `https://contosoqbot-dashboard.azurewebsites.net` and the questions app will be at `https://contosoqbot-questions.azurewebsites.net`.
-2. Go back to the "App Registrations" page [here](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredAppsPreview).
+1. Go back to the "App Registrations" page [here](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredAppsPreview).
 
-3. Click on the QBot API Auth app in the application list. Under "Manage", click on "Authentication" to bring up authentication settings.
-4. Add a new entries to "Redirect URIs":
+2. Click on the QBot API Auth app in the application list. Under "Manage", click on "Authentication" to bring up authentication settings.
+3. Add a new entries to "Redirect URIs":
 	1. First entry:
 	    * **Type**: Web
-	    * **Redirect URI**: If the base name is "contosoqbot", then enter "https://contosoqbot-dashboard.azurewebsites.net/app-silent-end"
+	    * **Redirect URI**: Enter the dashboard app url from Notepad file, append with /app-silent-end. If the base name is "contosoqbot", then enter "https://contosoqbot-dashboard.azurewebsites.net/app-silent-end"
 	1. Second entry:
 	    * **Type**: Web
-	    * **Redirect URI**: If the base name is "contosoqbot", then enter "https://contosoqbot-questions.azurewebsites.net/app-silent-end"
+	    * **Redirect URI**: Enter the questions app url from Notepad file, append with /app-silent-end. If the base name is "contosoqbot", then enter "https://contosoqbot-questions.azurewebsites.net/app-silent-end"
 
-5. Under "Implicit grant", check "ID tokens".
+4. Under "Implicit grant", check "ID tokens".
 
-6. Click "Save" to commit your changes.
+5. Click "Save" to commit your changes.
 
 # Step 6: Setup SQL Server Schema
 Clone the fork respository and open in Visual Studio. Run the included SSDT package to create the initial SQL database schema and seed data.
@@ -249,7 +256,19 @@ Fill in the target database connection which is saved from deployment output.
 
 ![](images/publish-database.png)
 
-# Step 7: Create the QnA Maker knowledge base
+# Step 7: Setup connection string for SQL in configuration file
+1. Open URL `https://<<BaseResourceName>>.scm.azurewebsites.net/DebugConsole`
+2. Navigate to site -> wwwroot -> Edit web.config file.
+3. Enter the below value before `<appSettings>`
+	
+
+    <connectionStrings>
+    <add name="QBotEntities" connectionString="metadata=res://*/QuestionBotModel.csdl|res://*/QuestionBotModel.ssdl|res://*/QuestionBotModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=<<SQL server fully qualified domain name>>;initial catalog=<<SQL database anem>>;user id=<<user id>>;password=<<password>>;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    </connectionStrings>
+
+Save the web.config file. Restart the app service.
+
+# Step 8: Create the QnA Maker knowledge base
 QBot uses QnA maker as it's knowlege base of questions and answers. Each course in QBot will require a back-end QnA KB provisioned, and this relationship is 1-1, ie. One QnA KB required per QBot Course.
 
 https://www.qnamaker.ai/Create
@@ -278,7 +297,7 @@ Use the following values when connecting to the QnA service:
 > 4. **QnA HTTP Key**
 > 5. **QnA HTTP Endpoint**
 
-# Step 8: Deploy the Bot to Teams
+# Step 9: Deploy the Bot to Teams
 ### Prepare the manifest file
 
 Edit the `manifest.json` file, and replace the following values:
@@ -344,11 +363,11 @@ Edit the `manifest.json` file, and replace the following values:
 
 Key|Value
 :-|:-
-id|Microsoft AppID (GUID) from the [Bot Channel Registration](#bot-channels-registration)
-botId|Microsoft AppID (GUID) from the [Bot Channel Registration](#bot-channels-registration).<br>Remember to replace **both instances** in the `manifest.json`
-configurationUrl|URL of the deployed [Question Tab Angular web application](#questions-tab-web-app) with `/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}` appended.
-contentUrl|URL of the deployed [Dashboard Tab Angular web application](#dashboard-tab-web-app) with `/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}` appended.
-validDomains|Array of three strings representing the domains of the [Bot API Web App](#qbot-api-web-app), [Question Tab](#questions-tab-web-app) and [Dashboard Tab](#dashboard-tab-web-app)
+id|Microsoft AppID (GUID) from the [Bot Channel Registration](#bot-channels-registration). Copy the botid from Notepad file.
+botId|Microsoft AppID (GUID) from the [Bot Channel Registration](#bot-channels-registration). Copy the botid from Notepad file.<br>Remember to replace **both instances** in the `manifest.json`
+configurationUrl|URL of the deployed [Question Tab Angular web application](#questions-tab-web-app) with `/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}` appended. Copy the configuration url from Notepad file.
+contentUrl|URL of the deployed [Dashboard Tab Angular web application](#dashboard-tab-web-app) with `/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}` appended. Copy the content url from Notepad file.
+validDomains|Array of three strings representing the domains of the [Bot API Web App](#qbot-api-web-app), [Question Tab](#questions-tab-web-app) and [Dashboard Tab](#dashboard-tab-web-app). Copy the appDomain, dashboardAppDomain and questionsAppDomain fro Notepad file.
 
 
 So now, within Manifest` folder there will be 3 files
@@ -372,7 +391,7 @@ Zip up into a new package file (eg. `qbot-manifest.zip`) ready for upload into M
 
 You should add the **QBot service account** to each class team so that Graph API calls in delegate permissions work fine.
 
-# Step 9: QBot Setup
+# Step 10: QBot Setup
 Congratulations, you have successfully built the QBot solution, and added the App into Teams. Final step is to set up the different courses and parameters as follows:
 
 1. Go to the dashboard tab (initiate a personal coversation with the Bot)
