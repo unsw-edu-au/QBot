@@ -260,13 +260,10 @@ Fill in the target database connection which is saved from deployment output.
 1. Open URL `https://<<BaseResourceName>>.scm.azurewebsites.net/DebugConsole`
 2. Navigate to site -> wwwroot -> Edit web.config file.
 3. Enter the below value before `<appSettings>`
-	
 
-    <connectionStrings>
-    <add name="QBotEntities" connectionString="metadata=res://*/QuestionBotModel.csdl|res://*/QuestionBotModel.ssdl|res://*/QuestionBotModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=<<SQL server fully qualified domain name>>;initial catalog=<<SQL database anem>>;user id=<<user id>>;password=<<password>>;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
-    </connectionStrings>
+`<connectionStrings> <add name="QBotEntities"  connectionString="metadata=res://*/QuestionBotModel.csdl|res://*/QuestionBotModel.ssdl|res://*/QuestionBotModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=<<SQL server fully qualified domain name>>;initial catalog=<<SQL database name>>;user id=<<user id>>;password=<<password>>;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" /> </connectionStrings>`
 
-Save the web.config file. Restart the app service.
+Update the `<<SQL server fully qualified domain name>>` and `<<SQL database name>>` in the above string with the value from Notepad file. Save the web.config file. Restart the app service.
 
 # Step 8: Create the QnA Maker knowledge base
 QBot uses QnA maker as it's knowlege base of questions and answers. Each course in QBot will require a back-end QnA KB provisioned, and this relationship is 1-1, ie. One QnA KB required per QBot Course.
