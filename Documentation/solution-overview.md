@@ -10,7 +10,7 @@ The QBot solution has the following main components:
 * **QnA Maker**: Cognitive service that drives all the answering and learning of QBot
 * **Azure Function**: Scheduled service that auto publishes the QnA Maker knowledgebase
 
-There are also the various Azure App Registrations that are used to authenticate and authorise the various components. Full details can be found in the [deployment guide](deployment-guide.md)
+There are also the various Azure App Registrations that are used to authenticate and authorise the various components. Full details can be found in the [deployment guide](armtemplate-deployment-guide.md)
 
 ## Bot Registration
 A Microsoft Bot Channels Registration. The messaging endpoint will be set to the **QBot API App Service** and must enable connection to a Microsoft Teams channel.
