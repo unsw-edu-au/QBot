@@ -1,6 +1,6 @@
 # Microsoft Teams QBot
 
-| [Demo](Documentation/demo.md) | [Deployment Guide](Documentation/deployment-guide.md) | [Solution Overview](Documentation/solution-overview.md) | [Troubleshooting](Documentation/Troubleshooting.md) | [Limitations](Documentation/Known-limitations.md) | [Taking it further](Documentation/Taking-it-further.md) | 
+| [Demo](Documentation/demo.md) | [Deployment Guide](Documentation/armtemplate-deployment-guide.md) | [Solution Overview](Documentation/solution-overview.md) | [Troubleshooting](Documentation/Troubleshooting.md) | [Limitations](Documentation/Known-limitations.md) | [Taking it further](Documentation/Taking-it-further.md) | 
 | --- | --- | --- | --- | --- | --- |
 
 
@@ -18,7 +18,7 @@ See a quick, animated demo of the various app scenarios [here](Documentation/dem
 ## Get Started
 Begin with the [Solution Overview](Documentation/solution-overview.md) to read about what the app does and how it works.
 
-When you're ready to try out QBot, or to use it in your own organization, follow the steps in the [Deployment Guide](Documentation/deployment-guide.md).
+When you're ready to try out QBot, or to use it in your own organization, follow the steps in the [Deployment Guide](Documentation/armtemplate-deployment-guide.md).
 
 ## Feedback
 Thoughts? Questions? Ideas? Share them with us [here](https://github.com/unsw-edu-au/QBot/issues/new)!
