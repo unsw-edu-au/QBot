@@ -77,7 +77,7 @@ You will need to grant Graph API permissions to this App Registration (the full 
 |Setting|Value|
 |:-|:-|
 |Account Type|*Accounts in any organizational directory (Any Azure AD directory - Multitenant)*|
-|API Permissions|Add the following API permissions:<br><br>Name: **User.Read.All**<br>Type: **Application** or **Delegate**<br>Consent: **Required**<br><br>Name: **Group.ReadWrite.All**<br>Type: **Application** or **Delegate**<br>Consent: **Required**<br><br>Name: **Sites.ReadWrite.All**<br>Type: **Application** or **Delegate**<br>Consent: **Required**
+|API Permissions|Add the following API permissions:<br><br>Name: **User.Read.All**<br>Type: **Application** or **Delegate**<br>Consent: **Required**<br><br>Name: **Group.ReadWrite.All**<br>Type: **Application** or **Delegate**<br>Consent: **Required**
 
 When granting admin consent for these, you will need to be a Global Administrator on the respective tenant.
 
