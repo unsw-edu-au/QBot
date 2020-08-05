@@ -362,8 +362,8 @@ Key|Value
 :-|:-
 id|Microsoft AppID (GUID) from the [Bot Channel Registration](#bot-channels-registration). Copy the botid from Notepad file.
 botId|Microsoft AppID (GUID) from the [Bot Channel Registration](#bot-channels-registration). Copy the botid from Notepad file.<br>Remember to replace **both instances** in the `manifest.json`
-configurationUrl|URL of the deployed [Question Tab Angular web application](#questions-tab-web-app) with `/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}` appended. Copy the configuration url from Notepad file.
-contentUrl|URL of the deployed [Dashboard Tab Angular web application](#dashboard-tab-web-app) with `/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}` appended. Copy the content url from Notepad file.
+configurationUrl|URL of the deployed [Question Tab Angular web application](#questions-tab-web-app) with `/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}` appended. Copy the configuration url from Notepad file.
+contentUrl|URL of the deployed [Dashboard Tab Angular web application](#dashboard-tab-web-app) with `/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}` appended. Copy the content url from Notepad file.
 validDomains|Array of three strings representing the domains of the [Bot API Web App](#qbot-api-web-app), [Question Tab](#questions-tab-web-app) and [Dashboard Tab](#dashboard-tab-web-app). Copy the appDomain, dashboardAppDomain and questionsAppDomain fro Notepad file.
 
 
