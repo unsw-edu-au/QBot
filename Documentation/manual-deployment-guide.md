@@ -407,8 +407,8 @@ Edit the `manifest.json` file, and replace the following values:
 |:-|:-|
 id|Microsoft AppID (GUID) from the [Bot Channel Registration](#bot-channels-registration)
 botId|Microsoft AppID (GUID) from the [Bot Channel Registration](#bot-channels-registration).<br>Remember to replace **both instances** in the `manifest.json`
-configurationUrl|URL of the deployed [Question Tab Angular web application](#questions-tab-web-app) with `/#/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}` appended.
-contentUrl|URL of the deployed [Dashboard Tab Angular web application](#dashboard-tab-web-app) with `/#/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}` appended.
+configurationUrl|URL of the deployed [Question Tab Angular web application](#questions-tab-web-app) with `/config?upn={upn}&tid={tid}&gid={gid}&cname={channelName}` appended.
+contentUrl|URL of the deployed [Dashboard Tab Angular web application](#dashboard-tab-web-app) with `/home?upn={upn}&tid={tid}&gid={groupId}&uid={userObjectId}` appended.
 validDomains|Array of three strings representing the domains of the [Bot API Web App](#qbot-api-web-app), [Question Tab](#questions-tab-web-app) and [Dashboard Tab](#dashboard-tab-web-app)
 
 
