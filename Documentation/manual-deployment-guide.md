@@ -177,7 +177,7 @@ https://www.qnamaker.ai/Create
 > 3. **QnA Endpoint Key** - The GUID part of the Authorization header<br><br>
 > ![](images/qna-configure.png)
 > 4. **QnA HTTP Key**
-> 5. **QnA HTTP Endpoint**
+> 5. **QnA HTTP Endpoint** - Make sure the QnA HTTP Endpoint ends with /qnamaker/v4.0. If not, append the same so that the endpoint URL appears similar to above image.
 
 
 ### Azure Function App
