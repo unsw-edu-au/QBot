@@ -316,7 +316,7 @@ Use the following values when connecting to the QnA service:
 > 4. **QnA HTTP Key**
 > 5. **QnA HTTP Endpoint** - Make sure the QnA HTTP Endpoint ends with /qnamaker/v4.0. If not, append the same so that the endpoint URL appears similar to above image. 
 
-# Step 10: Deploy the Bot to Teams
+# Step 10: Surface QBot into Microsoft Teams
 ### Prepare the manifest file
 
 Edit the `manifest.json` file, and replace the following values:
