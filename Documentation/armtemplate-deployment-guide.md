@@ -161,6 +161,7 @@ apiBaseUrl|The URL where the QBot API Web App is deployed, with `/api/Request/` 
 tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy value from Notepad.
 clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy value from Notepad.
 selfUrl|The base URL where this [Questions Tab App](#questions-tab-web-app) (Angular app is deployed), eg: `https://<<BaseResourceName>>-questions.azurewebsites.net`
+
 Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make the above changes.
 
 # Step 3: Encrypt QBot service account password
