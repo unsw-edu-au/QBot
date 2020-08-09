@@ -90,9 +90,9 @@ Please note the below values to the Notepad file:
 - Application (client) ID
 - Client secret
 
-# Step 2: Decide on a Base Resource Name for your QBot deployment
+# Step 2: Choose on a Base Resource Name for your QBot deployment
 Choose a "Base Resource Name", which the template uses to generate names for the other resources.
-   * The app service names `[Base Resource Name]`, `[Base Resource Name]-dashboard`, and `[Base Resource Name]-questions` must be available. For example, if you select `contosoqbot` as the base name, the names `contosoqbot`, `contosoqbot-dashboard`, and `contosoqbot-questions` must be available (not taken); otherwise, the deployment will fail with a Conflict error.
+   * The app service names `[Base Resource Name]`, `[Base Resource Name]-dashboard`, and `[Base Resource Name]-questions` must be available. For example, if you select `contosoqbot` as the base name, the names `contosoqbot`, `contosoqbot-dashboard`, and `contosoqbot-questions` must be available (not taken); otherwise, the deployment will fail with a Conflict error. You can check if the URLs are available by opening for eg: `contosoqbot-dashboard.azurewebsites.net` in your web browser.
    * Remember the base resource name should not end in a numeric as that is known to cause deployment failures.
    * Remember the base resource name that you selected. We will need it for setting up Angular apps - Dashboard Tab & Questions Tab as well as Azure deployment.
    
