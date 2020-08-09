@@ -1,9 +1,9 @@
 # Deployment Guide
 
 ## Pre-Requisites
-To begin, we will need:
-* Fork the repository. There will be some modifications required in the fork repository and use in deployment.
-* Specify a base resource name for the application and save the name.
+To begin, we will need to:
+* Fork the repository. There will be some modifications required in the fork repository and use in deployment. You can use Visual Studio on your machine to fork the repo locally and publish selectively to Azure from there.
+* Specify a Base Resource Name for the application and save the name. Make sure the resource name is available.
 * An Office 365 tenant with Microsoft Teams turned on for the target set of users
 * Access to create a new Team within the "O365 tenant"
 * Access to create new App Registrations in the "Azure Active Directory" of the tenant
@@ -90,7 +90,13 @@ Please note the below values to the Notepad file:
 - Application (client) ID
 - Client secret
 
-# Step 2: Setup Angular apps - Dashboard Tab & Questions Tab for deployment
+# Step 2: Decide on a Base Resource Name for your QBot deployment
+Choose a "Base Resource Name", which the template uses to generate names for the other resources.
+   * The app service names `[Base Resource Name]`, `[Base Resource Name]-dashboard`, and `[Base Resource Name]-questions` must be available. For example, if you select `contosoqbot` as the base name, the names `contosoqbot`, `contosoqbot-dashboard`, and `contosoqbot-questions` must be available (not taken); otherwise, the deployment will fail with a Conflict error.
+   * Remember the base resource name should not end in a numeric as that is known to cause deployment failures.
+   * Remember the base resource name that you selected. We will need it for setting up Angular apps - Dashboard Tab & Questions Tab as well as Azure deployment.
+   
+# Step 3: Setup Angular apps - Dashboard Tab & Questions Tab for deployment
 There are 2 Teams tabs, developed as Angular applications. They are in the projects: `DashboardTabApp` and `QuestionsTabApp`. Both are built and deployed in the same way.
 
 In fork repository, open up `Source\DashboardTabApp\src\environments\environment.ts` and make the following changes
@@ -120,7 +126,7 @@ export const environment = {
 ```
 Key|Value
 :-|:-
-apiBaseUrl|The URL where the QBot API Web App is deployed, with `/api/Request/` appended. eg: `https://<<BaseResourceName>>.azurewebsites.net/api/Request/`
+apiBaseUrl|The URL where the QBot API Web App will be deployed, with `/api/Request/` appended. eg: `https://<<BaseResourceName>>.azurewebsites.net/api/Request/`
 tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy the value from Notepad.
 clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy the value from Notepad.
 
@@ -157,20 +163,20 @@ export const environment = {
 ```
 Key|Value
 :-|:-
-apiBaseUrl|The URL where the QBot API Web App is deployed, with `/api/Request/` appended. eg: `https://<<BaseResourceName>>.azurewebsites.net/api/Request/`
+apiBaseUrl|The URL where the QBot API Web App will be deployed, with `/api/Request/` appended. eg: `https://<<BaseResourceName>>.azurewebsites.net/api/Request/`
 tenantId|The Directory (tenant) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy value from Notepad.
 clientId|The Application (client) ID of the [QBot API Auth App Registration](#qbot-api-auth-app-registration). Copy value from Notepad.
-selfUrl|The base URL where this [Questions Tab App](#questions-tab-web-app) (Angular app is deployed), eg: `https://<<BaseResourceName>>-questions.azurewebsites.net`
+selfUrl|The base URL where this [Questions Tab App](#questions-tab-web-app) Angular app will be deployed, eg: `https://<<BaseResourceName>>-questions.azurewebsites.net`
 
 Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make the above changes.
 
-# Step 3: Encrypt QBot service account password
+# Step 4: Encrypt QBot service account password
 1. In the local copy of the fork repository, open `StringEncryption.exe` under `PasswordEncryptionTool` folder.
 2. Provide the qbot service account password under Raw string field and click on Encrpt.
 	![password-encrption-tool](images/password-encrption-tool.png)
 3. Copy the string under Encrpted string field to Notepad file for later use.
 
-# Step 4: Deploy to your Azure subscription
+# Step 5: Deploy QBot solution to your Azure subscription
 1. Click on the "Deploy to Azure" button below.
 
 	[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fvishnuabhrapudi%2FQBot%2Fmaster%2FDeployment%2Fazuredeploy.json)
@@ -186,10 +192,9 @@ Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make th
      * QnA Maker
      * Azure Search
 
-5. Enter a "Base Resource Name", which the template uses to generate names for the other resources.
-   * The app service names `[Base Resource Name]`, `[Base Resource Name]-dashboard`, and `[Base Resource Name]-questions` must be available. For example, if you select `contosoqbot` as the base name, the names `contosoqbot`, `contosoqbot-dashboard`, and `contosoqbot-questions` must be available (not taken); otherwise, the deployment will fail with a Conflict error.
-   * Remember the base resource name should not end in a numeric as that is known to cause deployment failures.
-   * Remember the base resource name that you selected. We will need it later.
+5. Enter the "Base Resource Name", which you had chosen in Step 2.
+   * Note that the app service names `[Base Resource Name]`, `[Base Resource Name]-dashboard`, and `[Base Resource Name]-questions` must be available. For example, if you select `contosoqbot` as the base name, the names `contosoqbot`, `contosoqbot-dashboard`, and `contosoqbot-questions` must be available (not taken); otherwise, the deployment will fail with a Conflict error.
+   * Ensure the base resource name should not end in a numeric as that is known to cause deployment failures.
 6. Fill in the below details
 	1. **App Display Name**: The app (and bot) display name.
 	2. **App Description**: The app (and bot) description.
@@ -235,7 +240,7 @@ Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make th
 	* sqlServerFqdn - SQL Server fully qualified domain name.
 	* databaseName - SQL database name.
 
-# Step 5: Set up authentication for the Dashboard and Questions apps
+# Step 6: Set up authentication for the Dashboard and Questions apps
 1. Go back to the "App Registrations" page [here](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredAppsPreview).
 
 2. Click on the QBot API Auth app in the application list. Under "Manage", click on "Authentication" to bring up authentication settings.
@@ -251,14 +256,14 @@ Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make th
 
 5. Click "Save" to commit your changes.
 
-# Step 6: Setup SQL Server Schema
+# Step 7: Setup SQL Server Schema
 Clone the fork respository and open in Visual Studio. Run the included SSDT package to create the initial SQL database schema and seed data.
 To do this within Visual Studio, right click on the "Microsoft.Teams.Apps.QBot.Database" project, and choose "Publish".
 Fill in the target database connection which is saved from deployment output.
 
 ![](images/publish-database.png)
 
-# Step 7: Setup connection string for SQL in configuration file
+# Step 8: Setup connection string for SQL in configuration file
 1. Open URL `https://<<BaseResourceName>>.scm.azurewebsites.net/DebugConsole`
 2. Navigate to site -> wwwroot -> Edit web.config file.
 3. Enter the below value before `<appSettings>`
@@ -267,7 +272,7 @@ Fill in the target database connection which is saved from deployment output.
 
 Update the `<<SQL server fully qualified domain name>>` and `<<SQL database name>>` in the above string with the value from Notepad file. Save the web.config file. Restart the app service.
 
-# Step 8: Publish the Azure Function using the Function App project in Visual Studio
+# Step 9: Publish the Azure Function using the Function App project in Visual Studio
 The Function App project is called `Microsoft.Teams.Apps.QBot.FunctionApp` and is a .NET Core Azure Function App. 
 Make sure .NET Core 2.1 LTS & .NET Framework 4.7.1 is installed in your Visual Studio client on your PC.
 Right click on the project and choose "Publish" to your Function App.
@@ -288,7 +293,7 @@ The string is similar to the one you'd defined in `connectionStrings.secret.conf
 metadata=res://*/QuestionBotModel.csdl|res://*/QuestionBotModel.ssdl|res://*/QuestionBotModel.msl;provider=System.Data.SqlClient;provider connection string=';data source=*****;initial catalog=*****;user id=*****;password=*****;MultipleActiveResultSets=True;App=EntityFramework';
 ```
 
-# Step 9: Create the QnA Maker knowledge base
+# Step 10: Create the QnA Maker knowledge base
 QBot uses QnA maker as it's knowlege base of questions and answers. Each course in QBot will require a back-end QnA KB provisioned, and this relationship is 1-1, ie. One QnA KB required per QBot Course.
 
 https://www.qnamaker.ai/Create
@@ -317,7 +322,7 @@ Use the following values when connecting to the QnA service:
 > 4. **QnA HTTP Key**
 > 5. **QnA HTTP Endpoint** - Make sure the QnA HTTP Endpoint ends with /qnamaker/v4.0. If not, append the same so that the endpoint URL appears similar to above image. 
 
-# Step 10: Surface QBot into Microsoft Teams
+# Step 11: Surface QBot into Microsoft Teams
 ### Prepare the manifest file
 
 Edit the `manifest.json` file, and replace the following values:
@@ -411,7 +416,7 @@ Zip up into a new package file (eg. `qbot-manifest.zip`) ready for upload into M
 
 You should add the **QBot service account** to each class team so that Graph API calls in delegate permissions work fine.
 
-# Step 11: QBot Setup
+# Step 12: QBot Setup
 Congratulations, you have successfully built the QBot solution, and added the App into Teams. Final step is to set up the different courses and parameters as follows:
 
 1. Go to the dashboard tab (initiate a personal coversation with the Bot)
