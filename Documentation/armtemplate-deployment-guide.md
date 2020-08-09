@@ -187,6 +187,7 @@ Open up `Source\QuestionTabApp\src\environments\environment.prod.ts` and make th
 
 5. Enter a "Base Resource Name", which the template uses to generate names for the other resources.
    * The app service names `[Base Resource Name]`, `[Base Resource Name]-dashboard`, and `[Base Resource Name]-questions` must be available. For example, if you select `contosoqbot` as the base name, the names `contosoqbot`, `contosoqbot-dashboard`, and `contosoqbot-questions` must be available (not taken); otherwise, the deployment will fail with a Conflict error.
+   * Remember the base resource name should not end in a numeric as that is known to cause deployment failures.
    * Remember the base resource name that you selected. We will need it later.
 6. Fill in the below details
 	1. **App Display Name**: The app (and bot) display name.
@@ -265,7 +266,28 @@ Fill in the target database connection which is saved from deployment output.
 
 Update the `<<SQL server fully qualified domain name>>` and `<<SQL database name>>` in the above string with the value from Notepad file. Save the web.config file. Restart the app service.
 
-# Step 8: Create the QnA Maker knowledge base
+# Step 8: Publish the Azure Function using the Function App project in Visual Studio
+The Function App project is called `Microsoft.Teams.Apps.QBot.FunctionApp` and is a .NET Core Azure Function App. 
+Make sure .NET Core 2.1 LTS & .NET Framework 4.7.1 is installed in your Visual Studio client on your PC.
+Right click on the project and choose "Publish" to your Function App.
+
+After publishing, go to the Function App resource on Azure and navigate to Configuration settings. 
+Here, create a new connection string setting with the following values
+
+|Setting|Value|
+|:-|:-|
+|Name|QBotEntities
+|Value|See SQL Connection String below|
+|Type|Custom|
+
+SQL Connection String:
+The string is similar to the one you'd defined in `connectionStrings.secret.config` file under the QBot API project. Pick up the value defined in `connectionString=` parameter from the config file. Note that the connection string must not have double quotes, and the `&quot;` should be replaced with a single quote `'`. Your string will look something like the following:
+``` xml
+<!-- Replace ***** with your SQL Server, database, username & password -->
+metadata=res://*/QuestionBotModel.csdl|res://*/QuestionBotModel.ssdl|res://*/QuestionBotModel.msl;provider=System.Data.SqlClient;provider connection string=';data source=*****;initial catalog=*****;user id=*****;password=*****;MultipleActiveResultSets=True;App=EntityFramework';
+```
+
+# Step 9: Create the QnA Maker knowledge base
 QBot uses QnA maker as it's knowlege base of questions and answers. Each course in QBot will require a back-end QnA KB provisioned, and this relationship is 1-1, ie. One QnA KB required per QBot Course.
 
 https://www.qnamaker.ai/Create
@@ -292,9 +314,9 @@ Use the following values when connecting to the QnA service:
 > 3. **QnA Endpoint Key** - The GUID part of the Authorization header<br><br>
 > ![](images/qna-configure.png)
 > 4. **QnA HTTP Key**
-> 5. **QnA HTTP Endpoint**
+> 5. **QnA HTTP Endpoint** - Make sure the QnA HTTP Endpoint ends with /qnamaker/v4.0. If not, append the same so that the endpoint URL appears similar to above image. 
 
-# Step 9: Deploy the Bot to Teams
+# Step 10: Deploy the Bot to Teams
 ### Prepare the manifest file
 
 Edit the `manifest.json` file, and replace the following values:
@@ -388,7 +410,7 @@ Zip up into a new package file (eg. `qbot-manifest.zip`) ready for upload into M
 
 You should add the **QBot service account** to each class team so that Graph API calls in delegate permissions work fine.
 
-# Step 10: QBot Setup
+# Step 11: QBot Setup
 Congratulations, you have successfully built the QBot solution, and added the App into Teams. Final step is to set up the different courses and parameters as follows:
 
 1. Go to the dashboard tab (initiate a personal coversation with the Bot)
