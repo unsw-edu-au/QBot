@@ -29,9 +29,17 @@ Please report bugs and other code issues [here](https://github.com/unsw-edu-au/Q
 If you're looking to build on top of this opensource code, [here](Documentation/Taking-it-further.md) are some ideas.
 
 ## Legal notice
-Please read the license terms applicable to this [here](https://github.com/unsw-edu-au/QBot/blob/master/LICENSE). In addition to these terms, you agree to the following. You are responsible for complying with all privacy and security regulations, as well as all internal privacy and security policies of your company. You must also include your own privacy statement and terms of use for the app if you choose to deploy or share it broadly. Finally, please note that this application includes functionality to opt-in/opt-out of participation. Usage of this functionality is entirely your choice. Use and management of any personal data collected is your responsibility. Microsoft will not have any access to this data through this app.
+Please read the license terms applicable to this [here](https://github.com/unsw-edu-au/QBot/blob/master/LICENSE). 
 
-Any Microsoft trademarks and logos included in this repository are property of Microsoft and should not be reused, redistributed, modified, repurposed, or otherwise altered or used outside of this repository.
+This app template is provided under the [MIT License](https://github.com/unsw-edu-au/QBot/blob/master/LICENSE) terms. In addition to these terms, by using this app template you agree to the following:
 
+* You, not UNSW or Microsoft will license the use of your app to users or organizations. You are responsible for complying with all applicable privacy and security regulations related to use, collection and handling of any personal data by your app. This includes obtaining any necessary consents and complying with all internal privacy and security policies of your organization if your app is developed to be sideloaded internally within your organization. Any standard consent flow provided in the app template is provided as an sample implementation only and you will need to make sure the correct consent flow is implemented in the app. 
+* Use and management of any personal data collected is your responsibility. Microsoft will not have any access to this data through this app.
+* Where applicable, you may be responsible for data related incidents or data subject requests for data collected through your app.
+* Any trademarks or registered trademarks of Microsoft in the United States and/or other countries and logos included in this repository are the property of Microsoft, and the license for this project does not grant you rights to use any Microsoft names, logos or trademarks outside of this repository.  Microsoft’s general trademark guidelines can be found here.
+* You understand this app template is not intended to substitute your own regulatory due diligence or make you or your app compliant with applicable regulations including but not limited to privacy, healthcare, employment, or financial regulations. 
+* You must also include your own privacy statement and terms of use for the app if you choose to deploy or share it broadly.
+* Any Microsoft trademarks and logos included in this repository are property of Microsoft and should not be reused, redistributed, modified, repurposed, or otherwise altered or used outside of this repository.
+ 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. 
