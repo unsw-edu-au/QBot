@@ -31,7 +31,7 @@
         "jquery": "^3.4.1",
         "markdown-it": "^8.4.2",
         "moment-timezone": "^0.5.21",
-        "npm": "^6.13.1",
+        "npm": "^6.14.6",
         "popper.js": "^1.14.3",
         "rxjs": "^6.0.0",
         "zone.js": "^0.8.26"
