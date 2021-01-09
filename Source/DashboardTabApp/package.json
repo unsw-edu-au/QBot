@@ -33,7 +33,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^3.2.1",
     "expose-loader": "^0.7.5",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "markdown-it": "^10.0.0",
     "moment-timezone": "^0.5.26",
     "msteams-ui-icons-core": "^0.4.2",
