@@ -35,7 +35,7 @@
     "expose-loader": "^0.7.5",
     "jquery": "^3.4.1",
     "markdown-it": "^10.0.0",
-    "moment-timezone": "^0.5.26",
+    "moment-timezone": "^0.5.35",
     "msteams-ui-icons-core": "^0.4.2",
     "msteams-ui-styles-core": "^0.8.2",
     "ng4-loading-spinner": "^1.2.3",
