@@ -39,7 +39,7 @@
     "msteams-ui-icons-core": "^0.4.2",
     "msteams-ui-styles-core": "^0.8.2",
     "ng4-loading-spinner": "^1.2.3",
-    "npm": "^6.11.3",
+    "npm": "^9.4.1",
     "popper.js": "^1.15.0",
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.3",
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.4",
-    "@angular/cli": "~8.3.4",
+    "@angular/cli": "~15.1.4",
     "@angular/compiler-cli": "^8.2.6",
     "@angular/language-service": "^8.2.6",
     "@types/adal": "^1.0.29",
