@@ -39,7 +39,7 @@
     "msteams-ui-icons-core": "^0.4.2",
     "msteams-ui-styles-core": "^0.8.2",
     "ng4-loading-spinner": "^1.2.3",
-    "npm": "^6.11.3",
+    "npm": "^9.6.6",
     "popper.js": "^1.15.0",
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.3",
